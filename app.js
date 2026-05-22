@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     function updateClock() {
         const now = new Date();
-        
+
         // Time with AM/PM
         let hours = now.getHours();
         const minutes = String(now.getMinutes()).padStart(2, "0");
@@ -15,15 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
         hours = hours % 12;
         hours = hours ? hours : 12; // convert 0 to 12
         const hoursStr = String(hours).padStart(2, "0");
-        
+
         const timeString = `${hoursStr}:${minutes}:${seconds} ${ampm}`;
         document.getElementById("clock-time").textContent = timeString;
-        
+
         // Date formatting: Sunday, 17 Sept 2026
         const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
         document.getElementById("clock-date").textContent = now.toLocaleDateString('en-US', options);
     }
-    
+
     updateClock();
     setInterval(updateClock, 1000);
 
@@ -67,12 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Ensure sidebar has home button active when viewing a room
+        // Sidebar highlight: camera btn for My Home, home btn for regular rooms
         const navHome = document.getElementById("btn-nav-home");
         const navCameras = document.getElementById("btn-nav-cameras");
         if (navHome && navCameras) {
-            navHome.classList.add("active");
-            navCameras.classList.remove("active");
+            if (roomKey === "security-center") {
+                navCameras.classList.add("active");
+                navHome.classList.remove("active");
+            } else {
+                navHome.classList.add("active");
+                navCameras.classList.remove("active");
+            }
         }
 
         // Crossfade background
@@ -84,11 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Set the image on the hidden layer first
             nextLayer.style.backgroundImage = `url('${nextBgImage}')`;
-            
+
             // Swap active classes (CSS transition handles opacity crossfade)
             nextLayer.classList.add("active");
             currentLayer.classList.remove("active");
-            
+
             currentBgLayerIndex = nextLayerIndex;
         }
     }
@@ -131,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     });
                 } else if (btn.id === "btn-nav-cameras") {
-                    // Hide all room views
+                    // Show security center / My Home
                     roomViews.forEach(view => {
                         if (view.id === "view-security-center") {
                             view.classList.add("active");
@@ -140,8 +145,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     });
 
-                    // Remove active class from room tabs
-                    roomTabs.forEach(tab => tab.classList.remove("active"));
+                    // Activate the My Home tab
+                    roomTabs.forEach(tab => {
+                        if (tab.dataset.room === "security-center") {
+                            tab.classList.add("active");
+                        } else {
+                            tab.classList.remove("active");
+                        }
+                    });
+
+                    activeRoomKey = "security-center";
                 }
             } else {
                 // For other buttons (stats, settings), just show visual active selection
@@ -155,19 +168,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // 4. Device Toggle Controllers
     // -------------------------------------------------------------------------
     const toggles = document.querySelectorAll(".toggle-control");
-    
+
     toggles.forEach(toggle => {
         toggle.addEventListener("change", (e) => {
             const targetId = toggle.dataset.target;
             const targetWidget = document.getElementById(targetId);
-            
+
             if (targetWidget) {
                 if (toggle.checked) {
                     targetWidget.classList.add("active");
                 } else {
                     targetWidget.classList.remove("active");
                 }
-                
+
                 // Trigger sub-logic updates for specific widgets
                 updateWidgetStatusText(targetId, toggle.checked);
             }
@@ -197,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
             standby.style.color = isChecked ? "var(--accent-green)" : "var(--accent-blue)";
             standbyText.textContent = isChecked ? "ACTIVE" : "STANDBY";
         }
-        
+
         // Kitchen updates
         else if (id === "widget-kitchen-fridge") {
             document.getElementById("val-fridge-temp").style.opacity = isChecked ? "1" : "0.3";
@@ -209,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (id === "widget-kitchen-purifier") {
             document.getElementById("status-purifier-text").textContent = isChecked ? "Filter Good • Running" : "Standby";
         }
-        
+
         // Bedroom updates
         else if (id === "widget-bedroom-ac") {
             const acWidget = document.getElementById("widget-bedroom-ac");
@@ -228,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (id === "widget-bedroom-speaker") {
             document.getElementById("status-bedroom-audio").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
         }
-        
+
         // Nursery updates
         else if (id === "widget-nursery-humidifier") {
             const humValue = document.querySelector("#widget-nursery-humidifier .sensor-value");
@@ -241,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 soundPlaying = false;
             }
         }
-        
+
         updateSummaryBanner();
     }
 
@@ -255,10 +268,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (document.getElementById("widget-bedroom-lights").classList.contains("active")) activeLights += 4; // represent grouping
         if (document.getElementById("widget-nursery-lights").classList.contains("active")) activeLights += 5;
         if (document.getElementById("widget-nursery-nightlight").classList.contains("active")) activeLights += 3;
-        
+
         const lightsBanner = document.getElementById("banner-lights-status");
         lightsBanner.textContent = activeLights > 0 ? `${activeLights} Lights On` : "All Lights Off";
-        
+
         // Calculate climate summary
         let climateActive = false;
         let temps = [];
@@ -270,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
             climateActive = true;
             temps.push(parseFloat(document.getElementById("val-bedroom-ac").textContent));
         }
-        
+
         const climateBanner = document.getElementById("banner-climate-status");
         if (climateActive && temps.length > 0) {
             const avg = (temps.reduce((a, b) => a + b, 0) / temps.length).toFixed(1);
@@ -289,10 +302,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Map value to angle / stroke-dashoffset
         const ratio = (val - min) / (max - min);
         const offset = CIRCUMFERENCE - (ratio * CIRCUMFERENCE);
-        
+
         progressCircle.style.strokeDashoffset = offset;
         valText.textContent = `${val.toFixed(isOven ? 0 : 1)}${unit}`;
-        
+
         if (statusText && statusMsg) {
             statusText.textContent = statusMsg;
         }
@@ -310,9 +323,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let status = "Cooling";
         if (livingAcVal > 24.0) status = "Heating";
         else if (livingAcVal > 21.0) status = "Fan Only";
-        
+
         setDialProgress(progressLivingAc, valLivingAc, statusLivingAc, livingAcVal, 16.0, 30.0, "°", status);
-        
+
         // Update auxiliary status
         const isAcOn = document.querySelector("#widget-living-ac-switch input").checked;
         if (isAcOn) {
@@ -337,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let status = "Cooling";
         if (bedroomAcVal > 24.0) status = "Heating";
         else if (bedroomAcVal > 22.0) status = "Auto";
-        
+
         setDialProgress(progressBedroomAc, valBedroomAc, statusBedroomAc, bedroomAcVal, 16.0, 30.0, "°", status);
         updateSummaryBanner();
     }
@@ -393,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = svgElement.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
-            
+
             // Calculate angle from 12 o'clock (top) clockwise
             let angle = Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI);
             angle += 90; // Align with top starting point
@@ -448,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     const fridgeSlider = document.getElementById("slider-fridge-set");
     const fridgeLabel = document.getElementById("label-fridge-set");
-    
+
     fridgeSlider.addEventListener("input", (e) => {
         const val = e.target.value;
         fridgeLabel.textContent = `${val}°C`;
@@ -460,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     const kitchenBrightSlider = document.getElementById("slider-kitchen-brightness");
     const kitchenBrightLabel = document.getElementById("val-kitchen-brightness");
-    
+
     kitchenBrightSlider.addEventListener("input", (e) => {
         kitchenBrightLabel.textContent = `${e.target.value}%`;
     });
@@ -487,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Map percentage to HSL Hue
         const hue = percentage * 360;
         const colorString = `hsl(${hue}, 100%, 50%)`;
-        
+
         // Update color indicator color and widget shadow
         colorIndicator.style.backgroundColor = colorString;
         bedroomLightsWidget.style.borderColor = colorString;
@@ -530,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Bedroom Brightness slider
     const bedBrightnessSlider = document.getElementById("slider-bedroom-brightness");
     const bedBrightnessLabel = document.getElementById("label-bedroom-brightness");
-    
+
     bedBrightnessSlider.addEventListener("input", (e) => {
         bedBrightnessLabel.textContent = `${e.target.value}%`;
     });
@@ -678,7 +691,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 callOverlay.classList.add("active");
             }, 10);
-            
+
             callCountdown = 5;
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
             cancelCallBtn.textContent = "Cancel Emergency Call";
@@ -719,7 +732,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const alarmLabel = document.getElementById("lbl-emergency-alarm");
     const alarmDesc = document.getElementById("lbl-alarm-desc");
     let alarmActive = false;
-    
+
     let audioCtx = null;
     let sirenOsc = null;
     let sirenLFO = null;
@@ -733,27 +746,27 @@ document.addEventListener("DOMContentLoaded", () => {
             if (audioCtx.state === "suspended") {
                 audioCtx.resume();
             }
-            
+
             sirenOsc = audioCtx.createOscillator();
             sirenLFO = audioCtx.createOscillator();
             const lfoGain = audioCtx.createGain();
             sirenGain = audioCtx.createGain();
-            
+
             sirenOsc.type = "sawtooth"; // piercing, realistic alarm sound
             sirenOsc.frequency.value = 600; // base frequency
-            
+
             sirenLFO.type = "sine";
             sirenLFO.frequency.value = 1.5; // sweep speed (1.5 Hz)
             lfoGain.gain.value = 150; // sweep range (+/- 150Hz)
-            
+
             sirenGain.gain.setValueAtTime(0, audioCtx.currentTime);
             sirenGain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.1); // fade in to 20% vol
-            
+
             sirenLFO.connect(lfoGain);
             lfoGain.connect(sirenOsc.frequency);
             sirenOsc.connect(sirenGain);
             sirenGain.connect(audioCtx.destination);
-            
+
             sirenOsc.start();
             sirenLFO.start();
         } catch (err) {
@@ -780,7 +793,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (emergencyAlarmBtn && alarmFlashVignette && alarmLabel && alarmDesc) {
         emergencyAlarmBtn.addEventListener("click", () => {
             alarmActive = !alarmActive;
-            
+
             if (alarmActive) {
                 // Activate Flashing Vignette
                 alarmFlashVignette.style.display = "block";
@@ -792,10 +805,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 emergencyAlarmBtn.style.background = "rgba(220, 38, 38, 0.4)";
                 emergencyAlarmBtn.style.borderColor = "#dc2626";
                 emergencyAlarmBtn.style.boxShadow = "0 0 25px rgba(220, 38, 38, 0.6)";
-                
+
                 alarmLabel.textContent = "ALARM ACTIVE (STOP)";
                 alarmDesc.textContent = "House sirens are sounding. Click to silence.";
-                
+
                 // Play Siren
                 startSiren();
             } else {
@@ -812,7 +825,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 alarmLabel.textContent = "TRIGGER ALARM";
                 alarmDesc.textContent = "Sound sirens & flash lights";
-                
+
                 // Stop Siren
                 stopSiren();
             }
