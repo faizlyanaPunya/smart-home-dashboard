@@ -37,12 +37,21 @@
                     </svg>
                 </button>
                 <button class="sidebar-btn" id="btn-nav-settings" title="Settings">
-                    <!-- Settings SVG -->
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
-                    </svg>
-                </button>
+                    <button class="sidebar-btn" id="btn-nav-stats" title="Energy & Stats">
+                        <!-- Chart SVG -->
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                        </svg>
+                    </button>
+                    <button class="sidebar-btn" id="btn-nav-settings" title="Settings"
+                        onclick="window.location.href='settings.html'">
+                        <!-- Settings SVG -->
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                        </svg>
+                    </button>
             </nav>
             <div class="sidebar-profile" title="Payal (Administrator)">
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100"
@@ -133,8 +142,10 @@
                     </div>
 
                     <!-- Air Conditioner / Thermostat Widget (Radial Dial) -->
-                    <div class="widget radial-dial-widget col-3 active" data-glow="blue" id="widget-living-ac" style="flex-direction: column;">
-                        <div class="widget-header" style="width: 100%; position: absolute; top: 20px; left: 20px; right: 20px;">
+                    <div class="widget radial-dial-widget col-3 active" data-glow="blue" id="widget-living-ac"
+                        style="flex-direction: column;">
+                        <div class="widget-header"
+                            style="width: 100%; position: absolute; top: 20px; left: 20px; right: 20px;">
                             <div>
                                 <span class="widget-title">Air Conditioner</span>
                                 <div class="widget-subtitle">LG Inverter</div>
@@ -173,16 +184,26 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding:10px 0;">
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding:10px 0;">
                             <!-- CSS Drawn TV matching the reference image -->
-                            <div style="position: relative; width: 140px; height: 85px; background: #111; border: 2px solid #333; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+                            <div
+                                style="position: relative; width: 140px; height: 85px; background: #111; border: 2px solid #333; border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
                                 <!-- TV Screen -->
-                                <div id="tv-screen-img" style="width: 96%; height: 92%; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.8) 100%); background-color: #000; border-radius: 2px; transition: opacity 0.3s;"></div>
+                                <div id="tv-screen-img"
+                                    style="width: 96%; height: 92%; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.8) 100%); background-color: #000; border-radius: 2px; transition: opacity 0.3s;">
+                                </div>
                                 <!-- TV Legs -->
-                                <div style="position: absolute; bottom: -12px; left: 15px; width: 3px; height: 12px; background: #888; transform: rotate(-25deg);"></div>
-                                <div style="position: absolute; bottom: -12px; right: 15px; width: 3px; height: 12px; background: #888; transform: rotate(25deg);"></div>
+                                <div
+                                    style="position: absolute; bottom: -12px; left: 15px; width: 3px; height: 12px; background: #888; transform: rotate(-25deg);">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: -12px; right: 15px; width: 3px; height: 12px; background: #888; transform: rotate(25deg);">
+                                </div>
                                 <!-- Standby light -->
-                                <div class="tv-glow-indicator" style="position: absolute; bottom: -3px; right: 10px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 5px var(--accent-green);"></div>
+                                <div class="tv-glow-indicator"
+                                    style="position: absolute; bottom: -3px; right: 10px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 5px var(--accent-green);">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -195,38 +216,59 @@
                                 <div class="widget-subtitle" id="status-living-router-text">212 kWh • Connected</div>
                             </div>
                             <label class="switch">
-                                <input type="checkbox" class="toggle-control" checked data-target="widget-living-router">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-living-router">
                                 <span class="slider green"></span>
                             </label>
                         </div>
-                        <div style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding-top: 10px;">
+                        <div
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding-top: 10px;">
                             <!-- CSS Drawn 3D Router -->
                             <div style="position: relative; width: 120px; height: 70px;" id="router-img">
                                 <!-- Antennas -->
-                                <div style="position: absolute; bottom: 25px; left: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(-25deg); transform-origin: bottom; z-index: 1;"></div>
-                                <div style="position: absolute; bottom: 25px; left: 57px; width: 5px; height: 55px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform-origin: bottom; z-index: 1;"></div>
-                                <div style="position: absolute; bottom: 25px; right: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(25deg); transform-origin: bottom; z-index: 1;"></div>
-                                
+                                <div
+                                    style="position: absolute; bottom: 25px; left: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(-25deg); transform-origin: bottom; z-index: 1;">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 25px; left: 57px; width: 5px; height: 55px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform-origin: bottom; z-index: 1;">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 25px; right: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(25deg); transform-origin: bottom; z-index: 1;">
+                                </div>
+
                                 <!-- Router Body -->
-                                <div style="position: absolute; bottom: 0; left: 0; width: 120px; height: 35px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 50% 50% 6px 6px / 100% 100% 15% 15%; box-shadow: 0 15px 20px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.8); z-index: 2;">
+                                <div
+                                    style="position: absolute; bottom: 0; left: 0; width: 120px; height: 35px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 50% 50% 6px 6px / 100% 100% 15% 15%; box-shadow: 0 15px 20px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.8); z-index: 2;">
                                     <!-- Glowing strip -->
-                                    <div style="position: absolute; bottom: 3px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, #ff6b00, #ff00ea, #00c3ff); border-radius: 2px; box-shadow: 0 0 5px rgba(255,255,255,0.5);"></div>
+                                    <div
+                                        style="position: absolute; bottom: 3px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, #ff6b00, #ff00ea, #00c3ff); border-radius: 2px; box-shadow: 0 0 5px rgba(255,255,255,0.5);">
+                                    </div>
                                     <!-- Status Lights -->
-                                    <div style="position: absolute; top: 10px; left: 45px; display: flex; gap: 6px;" id="router-leds">
-                                        <div style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;"></div>
-                                        <div style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;"></div>
-                                        <div style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;"></div>
+                                    <div style="position: absolute; top: 10px; left: 45px; display: flex; gap: 6px;"
+                                        id="router-leds">
+                                        <div
+                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                        </div>
+                                        <div
+                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                        </div>
+                                        <div
+                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Floating WiFi symbol -->
-                                <svg viewBox="0 0 24 24" style="position: absolute; right: -30px; top: -5px; width: 45px; height: 45px; fill: none; stroke: #99d968; stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); z-index: 3;">
-                                    <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0"/>
-                                    <circle cx="12" cy="20" r="1.5" fill="#99d968" stroke="none"/>
+                                <svg viewBox="0 0 24 24"
+                                    style="position: absolute; right: -30px; top: -5px; width: 45px; height: 45px; fill: none; stroke: #99d968; stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); z-index: 3;">
+                                    <path
+                                        d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0" />
+                                    <circle cx="12" cy="20" r="1.5" fill="#99d968" stroke="none" />
                                 </svg>
                             </div>
                         </div>
-                        <div style="text-align: center; font-size: 11px; color: var(--color-text-secondary); margin-top:10px;" id="router-network-info">
+                        <div style="text-align: center; font-size: 11px; color: var(--color-text-secondary); margin-top:10px;"
+                            id="router-network-info">
                             Network: Aura-5G<br>Speed: 850 Mbps
                         </div>
                     </div>
@@ -253,14 +295,17 @@
                             </label>
                         </div>
                         <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
-                            <div id="living-lamp-icon" style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">💡</div>
+                            <div id="living-lamp-icon"
+                                style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                💡</div>
                         </div>
                         <div class="range-container">
                             <div class="range-label">
                                 <span>Brightness</span>
                                 <span id="label-living-lamp">100%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="100" class="range-slider" id="slider-living-lamp">
+                            <input type="range" min="0" max="100" value="100" class="range-slider"
+                                id="slider-living-lamp">
                         </div>
                     </div>
 
@@ -269,16 +314,21 @@
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Speaker</span>
-                                <div class="widget-subtitle" id="status-living-speaker-text">Amazon Echo • Lofi Beats</div>
+                                <div class="widget-subtitle" id="status-living-speaker-text">Amazon Echo • Lofi Beats
+                                </div>
                             </div>
                             <label class="switch">
-                                <input type="checkbox" class="toggle-control" checked data-target="widget-living-speaker">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-living-speaker">
                                 <span class="slider"></span>
                             </label>
                         </div>
                         <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
-                            <div style="width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(from 0deg, #00a2ff, #00e272, #00a2ff); animation: spin 4s linear infinite; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 20px rgba(0,162,255,0.3);" id="speaker-disc">
-                                <div style="width: 60px; height: 60px; border-radius: 50%; background: #0c0e12; display:flex; align-items:center; justify-content:center; font-size:24px;">🎵</div>
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(from 0deg, #00a2ff, #00e272, #00a2ff); animation: spin 4s linear infinite; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 20px rgba(0,162,255,0.3);"
+                                id="speaker-disc">
+                                <div
+                                    style="width: 60px; height: 60px; border-radius: 50%; background: #0c0e12; display:flex; align-items:center; justify-content:center; font-size:24px;">
+                                    🎵</div>
                             </div>
                         </div>
                         <div class="range-container">
@@ -286,7 +336,8 @@
                                 <span>Volume</span>
                                 <span id="label-living-volume">40%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="40" class="range-slider" id="slider-living-volume">
+                            <input type="range" min="0" max="100" value="40" class="range-slider"
+                                id="slider-living-volume">
                         </div>
                     </div>
                 </section>
@@ -318,11 +369,14 @@
                             <!-- Removed forecast to make space for emergency buttons -->
                         </div>
                         <!-- Emergency Controls -->
-                        <div style="display: flex; gap: 8px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
-                            <button id="btn-kitchen-fire-alarm" class="emergency-btn" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.15); color: #ff6b6b; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; transition: all 0.3s; font-size: 12px;">
+                        <div
+                            style="display: flex; gap: 8px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <button id="btn-kitchen-fire-alarm" class="emergency-btn"
+                                style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.15); color: #ff6b6b; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; transition: all 0.3s; font-size: 12px;">
                                 🚒 Fire Alarm
                             </button>
-                            <button class="emergency-btn" onclick="alert('Activating Sprinklers! 💦')" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.15); color: #60a5fa; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; transition: all 0.3s; font-size: 12px;">
+                            <button class="emergency-btn" onclick="alert('Activating Sprinklers! 💦')"
+                                style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.15); color: #60a5fa; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: bold; transition: all 0.3s; font-size: 12px;">
                                 💦 Sprinklers
                             </button>
                         </div>
@@ -340,36 +394,49 @@
                                 <span class="slider orange"></span>
                             </label>
                         </div>
-                        <div style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
                             <!-- Oven CSS Image -->
-                            <div style="width: 90px; height: 90px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center;" id="oven-img-container">
-                                <div style="width: 90%; height: 15px; margin-top: 5px; display: flex; justify-content: space-evenly; align-items: center;">
+                            <div style="width: 90px; height: 90px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center;"
+                                id="oven-img-container">
+                                <div
+                                    style="width: 90%; height: 15px; margin-top: 5px; display: flex; justify-content: space-evenly; align-items: center;">
                                     <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
                                     <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
                                     <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
                                     <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
                                 </div>
-                                <div id="oven-glow-window" style="width: 80%; flex-grow: 1; margin: 5px 0 10px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
-                                    <div style="position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.6);"></div>
+                                <div id="oven-glow-window"
+                                    style="width: 80%; flex-grow: 1; margin: 5px 0 10px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
+                                    <div
+                                        style="position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.6);">
+                                    </div>
                                 </div>
-                                <div style="position: absolute; top: 30px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);"></div>
+                                <div
+                                    style="position: absolute; top: 30px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                </div>
                             </div>
 
                             <!-- Small Radial Dial -->
                             <div class="dial-container" style="width: 100px; height: 100px; margin: 0;">
-                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-kitchen-oven" style="width: 100%; height: 100%;">
+                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-kitchen-oven"
+                                    style="width: 100%; height: 100%;">
                                     <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12" id="progress-kitchen-oven" style="stroke: var(--accent-orange);"></circle>
+                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
+                                        id="progress-kitchen-oven" style="stroke: var(--accent-orange);"></circle>
                                 </svg>
                                 <div class="dial-info">
                                     <span class="dial-value" id="val-kitchen-oven" style="font-size: 24px;">180°</span>
-                                    <span class="dial-status" id="status-kitchen-oven" style="color: var(--accent-orange); font-size: 10px;">Ready</span>
+                                    <span class="dial-status" id="status-kitchen-oven"
+                                        style="color: var(--accent-orange); font-size: 10px;">Ready</span>
                                 </div>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 5px;">
-                            <button class="dial-btn" id="btn-kitchen-oven-down" style="width: 32px; height: 32px; font-size: 18px;">-</button>
-                            <button class="dial-btn" id="btn-kitchen-oven-up" style="width: 32px; height: 32px; font-size: 18px;">+</button>
+                            <button class="dial-btn" id="btn-kitchen-oven-down"
+                                style="width: 32px; height: 32px; font-size: 18px;">-</button>
+                            <button class="dial-btn" id="btn-kitchen-oven-up"
+                                style="width: 32px; height: 32px; font-size: 18px;">+</button>
                         </div>
                     </div>
 
@@ -459,17 +526,24 @@
 
                         <!-- Kitchen Brightness iOS Style Slider -->
                         <div style="margin-top: 12px;">
-                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
                                 <span>Kitchen Brightness</span>
                                 <span id="val-kitchen-brightness">52%</span>
                             </div>
-                            <div style="width: 100%; height: 44px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                            <div
+                                style="width: 100%; height: 44px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
                                 <!-- Fill bar -->
-                                <div id="ios-brightness-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 52%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;"></div>
+                                <div id="ios-brightness-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 52%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                </div>
                                 <!-- Icon -->
-                                <div style="position: absolute; left: 14px; z-index: 2; pointer-events: none; font-size: 20px; color: #555; mix-blend-mode: difference;">☀️</div>
+                                <div
+                                    style="position: absolute; left: 14px; z-index: 2; pointer-events: none; font-size: 20px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
                                 <!-- Input Range -->
-                                <input type="range" min="0" max="100" value="52" id="slider-kitchen-brightness" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                <input type="range" min="0" max="100" value="52" id="slider-kitchen-brightness"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
@@ -490,34 +564,46 @@
                                 <span class="slider blue"></span>
                             </label>
                         </div>
-                        <div style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
                             <!-- AC CSS Image -->
-                            <div style="width: 100px; height: 35px; background: #fff; border-radius: 6px; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;" id="bedroom-ac-img">
+                            <div style="width: 100px; height: 35px; background: #fff; border-radius: 6px; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;"
+                                id="bedroom-ac-img">
                                 <!-- Flap -->
-                                <div style="position: absolute; bottom: 2px; width: 90%; height: 3px; background: #ccc; border-radius: 2px;"></div>
+                                <div
+                                    style="position: absolute; bottom: 2px; width: 90%; height: 3px; background: #ccc; border-radius: 2px;">
+                                </div>
                                 <!-- Vents -->
-                                <div style="position: absolute; right: 10px; top: 10px; width: 20px; height: 10px; display: flex; flex-direction: column; gap: 2px;">
+                                <div
+                                    style="position: absolute; right: 10px; top: 10px; width: 20px; height: 10px; display: flex; flex-direction: column; gap: 2px;">
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                 </div>
-                                <div id="ac-led-bedroom" style="position: absolute; left: 10px; top: 10px; font-size: 10px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 5px #00d4ff;">21°</div>
+                                <div id="ac-led-bedroom"
+                                    style="position: absolute; left: 10px; top: 10px; font-size: 10px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 5px #00d4ff;">
+                                    21°</div>
                             </div>
                             <!-- Small Radial Dial -->
                             <div class="dial-container" style="width: 90px; height: 90px; margin: 0;">
-                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-bedroom-ac" style="width: 100%; height: 100%;">
+                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-bedroom-ac"
+                                    style="width: 100%; height: 100%;">
                                     <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12" id="progress-bedroom-ac"></circle>
+                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
+                                        id="progress-bedroom-ac"></circle>
                                 </svg>
                                 <div class="dial-info">
                                     <span class="dial-value" id="val-bedroom-ac" style="font-size: 22px;">21.0°</span>
-                                    <span class="dial-status" id="status-bedroom-ac" style="font-size: 10px;">Cooling</span>
+                                    <span class="dial-status" id="status-bedroom-ac"
+                                        style="font-size: 10px;">Cooling</span>
                                 </div>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 5px;">
-                            <button class="dial-btn" id="btn-bedroom-ac-down" style="width: 32px; height: 32px; font-size: 18px;">-</button>
-                            <button class="dial-btn" id="btn-bedroom-ac-up" style="width: 32px; height: 32px; font-size: 18px;">+</button>
+                            <button class="dial-btn" id="btn-bedroom-ac-down"
+                                style="width: 32px; height: 32px; font-size: 18px;">-</button>
+                            <button class="dial-btn" id="btn-bedroom-ac-up"
+                                style="width: 32px; height: 32px; font-size: 18px;">+</button>
                         </div>
                     </div>
 
@@ -551,7 +637,8 @@
 
                     <!-- Bedroom Camera -->
                     <div class="widget camera-widget col-6">
-                        <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera" style="height: 100%; object-fit: cover;">
+                        <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera"
+                            style="height: 100%; object-fit: cover;">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 03: Bedroom</span>
                             <span class="camera-live">LIVE</span>
@@ -566,14 +653,19 @@
                                 <div class="widget-subtitle" id="status-bedroom-audio">Amazon Echo</div>
                             </div>
                             <label class="switch">
-                                <input type="checkbox" class="toggle-control" checked data-target="widget-bedroom-speaker">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-bedroom-speaker">
                                 <span class="slider purple"></span>
                             </label>
                         </div>
-                        <div style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px;">
+                        <div
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px;">
                             <!-- CSS Drawn Disc -->
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(from 0deg, #ff007f, #7f00ff, #00d4ff, #ff007f); display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(127, 0, 255, 0.4); animation: spin 4s linear infinite;" id="speaker-disc-bedroom">
-                                <div style="width: 20px; height: 20px; background: #222; border-radius: 50%; border: 2px solid #111;"></div>
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(from 0deg, #ff007f, #7f00ff, #00d4ff, #ff007f); display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(127, 0, 255, 0.4); animation: spin 4s linear infinite;"
+                                id="speaker-disc-bedroom">
+                                <div
+                                    style="width: 20px; height: 20px; background: #222; border-radius: 50%; border: 2px solid #111;">
+                                </div>
                             </div>
                         </div>
                         <div class="range-container" style="margin-top: 10px; width: 80%; align-self: center;">
@@ -581,7 +673,8 @@
                                 <span>Volume</span>
                                 <span id="label-bedroom-volume">40%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="40" class="range-slider" id="slider-bedroom-volume">
+                            <input type="range" min="0" max="100" value="40" class="range-slider"
+                                id="slider-bedroom-volume">
                         </div>
                     </div>
 
@@ -597,19 +690,28 @@
                                 <span class="slider blue"></span>
                             </label>
                         </div>
-                        <div style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top: 10px;">
+                        <div
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top: 10px;">
                             <!-- CSS Drawn TV -->
                             <div style="position: relative; width: 100px; height: 60px;" id="tv-img-bedroom">
                                 <!-- TV Screen Base -->
-                                <div style="position: absolute; bottom: 10px; left: 0; width: 100px; height: 50px; background: #111; border-radius: 4px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+                                <div
+                                    style="position: absolute; bottom: 10px; left: 0; width: 100px; height: 50px; background: #111; border-radius: 4px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
                                     <!-- Screen Inner -->
-                                    <div style="width: 96%; height: 92%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 2px; position: relative;" id="tv-screen-bedroom">
-                                        <div class="tv-glow-indicator" style="position: absolute; bottom: 2px; right: 2px; width: 4px; height: 4px; background: red; border-radius: 50%; box-shadow: 0 0 5px red; opacity: 0;"></div>
+                                    <div style="width: 96%; height: 92%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 2px; position: relative;"
+                                        id="tv-screen-bedroom">
+                                        <div class="tv-glow-indicator"
+                                            style="position: absolute; bottom: 2px; right: 2px; width: 4px; height: 4px; background: red; border-radius: 50%; box-shadow: 0 0 5px red; opacity: 0;">
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- TV Legs -->
-                                <div style="position: absolute; bottom: 0; left: 15px; width: 3px; height: 12px; background: #555; transform: rotate(-20deg);"></div>
-                                <div style="position: absolute; bottom: 0; right: 15px; width: 3px; height: 12px; background: #555; transform: rotate(20deg);"></div>
+                                <div
+                                    style="position: absolute; bottom: 0; left: 15px; width: 3px; height: 12px; background: #555; transform: rotate(-20deg);">
+                                </div>
+                                <div
+                                    style="position: absolute; bottom: 0; right: 15px; width: 3px; height: 12px; background: #555; transform: rotate(20deg);">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -743,46 +845,52 @@
                         <div class="widget active" data-glow="yellow"
                             style="min-height:90px; padding:12px; width:100%; flex-direction:column; justify-content:center; gap: 12px; transition: all 0.3s ease;"
                             id="widget-nursery-lights">
-                            
+
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
                                 <div style="display:flex; flex-direction:column;">
                                     <span style="font-size:13px; font-weight:600;">Ceiling Lights</span>
-                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Warm White</div>
+                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Warm
+                                        White</div>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" id="toggle-nursery-light1" checked>
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
-                            
+
                             <div style="display:flex; align-items:center; width:100%; gap: 10px;">
                                 <div class="range-container" style="flex-grow:1; margin: 0;">
-                                    <input type="range" min="0" max="100" value="30" class="range-slider" id="slider-nursery-light1">
+                                    <input type="range" min="0" max="100" value="30" class="range-slider"
+                                        id="slider-nursery-light1">
                                 </div>
-                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;" id="val-nursery-light1">30%</span>
+                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;"
+                                    id="val-nursery-light1">30%</span>
                             </div>
                         </div>
 
                         <div class="widget active" data-glow="yellow"
                             style="min-height:90px; padding:12px; width:100%; flex-direction:column; justify-content:center; gap: 12px; transition: all 0.3s ease;"
                             id="widget-nursery-nightlight">
-                            
+
                             <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
                                 <div style="display:flex; flex-direction:column;">
                                     <span style="font-size:13px; font-weight:600;">Nightlight LED</span>
-                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Soft Amber</div>
+                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Soft
+                                        Amber</div>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" id="toggle-nursery-light2" checked>
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
-                            
+
                             <div style="display:flex; align-items:center; width:100%; gap: 10px;">
                                 <div class="range-container" style="flex-grow:1; margin: 0;">
-                                    <input type="range" min="0" max="100" value="65" class="range-slider" id="slider-nursery-light2">
+                                    <input type="range" min="0" max="100" value="65" class="range-slider"
+                                        id="slider-nursery-light2">
                                 </div>
-                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;" id="val-nursery-light2">65%</span>
+                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;"
+                                    id="val-nursery-light2">65%</span>
                             </div>
                         </div>
                     </div>
@@ -808,7 +916,8 @@
                             <div class="dial-container">
                                 <svg class="dial-svg" viewBox="0 0 140 140">
                                     <circle class="dial-track" cx="70" cy="70" r="60"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60" style="stroke-dashoffset: 150;"></circle>
+                                    <circle class="dial-progress" cx="70" cy="70" r="60"
+                                        style="stroke-dashoffset: 150;"></circle>
                                 </svg>
                                 <div class="dial-info">
                                     <span class="dial-value" id="val-washer-time">45m</span>
@@ -836,12 +945,14 @@
                             <div class="dial-container">
                                 <svg class="dial-svg" viewBox="0 0 140 140">
                                     <circle class="dial-track" cx="70" cy="70" r="60"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60" style="stroke: var(--accent-orange); stroke-dashoffset: 220;"></circle>
+                                    <circle class="dial-progress" cx="70" cy="70" r="60"
+                                        style="stroke: var(--accent-orange); stroke-dashoffset: 220;"></circle>
                                 </svg>
                                 <div class="dial-info">
                                     <span class="dial-value" id="val-dryer-time">1h 20m</span>
                                     <span class="dial-unit">Left</span>
-                                    <span class="dial-status" id="status-dryer-mode" style="color: var(--accent-orange);">Drying</span>
+                                    <span class="dial-status" id="status-dryer-mode"
+                                        style="color: var(--accent-orange);">Drying</span>
                                 </div>
                             </div>
                         </div>
@@ -880,7 +991,9 @@
 
                     <!-- Laundry Camera -->
                     <div class="widget camera-widget col-6">
-                        <img class="camera-feed" src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laundry Camera" style="object-position: center;">
+                        <img class="camera-feed"
+                            src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Laundry Camera" style="object-position: center;">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 05: Laundry</span>
                             <span class="camera-live">LIVE</span>
@@ -898,34 +1011,45 @@
 
                         <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; width:100%;">
                             <!-- Smart Iron -->
-                            <div class="widget active" data-glow="orange" style="min-height:90px; padding:12px; flex-direction:row; align-items:center;" id="widget-laundry-iron">
+                            <div class="widget active" data-glow="orange"
+                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
+                                id="widget-laundry-iron">
                                 <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
                                     <span style="font-size:13px; font-weight:600;">Smart Iron</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);" id="status-iron-text">Heating • 150°C</span>
+                                    <span style="font-size:10px; color:var(--color-text-secondary);"
+                                        id="status-iron-text">Heating • 150°C</span>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked data-target="widget-laundry-iron">
+                                    <input type="checkbox" class="toggle-control" checked
+                                        data-target="widget-laundry-iron">
                                     <span class="slider orange"></span>
                                 </label>
                             </div>
 
                             <!-- Steam Closet -->
-                            <div class="widget active" data-glow="blue" style="min-height:90px; padding:12px; flex-direction:row; align-items:center;" id="widget-laundry-steam">
+                            <div class="widget active" data-glow="blue"
+                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
+                                id="widget-laundry-steam">
                                 <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
                                     <span style="font-size:13px; font-weight:600;">Steam Closet</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);" id="status-steam-text">Refresh Cycle • On</span>
+                                    <span style="font-size:10px; color:var(--color-text-secondary);"
+                                        id="status-steam-text">Refresh Cycle • On</span>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked data-target="widget-laundry-steam">
+                                    <input type="checkbox" class="toggle-control" checked
+                                        data-target="widget-laundry-steam">
                                     <span class="slider"></span>
                                 </label>
                             </div>
 
                             <!-- Fold Assistant Robot -->
-                            <div class="widget" data-glow="yellow" style="min-height:90px; padding:12px; flex-direction:row; align-items:center;" id="widget-laundry-robot">
+                            <div class="widget" data-glow="yellow"
+                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
+                                id="widget-laundry-robot">
                                 <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
                                     <span style="font-size:13px; font-weight:600;">Fold Assistant</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);" id="status-robot-text">Docked • 100%</span>
+                                    <span style="font-size:10px; color:var(--color-text-secondary);"
+                                        id="status-robot-text">Docked • 100%</span>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" class="toggle-control" data-target="widget-laundry-robot">
@@ -934,13 +1058,17 @@
                             </div>
 
                             <!-- Smart Lighting -->
-                            <div class="widget active" data-glow="yellow" style="min-height:90px; padding:12px; flex-direction:row; align-items:center;" id="widget-laundry-light">
+                            <div class="widget active" data-glow="yellow"
+                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
+                                id="widget-laundry-light">
                                 <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
                                     <span style="font-size:13px; font-weight:600;">Overhead Light</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);" id="status-laundry-light-text">Bright White • On</span>
+                                    <span style="font-size:10px; color:var(--color-text-secondary);"
+                                        id="status-laundry-light-text">Bright White • On</span>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked data-target="widget-laundry-light">
+                                    <input type="checkbox" class="toggle-control" checked
+                                        data-target="widget-laundry-light">
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
@@ -952,7 +1080,8 @@
                 <section class="room-view active" id="view-security-center">
 
                     <!-- 6-CCTV Camera Grid -->
-                    <div class="col-8" style="display:grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap:10px;">
+                    <div class="col-8"
+                        style="display:grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap:10px;">
 
                         <!-- Camera 1: Front Door -->
                         <div class="widget camera-widget">
@@ -1011,7 +1140,8 @@
                     </div>
 
                     <!-- Right Panel: Emergency + Doors + Who's Home + Activity -->
-                    <div class="widget col-4" style="justify-content: flex-start; gap:10px; background: rgba(220, 38, 38, 0.04); border-color: rgba(220, 38, 38, 0.2); align-self: stretch; min-height: 0;">
+                    <div class="widget col-4"
+                        style="justify-content: flex-start; gap:10px; background: rgba(220, 38, 38, 0.04); border-color: rgba(220, 38, 38, 0.2); align-self: stretch; min-height: 0;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title" style="color: #ff4a4a;">🚨 Security & Emergency</span>
@@ -1021,33 +1151,53 @@
 
                         <!-- Emergency Buttons -->
                         <div style="display:flex; flex-direction:column; gap:7px; width:100%;">
-                            <button id="btn-emergency-call" class="widget" style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220,38,38,0.4); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
-                                <div style="width:34px; height:34px; border-radius:50%; background:#dc2626; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
-                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.57a1.003 1.003 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.79 6.32 8.6 5.13 8.6 3.9c0-.55-.45-1-1-1H3.99c-.56 0-1 .45-1 1 0 13.25 10.75 24 24 24 .55 0 1-.45 1-1v-3.51c0-.55-.45-1-1-1z"/></svg>
+                            <button id="btn-emergency-call" class="widget"
+                                style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220,38,38,0.4); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
+                                <div
+                                    style="width:34px; height:34px; border-radius:50%; background:#dc2626; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;">
+                                        <path
+                                            d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.57a1.003 1.003 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.79 6.32 8.6 5.13 8.6 3.9c0-.55-.45-1-1-1H3.99c-.56 0-1 .45-1 1 0 13.25 10.75 24 24 24 .55 0 1-.45 1-1v-3.51c0-.55-.45-1-1-1z" />
+                                    </svg>
                                 </div>
                                 <div style="display:flex; flex-direction:column; text-align:left;">
                                     <span style="font-size:13px; font-weight:700; color:white;">CALL 911</span>
-                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);">Trigger direct dispatch</span>
+                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);">Trigger direct
+                                        dispatch</span>
                                 </div>
                             </button>
 
-                            <button id="btn-emergency-alarm" class="widget" style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245,158,11,0.4); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
-                                <div style="width:34px; height:34px; border-radius:50%; background:#f59e0b; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
-                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                            <button id="btn-emergency-alarm" class="widget"
+                                style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245,158,11,0.4); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
+                                <div
+                                    style="width:34px; height:34px; border-radius:50%; background:#f59e0b; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;">
+                                        <path
+                                            d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+                                    </svg>
                                 </div>
                                 <div style="display:flex; flex-direction:column; text-align:left;">
-                                    <span style="font-size:13px; font-weight:700; color:white;" id="lbl-emergency-alarm">TRIGGER ALARM</span>
-                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);" id="lbl-alarm-desc">Sound sirens & flash lights</span>
+                                    <span style="font-size:13px; font-weight:700; color:white;"
+                                        id="lbl-emergency-alarm">TRIGGER ALARM</span>
+                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);" id="lbl-alarm-desc">Sound
+                                        sirens & flash lights</span>
                                 </div>
                             </button>
 
-                            <button id="btn-emergency-gate" class="widget" style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(0,226,114,0.1); border: 1px solid rgba(0,226,114,0.3); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
-                                <div style="width:34px; height:34px; border-radius:50%; background:rgba(0,226,114,0.2); display:flex; align-items:center; justify-content:center; color:var(--accent-green); transition: background 0.3s;" id="icon-emergency-gate-bg">
-                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-9 12H5v-2h5v2zm0-4H5v-2h5v2zm0-4H5V6h5v2zm9 8h-5v-2h5v2zm0-4h-5v-2h5v2zm0-4h-5V6h5v2z"/></svg>
+                            <button id="btn-emergency-gate" class="widget"
+                                style="min-height:52px; padding:8px 12px; flex-direction:row; align-items:center; background: rgba(0,226,114,0.1); border: 1px solid rgba(0,226,114,0.3); border-radius:12px; cursor:pointer; width:100%; justify-content:flex-start; gap:10px;">
+                                <div style="width:34px; height:34px; border-radius:50%; background:rgba(0,226,114,0.2); display:flex; align-items:center; justify-content:center; color:var(--accent-green); transition: background 0.3s;"
+                                    id="icon-emergency-gate-bg">
+                                    <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;">
+                                        <path
+                                            d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-9 12H5v-2h5v2zm0-4H5v-2h5v2zm0-4H5V6h5v2zm9 8h-5v-2h5v2zm0-4h-5v-2h5v2zm0-4h-5V6h5v2z" />
+                                    </svg>
                                 </div>
                                 <div style="display:flex; flex-direction:column; text-align:left;">
-                                    <span style="font-size:13px; font-weight:700; color:white;" id="lbl-emergency-gate">MAIN GATE: CLOSED</span>
-                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);" id="lbl-gate-desc">Click to Open Gate</span>
+                                    <span style="font-size:13px; font-weight:700; color:white;"
+                                        id="lbl-emergency-gate">MAIN GATE: CLOSED</span>
+                                    <span style="font-size:10px; color:rgba(255,255,255,0.7);" id="lbl-gate-desc">Click
+                                        to Open Gate</span>
                                 </div>
                             </button>
                         </div>
@@ -1056,23 +1206,29 @@
 
                         <!-- Doors & Windows -->
                         <div style="width:100%;">
-                            <div style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">🔒 Doors & Windows</div>
+                            <div
+                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                🔒 Doors & Windows</div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
                                 <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Front Door</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--accent-green);" id="status-door-front">🔒 Locked</span>
+                                    <span style="font-size:11px; font-weight:700; color:var(--accent-green);"
+                                        id="status-door-front">🔒 Locked</span>
                                 </div>
                                 <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Back Door</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--accent-green);" id="status-door-back">🔒 Locked</span>
+                                    <span style="font-size:11px; font-weight:700; color:var(--accent-green);"
+                                        id="status-door-back">🔒 Locked</span>
                                 </div>
                                 <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Living Room</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--accent-yellow);" id="status-door-living">🔓 Open</span>
+                                    <span style="font-size:11px; font-weight:700; color:var(--accent-yellow);"
+                                        id="status-door-living">🔓 Open</span>
                                 </div>
                                 <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Bedroom</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--color-text-secondary);" id="status-door-bedroom">🚪 Closed</span>
+                                    <span style="font-size:11px; font-weight:700; color:var(--color-text-secondary);"
+                                        id="status-door-bedroom">🚪 Closed</span>
                                 </div>
                             </div>
                         </div>
@@ -1081,24 +1237,35 @@
 
                         <!-- Who's Home -->
                         <div style="width:100%;">
-                            <div style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">👤 Who's Home</div>
+                            <div
+                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                👤 Who's Home</div>
                             <div style="display:flex; flex-direction:column; gap:5px;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#8b5cf6); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">P</div>
+                                    <div
+                                        style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#8b5cf6); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">
+                                        P</div>
                                     <span style="font-size:11px; font-weight:600;">Payal</span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-left:auto;"></span>
+                                    <span
+                                        style="width:6px; height:6px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-left:auto;"></span>
                                     <span style="font-size:9px; color:var(--accent-green);">Home</span>
                                 </div>
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#f59e0b,#ef4444); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">R</div>
+                                    <div
+                                        style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#f59e0b,#ef4444); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">
+                                        R</div>
                                     <span style="font-size:11px; font-weight:600;">Raj</span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-left:auto;"></span>
+                                    <span
+                                        style="width:6px; height:6px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-left:auto;"></span>
                                     <span style="font-size:9px; color:var(--accent-green);">Home</span>
                                 </div>
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <div style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#64748b,#475569); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">A</div>
+                                    <div
+                                        style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#64748b,#475569); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:white; flex-shrink:0;">
+                                        A</div>
                                     <span style="font-size:11px; font-weight:600;">Anya</span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.25); display:inline-block; margin-left:auto;"></span>
+                                    <span
+                                        style="width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.25); display:inline-block; margin-left:auto;"></span>
                                     <span style="font-size:9px; color:var(--color-text-muted);">Away</span>
                                 </div>
                             </div>
@@ -1108,19 +1275,35 @@
 
                         <!-- Recent Activity -->
                         <div style="width:100%;">
-                            <div style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">🕐 Recent Activity</div>
+                            <div
+                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                🕐 Recent Activity</div>
                             <div style="display:flex; flex-direction:column;">
-                                <div style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                                    <span style="width:5px; height:5px; border-radius:50%; background:var(--accent-yellow); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div><div style="font-size:10px; font-weight:600;">Motion detected — Driveway</div><div style="font-size:9px; color:var(--color-text-muted);">11:19 PM</div></div>
+                                <div
+                                    style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <span
+                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-yellow); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
+                                    <div>
+                                        <div style="font-size:10px; font-weight:600;">Motion detected — Driveway</div>
+                                        <div style="font-size:9px; color:var(--color-text-muted);">11:19 PM</div>
+                                    </div>
                                 </div>
-                                <div style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                                    <span style="width:5px; height:5px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div><div style="font-size:10px; font-weight:600;">Front door locked by Payal</div><div style="font-size:9px; color:var(--color-text-muted);">10:47 PM</div></div>
+                                <div
+                                    style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <span
+                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
+                                    <div>
+                                        <div style="font-size:10px; font-weight:600;">Front door locked by Payal</div>
+                                        <div style="font-size:9px; color:var(--color-text-muted);">10:47 PM</div>
+                                    </div>
                                 </div>
                                 <div style="display:flex; gap:7px; align-items:flex-start; padding:4px 0;">
-                                    <span style="width:5px; height:5px; border-radius:50%; background:var(--accent-blue); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div><div style="font-size:10px; font-weight:600;">Thermostat set to 20°C</div><div style="font-size:9px; color:var(--color-text-muted);">09:30 PM</div></div>
+                                    <span
+                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-blue); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
+                                    <div>
+                                        <div style="font-size:10px; font-weight:600;">Thermostat set to 20°C</div>
+                                        <div style="font-size:9px; color:var(--color-text-muted);">09:30 PM</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1129,26 +1312,38 @@
 
                         <!-- Air Quality + Energy compact 2x2 -->
                         <div style="width:100%;">
-                            <div style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">🌬️ Air &nbsp;·&nbsp; ⚡ Energy</div>
+                            <div
+                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                🌬️ Air &nbsp;·&nbsp; ⚡ Energy</div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-                                <div class="widget-sm" style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
+                                <div class="widget-sm"
+                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Temperature</span>
                                     <span style="font-size:14px; font-weight:700;" id="aq-temp">18.3°C</span>
                                     <span style="font-size:9px; color:var(--accent-green);">Normal</span>
                                 </div>
-                                <div class="widget-sm" style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
+                                <div class="widget-sm"
+                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Humidity</span>
                                     <span style="font-size:14px; font-weight:700;" id="aq-humidity">62%</span>
-                                    <div style="width:100%; height:3px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:2px;"><div style="width:62%; height:100%; background:var(--accent-blue); border-radius:2px;"></div></div>
+                                    <div
+                                        style="width:100%; height:3px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:2px;">
+                                        <div
+                                            style="width:62%; height:100%; background:var(--accent-blue); border-radius:2px;">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="widget-sm" style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
+                                <div class="widget-sm"
+                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Used Today</span>
                                     <span style="font-size:14px; font-weight:700;" id="energy-used">18.7 kWh</span>
                                     <span style="font-size:9px; color:var(--accent-green);">-8% vs yesterday</span>
                                 </div>
-                                <div class="widget-sm" style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
+                                <div class="widget-sm"
+                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Est. Cost</span>
-                                    <span style="font-size:14px; font-weight:700; color:var(--accent-yellow);" id="energy-cost">RM 4.20</span>
+                                    <span style="font-size:14px; font-weight:700; color:var(--accent-yellow);"
+                                        id="energy-cost">RM 4.20</span>
                                     <span style="font-size:9px; color:var(--color-text-muted);">Monthly: RM 126</span>
                                 </div>
                             </div>
@@ -1194,7 +1389,8 @@
                 style="width:72px; height:72px; border-radius:50%; background:#dc2626; display:flex; align-items:center; justify-content:center; color:white; font-size:32px; animation:pulse 1.5s infinite; margin-bottom:24px;">
                 📞
             </div>
-            <h2 id="emergency-call-title" style="font-size:24px; font-weight:700; margin-bottom:8px; color:white;">Calling 911</h2>
+            <h2 id="emergency-call-title" style="font-size:24px; font-weight:700; margin-bottom:8px; color:white;">
+                Calling 911</h2>
             <div style="color:var(--color-text-secondary); font-size:14px; margin-bottom:32px;"
                 id="emergency-call-status">Connecting to local dispatch...</div>
             <button id="btn-cancel-emergency-call"
