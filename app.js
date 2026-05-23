@@ -119,23 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.classList.add("active");
 
                 if (btn.id === "btn-nav-home") {
-                    // Switch back to the active room view
-                    roomViews.forEach(view => {
-                        if (view.id === `view-${activeRoomKey}`) {
-                            view.classList.add("active");
-                        } else {
-                            view.classList.remove("active");
-                        }
-                    });
-
-                    // Restore active room tab highlight
-                    roomTabs.forEach(tab => {
-                        if (tab.dataset.room === activeRoomKey) {
-                            tab.classList.add("active");
-                        } else {
-                            tab.classList.remove("active");
-                        }
-                    });
+                    changeRoom("living-room");
                 } else if (btn.id === "btn-nav-cameras") {
                     // Show security center / My Home
                     roomViews.forEach(view => {
