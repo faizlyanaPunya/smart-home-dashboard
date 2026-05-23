@@ -102,7 +102,7 @@ body {
 /* Floating Left Sidebar */
 .sidebar {
     width: 72px;
-    height: calc(100% - 48px);
+    height: auto;
     background: var(--glass-bg);
     border: var(--glass-border);
     backdrop-filter: var(--glass-blur);
@@ -135,7 +135,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    flex-grow: 1;
 }
 
 .sidebar-btn {
@@ -1134,6 +1133,10 @@ input:checked + .slider:before {
     100% { transform: scale(1); opacity: 1; }
 }
 
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 /* Responsiveness Settings */
 @media (max-width: 1200px) {
     .col-3 { grid-column: span 4; }

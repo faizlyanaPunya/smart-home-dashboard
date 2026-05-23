@@ -43,7 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "living-room": "assets/living_bg.png",
         "kitchen": "assets/kitchen_bg.png",
         "bedroom": "assets/bedroom_bg.png",
-        "nursery": "assets/nursery_bg.png"
+        "nursery": "assets/nursery_bg.png",
+        "laundry": "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
     };
 
     function changeRoom(roomKey) {
@@ -118,23 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.classList.add("active");
 
                 if (btn.id === "btn-nav-home") {
-                    // Switch back to the active room view
-                    roomViews.forEach(view => {
-                        if (view.id === `view-${activeRoomKey}`) {
-                            view.classList.add("active");
-                        } else {
-                            view.classList.remove("active");
-                        }
-                    });
-
-                    // Restore active room tab highlight
-                    roomTabs.forEach(tab => {
-                        if (tab.dataset.room === activeRoomKey) {
-                            tab.classList.add("active");
-                        } else {
-                            tab.classList.remove("active");
-                        }
-                    });
+                    changeRoom("living-room");
                 } else if (btn.id === "btn-nav-cameras") {
                     // Show security center / My Home
                     roomViews.forEach(view => {
@@ -189,26 +174,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateWidgetStatusText(id, isChecked) {
         // Living Room updates
-        if (id === "widget-living-ac-switch") {
-            document.getElementById("status-living-ac-text").textContent = isChecked ? "LG, 16°C • Active" : "Inactive";
-            const valLivingAcWidget = document.getElementById("widget-living-ac");
-            if (isChecked) valLivingAcWidget.classList.add("active");
-            else valLivingAcWidget.classList.remove("active");
+        if (id === "widget-living-ac") {
+            const statusAc = document.getElementById("status-living-ac");
+            if (isChecked) {
+                let status = "Cooling";
+                if (typeof livingAcVal !== 'undefined') {
+                    if (livingAcVal > 24.0) status = "Heating";
+                    else if (livingAcVal > 21.0) status = "Fan Only";
+                }
+                statusAc.textContent = status;
+            } else {
+                statusAc.textContent = "Off";
+            }
         }
         else if (id === "widget-living-lamp") {
-            document.getElementById("status-living-lamp-text").textContent = isChecked ? "Color Warm • On" : "Off";
+            const lampSliderVal = document.getElementById("slider-living-lamp").value;
+            const lampIcon = document.getElementById("living-lamp-icon");
+            if (isChecked) {
+                const glowOpacity = lampSliderVal / 100;
+                const glowSize = 20 + (lampSliderVal / 100 * 40);
+                lampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
+                lampIcon.style.opacity = Math.max(0.2, glowOpacity);
+            } else {
+                lampIcon.style.textShadow = "none";
+                lampIcon.style.opacity = "0.2";
+            }
         }
         else if (id === "widget-living-router") {
             document.getElementById("status-living-router-text").textContent = isChecked ? "212 kWh • Connected" : "Disconnected";
+            const routerNetworkInfo = document.getElementById("router-network-info");
+            const routerLeds = document.getElementById("router-leds");
+            const routerImg = document.getElementById("router-img");
+            if (routerNetworkInfo) routerNetworkInfo.style.opacity = isChecked ? "1" : "0.3";
+            if (routerLeds) routerLeds.style.opacity = isChecked ? "1" : "0";
+            if (routerImg) routerImg.style.opacity = isChecked ? "1" : "0.5";
         }
         else if (id === "widget-living-speaker") {
-            document.getElementById("status-living-speaker-text").textContent = isChecked ? "Amazon Echo • On" : "Off";
+            document.getElementById("status-living-speaker-text").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
+            const speakerDisc = document.getElementById("speaker-disc");
+            if (speakerDisc) speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
         }
         else if (id === "widget-living-tv") {
             const standby = document.querySelector("#widget-living-tv .tv-glow-indicator");
-            const standbyText = standby.querySelector("span:last-child");
-            standby.style.color = isChecked ? "var(--accent-green)" : "var(--accent-blue)";
-            standbyText.textContent = isChecked ? "ACTIVE" : "STANDBY";
+            if (standby) {
+                standby.style.background = isChecked ? "var(--accent-green)" : "var(--accent-orange)";
+                standby.style.boxShadow = isChecked ? "0 0 5px var(--accent-green)" : "0 0 5px var(--accent-orange)";
+            }
+            const tvScreen = document.getElementById("tv-screen-img");
+            if (tvScreen) tvScreen.style.opacity = isChecked ? "1" : "0.1";
         }
 
         // Kitchen updates
@@ -222,24 +235,50 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (id === "widget-kitchen-purifier") {
             document.getElementById("status-purifier-text").textContent = isChecked ? "Filter Good • Running" : "Standby";
         }
+        else if (id === "widget-kitchen-oven") {
+            const statusText = document.getElementById("status-kitchen-oven-text");
+            const ovenGlow = document.getElementById("oven-glow-window");
+            const dialInfo = document.getElementById("status-kitchen-oven");
+            if (isChecked) {
+                statusText.textContent = `Preheating • ${document.getElementById("val-kitchen-oven").textContent}C`;
+                if (ovenGlow) ovenGlow.style.opacity = "1";
+                if (dialInfo) dialInfo.textContent = "Preheating";
+            } else {
+                statusText.textContent = "Off";
+                if (ovenGlow) ovenGlow.style.opacity = "0.2";
+                if (dialInfo) dialInfo.textContent = "Off";
+            }
+        }
 
         // Bedroom updates
         else if (id === "widget-bedroom-ac") {
-            const acWidget = document.getElementById("widget-bedroom-ac");
-            if (isChecked) acWidget.classList.add("active");
-            else acWidget.classList.remove("active");
-        }
-        else if (id === "widget-bedroom-purifier") {
-            const aqiValue = document.querySelector("#widget-bedroom-purifier .sensor-value");
-            aqiValue.textContent = isChecked ? "12" : "--";
-            document.getElementById("val-purifier-alarm").textContent = isChecked ? "1 Alarm" : "None";
-            document.getElementById("val-fan-speed").textContent = isChecked ? "Auto" : "Off";
+            const statusText = document.getElementById("status-bedroom-ac");
+            const acLed = document.getElementById("ac-led-bedroom");
+            if (isChecked) {
+                statusText.textContent = "Cooling";
+                if (acLed) acLed.style.opacity = "1";
+            } else {
+                statusText.textContent = "Off";
+                if (acLed) acLed.style.opacity = "0";
+            }
         }
         else if (id === "widget-bedroom-lights") {
+            // Unused since we removed data-target to stop the parent widget from turning off entirely
             document.getElementById("bedroom-color-bar").style.opacity = isChecked ? "1" : "0.3";
         }
         else if (id === "widget-bedroom-speaker") {
             document.getElementById("status-bedroom-audio").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
+            const speakerDisc = document.getElementById("speaker-disc-bedroom");
+            if (speakerDisc) {
+                speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
+                speakerDisc.style.opacity = isChecked ? "1" : "0.5";
+            }
+        }
+        else if (id === "widget-bedroom-tv") {
+            const tvChannel = document.getElementById("val-tv-channel");
+            document.getElementById("status-bedroom-tv-text").textContent = isChecked ? `Netflix • ${tvChannel ? tvChannel.textContent : "CH 04"}` : "Inactive";
+            const tvScreen = document.querySelector("#tv-screen-bedroom .tv-glow-indicator");
+            if (tvScreen) tvScreen.style.opacity = isChecked ? "0" : "1";
         }
 
         // Nursery updates
@@ -255,6 +294,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        // Laundry updates
+        else if (id === "widget-laundry-washer") {
+            document.getElementById("status-washer-mode").textContent = isChecked ? "Washing" : "Off";
+            document.getElementById("val-washer-time").textContent = isChecked ? "45m" : "--";
+            document.querySelector("#widget-laundry-washer .dial-progress").style.strokeDashoffset = isChecked ? 150 : 377;
+        }
+        else if (id === "widget-laundry-dryer") {
+            document.getElementById("status-dryer-mode").textContent = isChecked ? "Drying" : "Off";
+            document.getElementById("val-dryer-time").textContent = isChecked ? "1h 20m" : "--";
+            document.querySelector("#widget-laundry-dryer .dial-progress").style.strokeDashoffset = isChecked ? 220 : 377;
+        }
+        else if (id === "widget-laundry-iron") {
+            document.getElementById("status-iron-text").textContent = isChecked ? "Heating • 150°C" : "Off";
+        }
+        else if (id === "widget-laundry-steam") {
+            document.getElementById("status-steam-text").textContent = isChecked ? "Refresh Cycle • On" : "Off";
+        }
+        else if (id === "widget-laundry-robot") {
+            document.getElementById("status-robot-text").textContent = isChecked ? "Active • Folding" : "Docked • 100%";
+        }
+        else if (id === "widget-laundry-light") {
+            document.getElementById("status-laundry-light-text").textContent = isChecked ? "Bright White • On" : "Off";
+        }
+
         updateSummaryBanner();
     }
 
@@ -268,6 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (document.getElementById("widget-bedroom-lights").classList.contains("active")) activeLights += 4; // represent grouping
         if (document.getElementById("widget-nursery-lights").classList.contains("active")) activeLights += 5;
         if (document.getElementById("widget-nursery-nightlight").classList.contains("active")) activeLights += 3;
+        if (document.getElementById("widget-laundry-light") && document.getElementById("widget-laundry-light").classList.contains("active")) activeLights += 2;
 
         const lightsBanner = document.getElementById("banner-lights-status");
         lightsBanner.textContent = activeLights > 0 ? `${activeLights} Lights On` : "All Lights Off";
@@ -275,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calculate climate summary
         let climateActive = false;
         let temps = [];
-        if (document.getElementById("widget-living-ac-switch").classList.contains("active")) {
+        if (document.getElementById("widget-living-ac").classList.contains("active")) {
             climateActive = true;
             temps.push(parseFloat(document.getElementById("val-living-ac").textContent));
         }
@@ -326,11 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setDialProgress(progressLivingAc, valLivingAc, statusLivingAc, livingAcVal, 16.0, 30.0, "°", status);
 
-        // Update auxiliary status
-        const isAcOn = document.querySelector("#widget-living-ac-switch input").checked;
-        if (isAcOn) {
-            document.getElementById("status-living-ac-text").textContent = `LG, ${livingAcVal.toFixed(1)}°C • Active`;
-        }
+        // Update Summary
         updateSummaryBanner();
     }
     updateLivingAc(livingAcVal);
@@ -473,21 +533,52 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     const kitchenBrightSlider = document.getElementById("slider-kitchen-brightness");
     const kitchenBrightLabel = document.getElementById("val-kitchen-brightness");
+    const iosBrightnessFill = document.getElementById("ios-brightness-fill");
 
     kitchenBrightSlider.addEventListener("input", (e) => {
         kitchenBrightLabel.textContent = `${e.target.value}%`;
+        if (iosBrightnessFill) {
+            iosBrightnessFill.style.width = `${e.target.value}%`;
+        }
     });
 
     // -------------------------------------------------------------------------
-    // 10. Bedroom Color Bar Picker
+    // 10. Bedroom Color Bar Picker & Smart Lights Toggle
     // -------------------------------------------------------------------------
     const colorBar = document.getElementById("bedroom-color-bar");
     const colorIndicator = document.getElementById("bedroom-color-indicator");
     const bedroomLightsWidget = document.getElementById("widget-bedroom-lights");
+    const toggleBedroomLights = document.getElementById("toggle-bedroom-lights");
+    const bedBrightnessSlider = document.getElementById("slider-bedroom-brightness");
+    const bedBrightnessLabel = document.getElementById("label-bedroom-brightness");
+    
     let isColorDragging = false;
 
+    if (toggleBedroomLights) {
+        toggleBedroomLights.addEventListener("change", (e) => {
+            const isChecked = e.target.checked;
+            if (colorBar) colorBar.style.opacity = isChecked ? "1" : "0.3";
+            if (bedroomLightsWidget) {
+                if (!isChecked) {
+                    bedroomLightsWidget.style.boxShadow = "none";
+                    bedroomLightsWidget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                } else {
+                    // Trigger slider event to restore brightness glow
+                    if (bedBrightnessSlider) {
+                        bedBrightnessSlider.dispatchEvent(new Event("input"));
+                    } else {
+                        // Fallback
+                        const currentColor = colorIndicator ? colorIndicator.style.backgroundColor : 'hsl(60, 100%, 50%)';
+                        bedroomLightsWidget.style.borderColor = currentColor || 'var(--accent-yellow)';
+                        bedroomLightsWidget.style.boxShadow = `0 0 20px ${currentColor || 'var(--accent-yellow)'}`;
+                    }
+                }
+            }
+        });
+    }
+
     function handleColorPick(clientX) {
-        const isLightsOn = document.querySelector("#widget-bedroom-lights input").checked;
+        const isLightsOn = toggleBedroomLights ? toggleBedroomLights.checked : true;
         if (!isLightsOn) return;
 
         const rect = colorBar.getBoundingClientRect();
@@ -501,10 +592,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const hue = percentage * 360;
         const colorString = `hsl(${hue}, 100%, 50%)`;
 
-        // Update color indicator color and widget shadow
+        // Update color indicator color and widget shadow based on brightness
         colorIndicator.style.backgroundColor = colorString;
-        bedroomLightsWidget.style.borderColor = colorString;
-        bedroomLightsWidget.style.boxShadow = `0 0 20px ${colorString}`;
+        
+        // Let the brightness slider update the shadow
+        if (bedBrightnessSlider) {
+            bedBrightnessSlider.dispatchEvent(new Event("input"));
+        } else {
+            bedroomLightsWidget.style.borderColor = colorString;
+            bedroomLightsWidget.style.boxShadow = `0 0 20px ${colorString}`;
+        }
     }
 
     colorBar.addEventListener("mousedown", (e) => {
@@ -541,12 +638,148 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Bedroom Brightness slider
-    const bedBrightnessSlider = document.getElementById("slider-bedroom-brightness");
-    const bedBrightnessLabel = document.getElementById("label-bedroom-brightness");
+    if (bedBrightnessSlider) {
+        bedBrightnessSlider.addEventListener("input", (e) => {
+            const val = e.target.value;
+            bedBrightnessLabel.textContent = `${val}%`;
+            
+            const isLightsOn = toggleBedroomLights ? toggleBedroomLights.checked : true;
+            if (isLightsOn && bedroomLightsWidget) {
+                const opacity = val / 100;
+                let currentColor = 'rgb(255, 204, 0)'; // default yellow
+                if (colorIndicator && colorIndicator.style.backgroundColor) {
+                    currentColor = colorIndicator.style.backgroundColor;
+                }
+                
+                bedroomLightsWidget.style.borderColor = currentColor;
+                
+                // Adjust shadow based on brightness
+                let shadowColor;
+                if (currentColor.startsWith('hsl')) {
+                    // Extract hue
+                    const hslMatch = currentColor.match(/\d+(\.\d+)?/g);
+                    if (hslMatch && hslMatch.length >= 3) {
+                        shadowColor = `hsla(${hslMatch[0]}, ${hslMatch[1]}%, ${hslMatch[2]}%, ${Math.max(0.2, opacity)})`;
+                    }
+                } else if (currentColor.startsWith('rgb')) {
+                    shadowColor = currentColor.replace('rgb', 'rgba').replace(')', `, ${Math.max(0.2, opacity)})`);
+                }
+                
+                if (shadowColor) {
+                    const glowSize = 10 + (opacity * 30); // 10px to 40px
+                    bedroomLightsWidget.style.boxShadow = `0 0 ${glowSize}px ${shadowColor}`;
+                }
+            }
+        });
+    }
 
-    bedBrightnessSlider.addEventListener("input", (e) => {
-        bedBrightnessLabel.textContent = `${e.target.value}%`;
-    });
+    // -------------------------------------------------------------------------
+    // 10.5. Nursery Lighting Control
+    // -------------------------------------------------------------------------
+    
+    // Ceiling Light
+    const toggleNurseryLight1 = document.getElementById("toggle-nursery-light1");
+    const sliderNurseryLight1 = document.getElementById("slider-nursery-light1");
+    const labelNurseryLight1 = document.getElementById("val-nursery-light1");
+    const widgetNurseryLight1 = document.getElementById("widget-nursery-lights");
+    
+    function updateNurseryLight1() {
+        if (!sliderNurseryLight1 || !labelNurseryLight1 || !widgetNurseryLight1) return;
+        const val = sliderNurseryLight1.value;
+        labelNurseryLight1.textContent = `${val}%`;
+        
+        const isOn = toggleNurseryLight1 ? toggleNurseryLight1.checked : true;
+        if (!isOn) {
+            widgetNurseryLight1.style.boxShadow = "none";
+            widgetNurseryLight1.style.borderColor = "rgba(255, 255, 255, 0.1)";
+        } else {
+            const opacity = val / 100;
+            const glowSize = 10 + (opacity * 30); // 10px to 40px
+            // Warm white (hsl(45, 100%, 70%))
+            widgetNurseryLight1.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+            widgetNurseryLight1.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+        }
+    }
+    
+    if (toggleNurseryLight1) toggleNurseryLight1.addEventListener("change", updateNurseryLight1);
+    if (sliderNurseryLight1) sliderNurseryLight1.addEventListener("input", updateNurseryLight1);
+
+    // Nightlight
+    const toggleNurseryLight2 = document.getElementById("toggle-nursery-light2");
+    const sliderNurseryLight2 = document.getElementById("slider-nursery-light2");
+    const labelNurseryLight2 = document.getElementById("val-nursery-light2");
+    const widgetNurseryLight2 = document.getElementById("widget-nursery-nightlight");
+    
+    function updateNurseryLight2() {
+        if (!sliderNurseryLight2 || !labelNurseryLight2 || !widgetNurseryLight2) return;
+        const val = sliderNurseryLight2.value;
+        labelNurseryLight2.textContent = `${val}%`;
+        
+        const isOn = toggleNurseryLight2 ? toggleNurseryLight2.checked : true;
+        if (!isOn) {
+            widgetNurseryLight2.style.boxShadow = "none";
+            widgetNurseryLight2.style.borderColor = "rgba(255, 255, 255, 0.1)";
+        } else {
+            const opacity = val / 100;
+            const glowSize = 10 + (opacity * 30); // 10px to 40px
+            // Soft Amber (hsl(30, 100%, 50%))
+            widgetNurseryLight2.style.borderColor = `hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
+            widgetNurseryLight2.style.boxShadow = `0 0 ${glowSize}px hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
+        }
+    }
+
+    if (toggleNurseryLight2) toggleNurseryLight2.addEventListener("change", updateNurseryLight2);
+    if (sliderNurseryLight2) sliderNurseryLight2.addEventListener("input", updateNurseryLight2);
+    
+    // Initialize Nursery Lights on load
+    updateNurseryLight1();
+    updateNurseryLight2();
+
+    // -------------------------------------------------------------------------
+    // Living Room New Widgets Logic
+    // -------------------------------------------------------------------------
+    
+    // Living Room Lamp Brightness slider
+    const livingLampSlider = document.getElementById("slider-living-lamp");
+    if (livingLampSlider) {
+        const livingLampLabel = document.getElementById("label-living-lamp");
+        const livingLampIcon = document.getElementById("living-lamp-icon");
+        livingLampSlider.addEventListener("input", (e) => {
+            const val = e.target.value;
+            livingLampLabel.textContent = `${val}%`;
+            const isLampActive = document.querySelector("#widget-living-lamp input").checked;
+            if (isLampActive) {
+                const glowOpacity = val / 100;
+                const glowSize = 20 + (val / 100 * 40); // 20px to 60px
+                livingLampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
+                livingLampIcon.style.opacity = Math.max(0.2, glowOpacity);
+            }
+        });
+    }
+
+    // Living Room Volume slider
+    const livingVolumeSlider = document.getElementById("slider-living-volume");
+    if (livingVolumeSlider) {
+        const livingVolumeLabel = document.getElementById("label-living-volume");
+        livingVolumeSlider.addEventListener("input", (e) => {
+            livingVolumeLabel.textContent = `${e.target.value}%`;
+        });
+    }
+
+    // Living Room TV modes
+    const tvModes = document.querySelectorAll("#widget-living-tv .mode-btn");
+    const tvDisplay = document.querySelector("#widget-living-tv .tv-channel-display");
+    if (tvModes && tvDisplay) {
+        tvModes.forEach(btn => {
+            btn.addEventListener("click", () => {
+                tvModes.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                if (btn.dataset.mode === "netflix") tvDisplay.textContent = "Netflix";
+                else if (btn.dataset.mode === "youtube") tvDisplay.textContent = "YouTube";
+                else if (btn.dataset.mode === "hdmi1") tvDisplay.textContent = "HDMI 1";
+            });
+        });
+    }
 
     // -------------------------------------------------------------------------
     // 11. Bedroom Media & TV volume selector
@@ -651,6 +884,16 @@ document.addEventListener("DOMContentLoaded", () => {
         humLabel.textContent = `${e.target.value}%`;
     });
 
+    // Laundry Fan
+    const laundryFanSlider = document.getElementById("slider-laundry-fan");
+    if (laundryFanSlider) {
+        const laundryFanLabel = document.getElementById("label-laundry-fan");
+        const fanModes = ["Off", "Low", "Medium", "High"];
+        laundryFanSlider.addEventListener("input", (e) => {
+            laundryFanLabel.textContent = fanModes[e.target.value];
+        });
+    }
+
     // -------------------------------------------------------------------------
     // 13. Simulated Sensors Oscillation (Aesthetic Polish)
     // -------------------------------------------------------------------------
@@ -675,41 +918,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
 
     // -------------------------------------------------------------------------
-    // 14. Emergency Call 911 Simulation
+    // 14. Emergency Call 911 / Fire Alarm Simulation
     // -------------------------------------------------------------------------
     const emergencyCallBtn = document.getElementById("btn-emergency-call");
+    const kitchenFireAlarmBtn = document.getElementById("btn-kitchen-fire-alarm");
     const cancelCallBtn = document.getElementById("btn-cancel-emergency-call");
     const callOverlay = document.getElementById("emergency-call-overlay");
     const callStatusText = document.getElementById("emergency-call-status");
+    const callTitle = document.getElementById("emergency-call-title");
+    const callIcon = document.getElementById("emergency-call-icon");
+
     let callTimer = null;
     let callCountdown = 5;
 
-    if (emergencyCallBtn && cancelCallBtn && callOverlay && callStatusText) {
-        emergencyCallBtn.addEventListener("click", () => {
-            // Show overlay with transition
-            callOverlay.style.display = "flex";
-            setTimeout(() => {
-                callOverlay.classList.add("active");
-            }, 10);
+    function startEmergencySequence(type) {
+        // Show overlay with transition
+        callOverlay.style.display = "flex";
+        setTimeout(() => {
+            callOverlay.classList.add("active");
+        }, 10);
 
-            callCountdown = 5;
+        callCountdown = 5;
+        
+        if (type === "911") {
+            if (callTitle) callTitle.textContent = "Calling 911";
+            if (callIcon) callIcon.textContent = "📞";
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
-            cancelCallBtn.textContent = "Cancel Emergency Call";
-            cancelCallBtn.style.background = "#dc2626";
+        } else if (type === "fire") {
+            if (callTitle) callTitle.textContent = "Calling Fire Dept";
+            if (callIcon) callIcon.textContent = "🚒";
+            callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
+        }
 
-            callTimer = setInterval(() => {
-                callCountdown--;
-                if (callCountdown > 0) {
-                    callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
-                } else {
-                    clearInterval(callTimer);
-                    callTimer = null;
+        cancelCallBtn.textContent = "Cancel Emergency Call";
+        cancelCallBtn.style.background = "#dc2626";
+
+        callTimer = setInterval(() => {
+            callCountdown--;
+            if (callCountdown > 0) {
+                callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
+            } else {
+                clearInterval(callTimer);
+                callTimer = null;
+                if (type === "911") {
                     callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">CONNECTED TO DISPATCH</span><br><br>Help is on the way to 1042 Aura Way. Stay on the line.`;
-                    cancelCallBtn.textContent = "Hang Up";
-                    cancelCallBtn.style.background = "#4b5563"; // gray hang up
+                } else if (type === "fire") {
+                    callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">FIRE DEPT DISPATCHED</span><br><br>Engines are en route to 1042 Aura Way. Evacuate immediately.`;
                 }
-            }, 1000);
-        });
+                cancelCallBtn.textContent = "Hang Up";
+                cancelCallBtn.style.background = "#4b5563"; // gray hang up
+            }
+        }, 1000);
+    }
+
+    if (cancelCallBtn && callOverlay && callStatusText) {
+        if (emergencyCallBtn) {
+            emergencyCallBtn.addEventListener("click", () => startEmergencySequence("911"));
+        }
+        
+        if (kitchenFireAlarmBtn) {
+            kitchenFireAlarmBtn.addEventListener("click", () => startEmergencySequence("fire"));
+        }
 
         cancelCallBtn.addEventListener("click", () => {
             if (callTimer) {
