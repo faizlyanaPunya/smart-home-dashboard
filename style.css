@@ -1299,7 +1299,8 @@ input:checked+.slider:before {
 
 #view-kitchen.active,
 #view-bedroom.active,
-#view-nursery.active {
+#view-nursery.active,
+#view-laundry.active {
     height: 100%;
     min-height: 0;
     overflow: hidden;
@@ -1334,13 +1335,15 @@ input:checked+.slider:before {
     /* Override widget minimum heights in bedroom, kitchen, and nursery to allow shrinking */
     #view-kitchen .widget,
     #view-bedroom .widget,
-    #view-nursery .widget {
+    #view-nursery .widget,
+    #view-laundry .widget {
         min-height: unset !important;
         padding: 12px 16px;
     }
 
     #view-kitchen .flex-col-gap,
-    #view-nursery .flex-col-gap {
+    #view-nursery .flex-col-gap,
+    #view-laundry .flex-col-gap {
         gap: 8px;
     }
 
@@ -1396,7 +1399,8 @@ input:checked+.slider:before {
     }
 
     #view-kitchen .flex-col-gap,
-    #view-nursery .flex-col-gap {
+    #view-nursery .flex-col-gap,
+    #view-laundry .flex-col-gap {
         gap: 6px;
     }
 

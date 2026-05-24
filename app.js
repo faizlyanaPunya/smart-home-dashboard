@@ -526,6 +526,9 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (id === "widget-laundry-light") {
             updateLaundryLight();
         }
+        else if (id === "widget-laundry-fan") {
+            updateLaundryFanState();
+        }
 
         updateSummaryBanner();
     }
@@ -1353,6 +1356,73 @@ document.addEventListener("DOMContentLoaded", () => {
             laundryFanLabel.textContent = fanModes[e.target.value];
         });
     }
+
+    // Laundry Smart Fan Control
+    const laundryFanBtns = document.querySelectorAll("#laundry-fan-speed-container .segment-btn-ver");
+    const laundryFanIcon = document.getElementById("laundry-fan-icon-container");
+    const statusLaundryFanText = document.getElementById("status-laundry-fan-text");
+    const toggleLaundryFan = document.getElementById("toggle-laundry-fan");
+    
+    let currentFanSpeed = "MED"; // Default speed
+
+    function updateLaundryFanState() {
+        if (!statusLaundryFanText) return;
+        const isOn = toggleLaundryFan ? toggleLaundryFan.checked : true;
+
+        if (!isOn) {
+            statusLaundryFanText.textContent = "Off";
+            if (laundryFanIcon) {
+                laundryFanIcon.style.animation = "none";
+                laundryFanIcon.style.opacity = "0.3";
+            }
+            laundryFanBtns.forEach(btn => {
+                btn.style.opacity = "0.4";
+                btn.style.pointerEvents = "none";
+            });
+        } else {
+            statusLaundryFanText.textContent = `Active • ${currentFanSpeed}`;
+            if (laundryFanIcon) {
+                laundryFanIcon.style.opacity = "1";
+            }
+            laundryFanBtns.forEach(btn => {
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "";
+                if (btn.dataset.speed === currentFanSpeed) {
+                    btn.classList.add("active");
+                    btn.style.borderColor = "var(--accent-blue)";
+                    btn.style.background = "rgba(0, 168, 255, 0.15)";
+                    btn.style.color = "var(--accent-blue)";
+                } else {
+                    btn.classList.remove("active");
+                    btn.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    btn.style.background = "rgba(255, 255, 255, 0.05)";
+                    btn.style.color = "#fff";
+                }
+            });
+
+            if (laundryFanIcon) {
+                // Set animation duration based on speed
+                let speedDuration = "1.5s";
+                if (currentFanSpeed === "HIGH") speedDuration = "0.6s";
+                else if (currentFanSpeed === "LOW") speedDuration = "3s";
+
+                laundryFanIcon.style.animation = `spin ${speedDuration} linear infinite`;
+            }
+        }
+    }
+
+    laundryFanBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const isOn = toggleLaundryFan ? toggleLaundryFan.checked : true;
+            if (!isOn) return;
+
+            currentFanSpeed = btn.dataset.speed;
+            updateLaundryFanState();
+        });
+    });
+
+    // Run initial update
+    updateLaundryFanState();
     // Laundry Overhead Light Control
     const toggleLaundryLight = document.getElementById("toggle-laundry-light");
     const sliderLaundryLight = document.getElementById("slider-laundry-light");
