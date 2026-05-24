@@ -944,9 +944,118 @@
 
                 <!-- ------------------- LAUNDRY VIEW ------------------- -->
                 <section class="room-view" id="view-laundry">
+ <!-- Laundry Overhead Light Widget -->
+                    <div class="widget col-4 active" data-glow="yellow" id="widget-laundry-light"
+                        style="padding: 10px 12px 10px 12px;">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Overhead Light</span>
+                                <div class="widget-subtitle" id="status-laundry-light-text">Bright White</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" id="toggle-laundry-light" checked
+                                    data-target="widget-laundry-light">
+                                <span class="slider yellow"></span>
+                            </label>
+                        </div>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 12px 0;">
+                            <div style="font-size: 38px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                id="laundry-light-icon">💡</div>
+                        </div>
+                        <div class="range-container"
+                            style="margin-top: 8px; margin-bottom: 2px; width: 96%; align-self: center;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="val-laundry-light">80%</span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <div id="ios-laundry-light-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                </div>
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
+                                <input type="range" min="0" max="100" value="80" id="slider-laundry-light"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Smart Fan Widget -->
+                    <div class="widget col-4 active" data-glow="blue" id="widget-laundry-fan">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Smart Fan</span>
+                                <div class="widget-subtitle" id="status-laundry-fan-text">Fan State: Medium Speed</div>
+                            </div>
+                            <div class="widget-icon-container" id="icon-laundry-fan">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 3l1.3 4.2c.7.2 1.3 1.7 1.3 3.1 0 1.1-.3 2.1-.8 3 .4-.1.8-.1 1.2-.1 2.2 0 4 1.8 4 4s-1.8 4-4 4c-.6 0-1.2-.2-1.7-.5-.2.4-.4.8-.7 1.2L12 21l-1.3-4.2c-.7-.2-1.3-1.7-1.3-3.1 0-1.1.3-2.1.8-3-.4.1-.8.1-1.2.1-2.2 0-4-1.8-4-4s1.8-4 4-4c.6 0 1.2.2 1.7.5.2-.4.4-.8.7-1.2L12 3z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div style="margin-top: 18px;">
+                            <div class="range-label">
+                                <span>Current Mode</span>
+                                <span id="label-laundry-fan">Medium</span>
+                            </div>
+                            <div class="segmented-control-wrapper" style="margin-top: 10px;">
+                                <div class="segmented-control" data-fan-target="laundry-fan">
+                                    <button class="segment-btn" data-speed="OFF">OFF</button>
+                                    <button class="segment-btn" data-speed="LOW">LOW</button>
+                                    <button class="segment-btn active" data-speed="MED">MED</button>
+                                    <button class="segment-btn" data-speed="HIGH">HIGH</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Laundry Environment -->
+                    <div class="widget col-4 active" data-glow="green" id="widget-laundry-sensors">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Laundry Environment</span>
+                                <div class="widget-subtitle">Sensors & Supplies</div>
+                            </div>
+                        </div>
+                        <div class="sensors-grid" style="margin-top: 10px;">
+                            <div class="sensor-block">
+                                <span class="sensor-value" style="color: var(--accent-green);">Safe</span>
+                                <span class="sensor-label">Leak Alert</span>
+                            </div>
+                            <div class="sensor-block">
+                                <span class="sensor-value">24°C</span>
+                                <span class="sensor-label">Room Temp</span>
+                            </div>
+                            <div class="sensor-block">
+                                <span class="sensor-value">58%</span>
+                                <span class="sensor-label">Humidity</span>
+                            </div>
+                            <div class="sensor-block">
+                                <span class="sensor-value">65%</span>
+                                <span class="sensor-label">Detergent</span>
+                                <span style="font-size: 10px; color: var(--color-text-secondary); margin-top: 4px;">Liquid 65% • Pods 42%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Laundry Camera -->
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed"
+                            src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Laundry Camera" style="object-position: center;">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 05: Laundry</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
 
                     <!-- Smart Washer Widget -->
-                    <div class="widget col-4 active" data-glow="blue" id="widget-laundry-washer"
+                    <div class="widget col-3 active" data-glow="blue" id="widget-laundry-washer"
                         style="padding: 12px 14px;">
                         <div class="widget-header">
                             <div>
@@ -963,10 +1072,8 @@
                         </div>
                         <div
                             style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
-                            <!-- Washer Chassis -->
                             <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
                                 id="washer-chassis">
-                                <!-- Top control line -->
                                 <div
                                     style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
                                     <span
@@ -975,10 +1082,8 @@
                                     <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-blue); box-shadow: 0 0 5px var(--accent-blue); transition: all 0.3s;"
                                         id="washer-led"></div>
                                 </div>
-                                <!-- Door ring -->
                                 <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 168, 255, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
                                     id="washer-door-ring">
-                                    <!-- Inner glass/image -->
                                     <img src="assets/smart_washer.png" alt="Smart Washer"
                                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 8s linear infinite;"
                                         id="img-laundry-washer">
@@ -988,7 +1093,7 @@
                     </div>
 
                     <!-- Smart Dryer Widget -->
-                    <div class="widget col-4 active" data-glow="orange" id="widget-laundry-dryer"
+                    <div class="widget col-3 active" data-glow="orange" id="widget-laundry-dryer"
                         style="padding: 12px 14px;">
                         <div class="widget-header">
                             <div>
@@ -1005,10 +1110,8 @@
                         </div>
                         <div
                             style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
-                            <!-- Dryer Chassis -->
                             <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
                                 id="dryer-chassis">
-                                <!-- Top control line -->
                                 <div
                                     style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
                                     <span
@@ -1017,101 +1120,12 @@
                                     <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-orange); box-shadow: 0 0 5px var(--accent-orange); transition: all 0.3s;"
                                         id="dryer-led"></div>
                                 </div>
-                                <!-- Door ring -->
                                 <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-orange); box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
                                     id="dryer-door-ring">
-                                    <!-- Inner glass/image -->
                                     <img src="assets/smart_dryer.png" alt="Smart Dryer"
                                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 12s linear infinite reverse;"
                                         id="img-laundry-dryer">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sensors Widget -->
-                    <div class="widget col-4 active" data-glow="green" id="widget-laundry-sensors">
-                        <div class="widget-header">
-                            <div>
-                                <span class="widget-title">Laundry Environment</span>
-                                <div class="widget-subtitle">Sensors & Supplies</div>
-                            </div>
-                        </div>
-                        <div class="sensors-grid" style="margin-top: 10px;">
-                            <div class="sensor-block">
-                                <span class="sensor-value" style="color: var(--accent-green);">Dry</span>
-                                <span class="sensor-label">Leak Sensor</span>
-                            </div>
-                            <div class="sensor-block">
-                                <span class="sensor-value">65%</span>
-                                <span class="sensor-label">Humidity</span>
-                            </div>
-                            <div class="sensor-block">
-                                <span class="sensor-value">42%</span>
-                                <span class="sensor-label">Detergent</span>
-                            </div>
-                        </div>
-                        <div class="range-container" style="margin-top: 20px;">
-                            <div class="range-label">
-                                <span>Ventilation Fan</span>
-                                <span id="label-laundry-fan">Medium</span>
-                            </div>
-                            <input type="range" min="0" max="3" value="2" class="range-slider" id="slider-laundry-fan">
-                        </div>
-                    </div>
-
-                    <!-- Laundry Camera -->
-                    <div class="widget camera-widget col-6"
-                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                        <img class="camera-feed"
-                            src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Laundry Camera" style="object-position: center;">
-                        <div class="camera-overlay">
-                            <span class="camera-name">Camera 05: Laundry</span>
-                            <span class="camera-live">LIVE</span>
-                        </div>
-                    </div>
-
-                    <!-- Laundry Overhead Light Widget -->
-                    <div class="widget col-6 active" data-glow="yellow" id="widget-laundry-light"
-                        style="padding: 10px 12px 10px 12px;">
-                        <div class="widget-header">
-                            <div>
-                                <span class="widget-title">Overhead Light</span>
-                                <div class="widget-subtitle" id="status-laundry-light-text">Bright White</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" class="toggle-control" id="toggle-laundry-light" checked
-                                    data-target="widget-laundry-light">
-                                <span class="slider yellow"></span>
-                            </label>
-                        </div>
-                        <div
-                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 12px 0;">
-                            <!-- Icon (Bulb) -->
-                            <div style="font-size: 38px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                id="laundry-light-icon">💡</div>
-                        </div>
-                        <div class="range-container"
-                            style="margin-top: 8px; margin-bottom: 2px; width: 96%; align-self: center;">
-                            <div
-                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
-                                <span>Brightness</span>
-                                <span id="val-laundry-light">80%</span>
-                            </div>
-                            <div
-                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
-                                <!-- Fill bar -->
-                                <div id="ios-laundry-light-fill"
-                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
-                                </div>
-                                <!-- Icon -->
-                                <div
-                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
-                                    ☀️</div>
-                                <!-- Input Range -->
-                                <input type="range" min="0" max="100" value="80" id="slider-laundry-light"
-                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
