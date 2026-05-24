@@ -266,7 +266,8 @@
                     </div>
 
                     <!-- Camera Widget -->
-                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 01: Living Room</span>
@@ -375,7 +376,7 @@
                     </div>
 
                     <!-- Smart Oven Widget -->
-                    <div class="widget col-4 active" data-glow="orange" id="widget-kitchen-oven">
+                    <div class="widget col-4 active" data-glow="orange" id="widget-kitchen-oven" style="padding: 15px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Oven</span>
@@ -387,30 +388,30 @@
                             </label>
                         </div>
                         <div
-                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
-                            <!-- Oven CSS Image -->
-                            <div style="width: 90px; height: 90px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center;"
+                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 6px 0;">
+                            <!-- Oven CSS Image (Shrunk to fit) -->
+                            <div style="width: 75px; height: 75px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center;"
                                 id="oven-img-container">
                                 <div
-                                    style="width: 90%; height: 15px; margin-top: 5px; display: flex; justify-content: space-evenly; align-items: center;">
-                                    <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
-                                    <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
-                                    <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
-                                    <div style="width: 6px; height: 6px; border-radius: 50%; background: #111;"></div>
+                                    style="width: 90%; height: 12px; margin-top: 4px; display: flex; justify-content: space-evenly; align-items: center;">
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;"></div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;"></div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;"></div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;"></div>
                                 </div>
                                 <div id="oven-glow-window"
-                                    style="width: 80%; flex-grow: 1; margin: 5px 0 10px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
+                                    style="width: 80%; flex-grow: 1; margin: 4px 0 8px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
                                     <div
                                         style="position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.6);">
                                     </div>
                                 </div>
                                 <div
-                                    style="position: absolute; top: 30px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                    style="position: absolute; top: 24px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
                                 </div>
                             </div>
 
-                            <!-- Small Radial Dial -->
-                            <div class="dial-container" style="width: 100px; height: 100px; margin: 0;">
+                            <!-- Small Radial Dial (Shrunk to fit) -->
+                            <div class="dial-container" style="width: 80px; height: 80px; margin: 0;">
                                 <svg class="dial-svg" viewBox="0 0 140 140" id="svg-kitchen-oven"
                                     style="width: 100%; height: 100%;">
                                     <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
@@ -418,17 +419,17 @@
                                         id="progress-kitchen-oven" style="stroke: var(--accent-orange);"></circle>
                                 </svg>
                                 <div class="dial-info">
-                                    <span class="dial-value" id="val-kitchen-oven" style="font-size: 24px;">180°</span>
+                                    <span class="dial-value" id="val-kitchen-oven" style="font-size: 18px;">180°</span>
                                     <span class="dial-status" id="status-kitchen-oven"
-                                        style="color: var(--accent-orange); font-size: 10px;">Ready</span>
+                                        style="color: var(--accent-orange); font-size: 9px;">Ready</span>
                                 </div>
                             </div>
                         </div>
-                        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 5px;">
+                        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 2px;">
                             <button class="dial-btn" id="btn-kitchen-oven-down"
-                                style="width: 32px; height: 32px; font-size: 18px;">-</button>
+                                style="width: 26px; height: 26px; font-size: 14px;">-</button>
                             <button class="dial-btn" id="btn-kitchen-oven-up"
-                                style="width: 32px; height: 32px; font-size: 18px;">+</button>
+                                style="width: 26px; height: 26px; font-size: 14px;">+</button>
                         </div>
                     </div>
 
@@ -465,7 +466,8 @@
                     </div>
 
                     <!-- Kitchen Camera -->
-                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 02: Kitchen</span>
@@ -545,7 +547,8 @@
                 <section class="room-view" id="view-bedroom">
 
                     <!-- Bedroom Thermostat Widget -->
-                    <div class="widget col-6 active" data-glow="blue" id="widget-bedroom-ac">
+                    <div class="widget col-6 active" data-glow="blue" id="widget-bedroom-ac"
+                        style="padding: 10px 15px 8px 15px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Air Conditioner</span>
@@ -557,27 +560,27 @@
                             </label>
                         </div>
                         <div
-                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 10px 0;">
-                            <!-- AC CSS Image -->
-                            <div style="width: 100px; height: 35px; background: #fff; border-radius: 6px; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;"
+                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 2px 0; margin-top: -2px;">
+                            <!-- AC CSS Image (Enlarged) -->
+                            <div style="width: 135px; height: 46px; background: #fff; border-radius: 8px; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden;"
                                 id="bedroom-ac-img">
                                 <!-- Flap -->
                                 <div
-                                    style="position: absolute; bottom: 2px; width: 90%; height: 3px; background: #ccc; border-radius: 2px;">
+                                    style="position: absolute; bottom: 3px; width: 90%; height: 3px; background: #ccc; border-radius: 2px;">
                                 </div>
                                 <!-- Vents -->
                                 <div
-                                    style="position: absolute; right: 10px; top: 10px; width: 20px; height: 10px; display: flex; flex-direction: column; gap: 2px;">
+                                    style="position: absolute; right: 12px; top: 13px; width: 24px; height: 12px; display: flex; flex-direction: column; gap: 2px;">
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                     <div style="width: 100%; height: 2px; background: #ccc;"></div>
                                 </div>
                                 <div id="ac-led-bedroom"
-                                    style="position: absolute; left: 10px; top: 10px; font-size: 10px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 5px #00d4ff;">
+                                    style="position: absolute; left: 14px; top: 12px; font-size: 15px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 5px #00d4ff;">
                                     21°</div>
                             </div>
-                            <!-- Small Radial Dial -->
-                            <div class="dial-container" style="width: 90px; height: 90px; margin: 0;">
+                            <!-- Small Radial Dial (Enlarged) -->
+                            <div class="dial-container" style="width: 125px; height: 125px; margin: 0;">
                                 <svg class="dial-svg" viewBox="0 0 140 140" id="svg-bedroom-ac"
                                     style="width: 100%; height: 100%;">
                                     <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
@@ -585,22 +588,24 @@
                                         id="progress-bedroom-ac"></circle>
                                 </svg>
                                 <div class="dial-info">
-                                    <span class="dial-value" id="val-bedroom-ac" style="font-size: 22px;">21.0°</span>
+                                    <span class="dial-value" id="val-bedroom-ac" style="font-size: 28px;">21.0°</span>
                                     <span class="dial-status" id="status-bedroom-ac"
                                         style="font-size: 10px;">Cooling</span>
                                 </div>
                             </div>
                         </div>
-                        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 5px;">
+                        <div
+                            style="display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; margin-top: -24px;">
                             <button class="dial-btn" id="btn-bedroom-ac-down"
-                                style="width: 32px; height: 32px; font-size: 18px;">-</button>
+                                style="width: 38px; height: 38px; font-size: 22px; border-radius: 50%;">-</button>
                             <button class="dial-btn" id="btn-bedroom-ac-up"
-                                style="width: 32px; height: 32px; font-size: 18px;">+</button>
+                                style="width: 38px; height: 38px; font-size: 22px; border-radius: 50%;">+</button>
                         </div>
                     </div>
 
                     <!-- Smart Light Widget (Color Wheel) -->
-                    <div class="widget col-6 active" data-glow="yellow" id="widget-bedroom-lights">
+                    <div class="widget col-6 active" data-glow="yellow" id="widget-bedroom-lights"
+                        style="padding: 10px 12px 10px 12px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Lights</span>
@@ -617,18 +622,32 @@
                                 <div class="color-indicator" id="bedroom-color-indicator"></div>
                             </div>
                         </div>
-                        <div class="range-container">
-                            <div class="range-label">
+                        <div class="range-container" style="margin-top: 8px; margin-bottom: 2px; width: 100%;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
                                 <span>Brightness</span>
                                 <span id="label-bedroom-brightness">75%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="75" class="range-slider"
-                                id="slider-bedroom-brightness">
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <!-- Fill bar -->
+                                <div id="ios-bedroom-brightness-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 75%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                </div>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="75" id="slider-bedroom-brightness"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                            </div>
                         </div>
                     </div>
 
                     <!-- Bedroom Camera -->
-                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera"
                             style="height: 100%; object-fit: cover;">
                         <div class="camera-overlay">
@@ -638,7 +657,8 @@
                     </div>
 
                     <!-- Bedroom Speaker -->
-                    <div class="widget col-3 active" data-glow="purple" id="widget-bedroom-speaker">
+                    <div class="widget col-3 active" data-glow="purple" id="widget-bedroom-speaker"
+                        style="padding: 10px 12px 10px 12px;">
                         <div class="widget-header" style="margin-bottom: 5px;">
                             <div>
                                 <span class="widget-title">Smart Speaker</span>
@@ -651,27 +671,41 @@
                             </label>
                         </div>
                         <div
-                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px;">
-                            <!-- CSS Drawn Disc -->
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(from 0deg, #ff007f, #7f00ff, #00d4ff, #ff007f); display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(127, 0, 255, 0.4); animation: spin 4s linear infinite;"
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 4px;">
+                            <!-- CSS Drawn Disc (Enlarged) -->
+                            <div style="width: 55px; height: 55px; border-radius: 50%; background: conic-gradient(from 0deg, #ff007f, #7f00ff, #00d4ff, #ff007f); display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(127, 0, 255, 0.4); animation: spin 4s linear infinite;"
                                 id="speaker-disc-bedroom">
                                 <div
-                                    style="width: 20px; height: 20px; background: #222; border-radius: 50%; border: 2px solid #111;">
+                                    style="width: 18px; height: 18px; background: #222; border-radius: 50%; border: 2px solid #111;">
                                 </div>
                             </div>
                         </div>
-                        <div class="range-container" style="margin-top: 10px; width: 80%; align-self: center;">
-                            <div class="range-label">
+                        <div class="range-container"
+                            style="margin-top: 8px; margin-bottom: 2px; width: 92%; align-self: center;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
                                 <span>Volume</span>
                                 <span id="label-bedroom-volume">40%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="40" class="range-slider"
-                                id="slider-bedroom-volume">
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <!-- Fill bar -->
+                                <div id="ios-bedroom-volume-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                </div>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    🔊</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="40" id="slider-bedroom-volume"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                            </div>
                         </div>
                     </div>
 
                     <!-- Smart TV Widget -->
-                    <div class="widget col-3 active" data-glow="blue" id="widget-bedroom-tv">
+                    <div class="widget col-3 active" data-glow="blue" id="widget-bedroom-tv" style="padding: 15px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart TV</span>
@@ -683,12 +717,12 @@
                             </label>
                         </div>
                         <div
-                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top: 10px;">
-                            <!-- CSS Drawn TV -->
-                            <div style="position: relative; width: 100px; height: 60px;" id="tv-img-bedroom">
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-top: 6px;">
+                            <!-- CSS Drawn TV (Enlarged) -->
+                            <div style="position: relative; width: 105px; height: 63px;" id="tv-img-bedroom">
                                 <!-- TV Screen Base -->
                                 <div
-                                    style="position: absolute; bottom: 10px; left: 0; width: 100px; height: 50px; background: #111; border-radius: 4px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+                                    style="position: absolute; bottom: 10px; left: 0; width: 105px; height: 53px; background: #111; border-radius: 4px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
                                     <!-- Screen Inner -->
                                     <div style="width: 96%; height: 92%; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 2px; position: relative;"
                                         id="tv-screen-bedroom">
@@ -699,10 +733,10 @@
                                 </div>
                                 <!-- TV Legs -->
                                 <div
-                                    style="position: absolute; bottom: 0; left: 15px; width: 3px; height: 12px; background: #555; transform: rotate(-20deg);">
+                                    style="position: absolute; bottom: 0; left: 16px; width: 2px; height: 12px; background: #555; transform: rotate(-20deg);">
                                 </div>
                                 <div
-                                    style="position: absolute; bottom: 0; right: 15px; width: 3px; height: 12px; background: #555; transform: rotate(20deg);">
+                                    style="position: absolute; bottom: 0; right: 16px; width: 2px; height: 12px; background: #555; transform: rotate(20deg);">
                                 </div>
                             </div>
                         </div>
@@ -816,7 +850,8 @@
                     </div>
 
                     <!-- Baby Crib Monitor (Camera) -->
-                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Monitor">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 04: Baby Crib</span>
@@ -824,65 +859,86 @@
                         </div>
                     </div>
 
-                    <!-- Dual Lighting Controller -->
-                    <div class="widget col-6" style="justify-content: flex-start; gap:16px;">
+                    <!-- Nursery Ceiling Light Widget -->
+                    <div class="widget col-3 active" data-glow="yellow" id="widget-nursery-lights"
+                        style="padding: 10px 12px 10px 12px;">
                         <div class="widget-header">
                             <div>
-                                <span class="widget-title">Nursery Lighting</span>
-                                <div class="widget-subtitle">Dual LED dimmers</div>
+                                <span class="widget-title">Ceiling Light</span>
+                                <div class="widget-subtitle">Warm White</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-nursery-light1" checked>
+                                <span class="slider yellow"></span>
+                            </label>
+                        </div>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
+                            <!-- Icon (Bulb) -->
+                            <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                id="nursery-light1-icon">💡</div>
+                        </div>
+                        <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="val-nursery-light1">30%</span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <!-- Fill bar -->
+                                <div id="ios-nursery-light1-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                </div>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="30" id="slider-nursery-light1"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Nursery LED dimmers -->
-                        <div class="widget active" data-glow="yellow"
-                            style="min-height:90px; padding:12px; width:100%; flex-direction:column; justify-content:center; gap: 12px; transition: all 0.3s ease;"
-                            id="widget-nursery-lights">
-
-                            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                                <div style="display:flex; flex-direction:column;">
-                                    <span style="font-size:13px; font-weight:600;">Ceiling Lights</span>
-                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Warm
-                                        White</div>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="toggle-nursery-light1" checked>
-                                    <span class="slider yellow"></span>
-                                </label>
+                    <!-- Nursery Nightlight Widget -->
+                    <div class="widget col-3 active" data-glow="yellow" id="widget-nursery-nightlight"
+                        style="padding: 10px 12px 10px 12px;">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Nightlight</span>
+                                <div class="widget-subtitle">Soft Amber</div>
                             </div>
-
-                            <div style="display:flex; align-items:center; width:100%; gap: 10px;">
-                                <div class="range-container" style="flex-grow:1; margin: 0;">
-                                    <input type="range" min="0" max="100" value="30" class="range-slider"
-                                        id="slider-nursery-light1">
-                                </div>
-                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;"
-                                    id="val-nursery-light1">30%</span>
-                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-nursery-light2" checked>
+                                <span class="slider yellow"></span>
+                            </label>
                         </div>
-
-                        <div class="widget active" data-glow="yellow"
-                            style="min-height:90px; padding:12px; width:100%; flex-direction:column; justify-content:center; gap: 12px; transition: all 0.3s ease;"
-                            id="widget-nursery-nightlight">
-
-                            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                                <div style="display:flex; flex-direction:column;">
-                                    <span style="font-size:13px; font-weight:600;">Nightlight LED</span>
-                                    <div style="font-size:9px; color:var(--color-text-secondary); margin-top:2px;">Soft
-                                        Amber</div>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="toggle-nursery-light2" checked>
-                                    <span class="slider yellow"></span>
-                                </label>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
+                            <!-- Icon (Moon) -->
+                            <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                id="nursery-light2-icon">🌙</div>
+                        </div>
+                        <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="val-nursery-light2">65%</span>
                             </div>
-
-                            <div style="display:flex; align-items:center; width:100%; gap: 10px;">
-                                <div class="range-container" style="flex-grow:1; margin: 0;">
-                                    <input type="range" min="0" max="100" value="65" class="range-slider"
-                                        id="slider-nursery-light2">
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <!-- Fill bar -->
+                                <div id="ios-nursery-light2-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 65%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
                                 </div>
-                                <span style="font-size:12px; font-weight:600; min-width: 35px; text-align: right;"
-                                    id="val-nursery-light2">65%</span>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="65" id="slider-nursery-light2"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
@@ -892,11 +948,14 @@
                 <section class="room-view" id="view-laundry">
 
                     <!-- Smart Washer Widget -->
-                    <div class="widget col-4 active" data-glow="blue" id="widget-laundry-washer">
+                    <div class="widget col-4 active" data-glow="blue" id="widget-laundry-washer"
+                        style="padding: 12px 14px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Washer</span>
-                                <div class="widget-subtitle">Heavy Duty</div>
+                                <div class="widget-subtitle" id="status-washer-title"><span
+                                        id="status-washer-mode">Washing</span> • <span id="val-washer-time">45m</span>
+                                    Left</div>
                             </div>
                             <label class="switch">
                                 <input type="checkbox" class="toggle-control" checked
@@ -904,28 +963,41 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <div class="radial-dial-widget" style="min-height: 140px; margin-top: 10px;">
-                            <div class="dial-container">
-                                <svg class="dial-svg" viewBox="0 0 140 140">
-                                    <circle class="dial-track" cx="70" cy="70" r="60"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60"
-                                        style="stroke-dashoffset: 150;"></circle>
-                                </svg>
-                                <div class="dial-info">
-                                    <span class="dial-value" id="val-washer-time">45m</span>
-                                    <span class="dial-unit">Left</span>
-                                    <span class="dial-status" id="status-washer-mode">Washing</span>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
+                            <!-- Washer Chassis -->
+                            <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
+                                id="washer-chassis">
+                                <!-- Top control line -->
+                                <div
+                                    style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
+                                    <span
+                                        style="font-size: 8px; color: var(--accent-blue); font-family: monospace; font-weight: bold;"
+                                        id="washer-panel-text">45 MIN</span>
+                                    <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-blue); box-shadow: 0 0 5px var(--accent-blue); transition: all 0.3s;"
+                                        id="washer-led"></div>
+                                </div>
+                                <!-- Door ring -->
+                                <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 168, 255, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
+                                    id="washer-door-ring">
+                                    <!-- Inner glass/image -->
+                                    <img src="assets/smart_washer.png" alt="Smart Washer"
+                                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 8s linear infinite;"
+                                        id="img-laundry-washer">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Smart Dryer Widget -->
-                    <div class="widget col-4 active" data-glow="orange" id="widget-laundry-dryer">
+                    <div class="widget col-4 active" data-glow="orange" id="widget-laundry-dryer"
+                        style="padding: 12px 14px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Dryer</span>
-                                <div class="widget-subtitle">Delicates</div>
+                                <div class="widget-subtitle" id="status-dryer-title"><span
+                                        id="status-dryer-mode">Drying</span> • <span id="val-dryer-time">1h 20m</span>
+                                    Left</div>
                             </div>
                             <label class="switch">
                                 <input type="checkbox" class="toggle-control" checked
@@ -933,18 +1005,27 @@
                                 <span class="slider orange"></span>
                             </label>
                         </div>
-                        <div class="radial-dial-widget" style="min-height: 140px; margin-top: 10px;">
-                            <div class="dial-container">
-                                <svg class="dial-svg" viewBox="0 0 140 140">
-                                    <circle class="dial-track" cx="70" cy="70" r="60"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60"
-                                        style="stroke: var(--accent-orange); stroke-dashoffset: 220;"></circle>
-                                </svg>
-                                <div class="dial-info">
-                                    <span class="dial-value" id="val-dryer-time">1h 20m</span>
-                                    <span class="dial-unit">Left</span>
-                                    <span class="dial-status" id="status-dryer-mode"
-                                        style="color: var(--accent-orange);">Drying</span>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
+                            <!-- Dryer Chassis -->
+                            <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
+                                id="dryer-chassis">
+                                <!-- Top control line -->
+                                <div
+                                    style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
+                                    <span
+                                        style="font-size: 8px; color: var(--accent-orange); font-family: monospace; font-weight: bold;"
+                                        id="dryer-panel-text">1H 20M</span>
+                                    <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-orange); box-shadow: 0 0 5px var(--accent-orange); transition: all 0.3s;"
+                                        id="dryer-led"></div>
+                                </div>
+                                <!-- Door ring -->
+                                <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-orange); box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
+                                    id="dryer-door-ring">
+                                    <!-- Inner glass/image -->
+                                    <img src="assets/smart_dryer.png" alt="Smart Dryer"
+                                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 12s linear infinite reverse;"
+                                        id="img-laundry-dryer">
                                 </div>
                             </div>
                         </div>
@@ -982,7 +1063,8 @@
                     </div>
 
                     <!-- Laundry Camera -->
-                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                    <div class="widget camera-widget col-6"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed"
                             src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                             alt="Laundry Camera" style="object-position: center;">
@@ -992,77 +1074,46 @@
                         </div>
                     </div>
 
-                    <!-- Additional Devices / Quick Settings -->
-                    <div class="widget col-6" style="justify-content: flex-start; gap:16px;">
-                        <div class="widget-header" style="margin-bottom: 4px;">
+                    <!-- Laundry Overhead Light Widget -->
+                    <div class="widget col-6 active" data-glow="yellow" id="widget-laundry-light"
+                        style="padding: 10px 12px 10px 12px;">
+                        <div class="widget-header">
                             <div>
-                                <span class="widget-title">Quick Settings</span>
-                                <div class="widget-subtitle">Laundry Devices</div>
+                                <span class="widget-title">Overhead Light</span>
+                                <div class="widget-subtitle" id="status-laundry-light-text">Bright White</div>
                             </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" id="toggle-laundry-light" checked
+                                    data-target="widget-laundry-light">
+                                <span class="slider yellow"></span>
+                            </label>
                         </div>
-
-                        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; width:100%;">
-                            <!-- Smart Iron -->
-                            <div class="widget active" data-glow="orange"
-                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
-                                id="widget-laundry-iron">
-                                <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
-                                    <span style="font-size:13px; font-weight:600;">Smart Iron</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);"
-                                        id="status-iron-text">Heating • 150°C</span>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-laundry-iron">
-                                    <span class="slider orange"></span>
-                                </label>
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 12px 0;">
+                            <!-- Icon (Bulb) -->
+                            <div style="font-size: 38px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                id="laundry-light-icon">💡</div>
+                        </div>
+                        <div class="range-container"
+                            style="margin-top: 8px; margin-bottom: 2px; width: 96%; align-self: center;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="val-laundry-light">80%</span>
                             </div>
-
-                            <!-- Steam Closet -->
-                            <div class="widget active" data-glow="blue"
-                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
-                                id="widget-laundry-steam">
-                                <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
-                                    <span style="font-size:13px; font-weight:600;">Steam Closet</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);"
-                                        id="status-steam-text">Refresh Cycle • On</span>
+                            <div
+                                style="width: 100%; height: 32px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <!-- Fill bar -->
+                                <div id="ios-laundry-light-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-laundry-steam">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-
-                            <!-- Fold Assistant Robot -->
-                            <div class="widget" data-glow="yellow"
-                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
-                                id="widget-laundry-robot">
-                                <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
-                                    <span style="font-size:13px; font-weight:600;">Fold Assistant</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);"
-                                        id="status-robot-text">Docked • 100%</span>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" data-target="widget-laundry-robot">
-                                    <span class="slider yellow"></span>
-                                </label>
-                            </div>
-
-                            <!-- Smart Lighting -->
-                            <div class="widget active" data-glow="yellow"
-                                style="min-height:90px; padding:12px; flex-direction:row; align-items:center;"
-                                id="widget-laundry-light">
-                                <div style="display:flex; flex-direction:column; justify-content:center; flex-grow:1;">
-                                    <span style="font-size:13px; font-weight:600;">Overhead Light</span>
-                                    <span style="font-size:10px; color:var(--color-text-secondary);"
-                                        id="status-laundry-light-text">Bright White • On</span>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-laundry-light">
-                                    <span class="slider yellow"></span>
-                                </label>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
+                                    ☀️</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="80" id="slider-laundry-light"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
@@ -1076,7 +1127,8 @@
                         style="display:grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap:10px;">
 
                         <!-- Camera 1: Front Door -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_front.png" alt="Front Door Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 01: Front Door</span>
@@ -1085,7 +1137,8 @@
                         </div>
 
                         <!-- Camera 2: Driveway -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_driveway.png" alt="Driveway Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 02: Driveway</span>
@@ -1094,7 +1147,8 @@
                         </div>
 
                         <!-- Camera 3: Backyard -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_backyard.png" alt="Backyard Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 03: Backyard</span>
@@ -1103,7 +1157,8 @@
                         </div>
 
                         <!-- Camera 4: Kitchen -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 04: Kitchen</span>
@@ -1112,7 +1167,8 @@
                         </div>
 
                         <!-- Camera 5: Bedroom -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 05: Bedroom</span>
@@ -1121,7 +1177,8 @@
                         </div>
 
                         <!-- Camera 6: Baby Crib -->
-                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <div class="widget camera-widget"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 06: Baby Crib</span>
@@ -1406,11 +1463,14 @@
             &times;
         </button>
         <div style="width:80%; max-width:1000px; position:relative;">
-            <img id="cctv-modal-img" src="" alt="CCTV Full Screen" style="width:100%; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.8); object-fit:contain; max-height:80vh;">
-            <div id="cctv-modal-title" style="position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.6); padding:8px 16px; border-radius:8px; color:white; font-weight:600; font-size:16px;">
+            <img id="cctv-modal-img" src="" alt="CCTV Full Screen"
+                style="width:100%; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.8); object-fit:contain; max-height:80vh;">
+            <div id="cctv-modal-title"
+                style="position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.6); padding:8px 16px; border-radius:8px; color:white; font-weight:600; font-size:16px;">
                 Camera
             </div>
-            <div style="position:absolute; top:20px; right:20px; background:rgba(220, 38, 38, 0.8); padding:6px 12px; border-radius:6px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px;">
+            <div
+                style="position:absolute; top:20px; right:20px; background:rgba(220, 38, 38, 0.8); padding:6px 12px; border-radius:6px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px;">
                 ● REC
             </div>
         </div>
