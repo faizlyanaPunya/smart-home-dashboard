@@ -217,16 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         else if (id === "widget-living-lamp") {
-            const lampSliderVal = document.getElementById("slider-living-lamp").value;
-            const lampIcon = document.getElementById("living-lamp-icon");
-            if (isChecked) {
-                const glowOpacity = lampSliderVal / 100;
-                const glowSize = 20 + (lampSliderVal / 100 * 40);
-                lampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
-                lampIcon.style.opacity = Math.max(0.2, glowOpacity);
-            } else {
-                lampIcon.style.textShadow = "none";
-                lampIcon.style.opacity = "0.2";
+            const lampSlider = document.getElementById("slider-living-lamp");
+            if (lampSlider) {
+                lampSlider.dispatchEvent(new Event("input"));
             }
         }
         else if (id === "widget-living-router") {
@@ -242,6 +235,16 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("status-living-speaker-text").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
             const speakerDisc = document.getElementById("speaker-disc");
             if (speakerDisc) speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
+
+            const speakerGraphic = document.getElementById("speaker-graphic-container");
+            const speakerSlider = document.getElementById("speaker-slider-container");
+            if (speakerGraphic) {
+                speakerGraphic.style.opacity = isChecked ? "1" : "0.5";
+                speakerGraphic.style.filter = isChecked ? "none" : "grayscale(100%)";
+            }
+            if (speakerSlider) {
+                speakerSlider.style.opacity = isChecked ? "1" : "0.3";
+            }
         }
         else if (id === "widget-living-tv") {
             const standby = document.querySelector("#widget-living-tv .tv-glow-indicator");
@@ -472,13 +475,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 6. SVG Circular Dials
     // -------------------------------------------------------------------------
-    const CIRCUMFERENCE = 377; // 2 * Math.PI * 60
-
     function setDialProgress(progressCircle, valText, statusText, val, min, max, unit, statusMsg, isOven = false) {
         // Map value to angle / stroke-dashoffset
+        const r = parseFloat(progressCircle.getAttribute("r")) || 60;
+        const circ = 2 * Math.PI * r;
         const ratio = (val - min) / (max - min);
-        const offset = CIRCUMFERENCE - (ratio * CIRCUMFERENCE);
+        const offset = circ - (ratio * circ);
 
+        progressCircle.style.strokeDasharray = circ;
         progressCircle.style.strokeDashoffset = offset;
         valText.textContent = `${val.toFixed(isOven ? 0 : 1)}${unit}`;
 
@@ -946,15 +950,48 @@ document.addEventListener("DOMContentLoaded", () => {
     if (livingLampSlider) {
         const livingLampLabel = document.getElementById("label-living-lamp");
         const livingLampIcon = document.getElementById("living-lamp-icon");
+        const iosBrightnessFill = document.getElementById("ios-brightness-fill");
+        const lampSliderTrack = document.getElementById("lamp-slider-track");
+
         livingLampSlider.addEventListener("input", (e) => {
             const val = e.target.value;
             livingLampLabel.textContent = `${val}%`;
+            if (iosBrightnessFill) iosBrightnessFill.style.width = `${val}%`;
+
             const isLampActive = document.querySelector("#widget-living-lamp input").checked;
             if (isLampActive) {
-                const glowOpacity = val / 100;
-                const glowSize = 20 + (val / 100 * 40); // 20px to 60px
-                livingLampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
-                livingLampIcon.style.opacity = Math.max(0.2, glowOpacity);
+                // Adjust brightness to be significantly more bright once user slides above 40%
+                let extraBrightness = 0;
+                if (val > 40) {
+                    extraBrightness = (val - 40) / 60; // 0.0 to 1.0 multiplier
+                }
+
+                const glowOpacity = Math.min(1.0, (val / 100) + (extraBrightness * 0.8)).toFixed(2);
+                const glowSize = Math.round(20 + (val / 100 * 40) + (extraBrightness * 60)); // Max 120px
+
+                const r = 255;
+                const g = Math.round(183 + (extraBrightness * 72)); // 183 to 255
+                const b = Math.round(extraBrightness * 150); // 0 to 150
+                const bulbColor = `rgba(${r}, ${g}, ${b}, ${glowOpacity})`;
+
+                livingLampIcon.style.textShadow = `0 0 ${glowSize}px ${bulbColor}, 0 0 ${glowSize / 2}px ${bulbColor}`;
+                livingLampIcon.style.opacity = Math.min(1.0, Math.max(0.2, (val / 100) + extraBrightness)).toFixed(2);
+                livingLampIcon.style.transform = `scale(1.1)`; // Keep size constant
+
+                if (lampSliderTrack) {
+                    const trackGlowSize = Math.round(5 + (extraBrightness * 15));
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 ${trackGlowSize}px ${bulbColor}`;
+                }
+                const lampSliderContainer = document.getElementById("lamp-slider-container");
+                if (lampSliderContainer) lampSliderContainer.style.opacity = "1";
+            } else {
+                if (lampSliderTrack) {
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0)`;
+                }
+                if (livingLampIcon) {
+                    livingLampIcon.style.textShadow = "none";
+                    livingLampIcon.style.opacity = "0.2";
+                }
             }
         });
     }
@@ -963,8 +1000,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const livingVolumeSlider = document.getElementById("slider-living-volume");
     if (livingVolumeSlider) {
         const livingVolumeLabel = document.getElementById("label-living-volume");
+        const iosVolFill = document.getElementById("ios-volume-fill");
         livingVolumeSlider.addEventListener("input", (e) => {
-            livingVolumeLabel.textContent = `${e.target.value}%`;
+            const val = e.target.value;
+            livingVolumeLabel.textContent = `${val}%`;
+            if (iosVolFill) iosVolFill.style.width = `${val}%`;
         });
     }
 

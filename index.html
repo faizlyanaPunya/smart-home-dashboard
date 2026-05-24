@@ -92,49 +92,54 @@
                 <!-- ------------------- LIVING ROOM VIEW ------------------- -->
                 <section class="room-view" id="view-living-room">
 
-                    <!-- Weather Widget -->
-                    <div class="widget weather-widget col-3">
+                    <!-- LED Lamp Widget -->
+                    <div class="widget col-4 active" data-glow="yellow" id="widget-living-lamp">
                         <div class="widget-header">
                             <div>
-                                <span class="widget-title">Sunny Day</span>
-                                <div class="widget-subtitle">Temperature Outside</div>
+                                <span class="widget-title">Lamp</span>
+                                <div class="widget-subtitle">Floor Lamp</div>
                             </div>
-                            <div class="widget-icon-container">
-                                <svg viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.38-.38.38-1.02 0-1.41zm-12.37 12.37c-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41z" />
-                                </svg>
-                            </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" checked data-target="widget-living-lamp">
+                                <span class="slider yellow"></span>
+                            </label>
                         </div>
-                        <div class="weather-row">
-                            <div class="weather-temp">21°C</div>
-                            <div>
-                                <div class="weather-desc">Sunny & Calm</div>
-                                <div class="weather-range">H: 24° L: 14°</div>
-                            </div>
+                        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+                            <div id="living-lamp-icon"
+                                style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                💡</div>
                         </div>
-                        <div class="weather-forecast">
-                            <div class="forecast-day">
-                                <span class="forecast-name">Mon</span>
-                                <span class="forecast-temp">22°</span>
+                        <!-- Custom Brown/Beige Slide Bar Brightness -->
+                        <div id="lamp-slider-container" style="margin-top: 15px; width: 100%; transition: opacity 0.3s;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="label-living-lamp">100%</span>
                             </div>
-                            <div class="forecast-day">
-                                <span class="forecast-name">Tue</span>
-                                <span class="forecast-temp">20°</span>
-                            </div>
-                            <div class="forecast-day">
-                                <span class="forecast-name">Wed</span>
-                                <span class="forecast-temp">21°</span>
-                            </div>
-                            <div class="forecast-day">
-                                <span class="forecast-name">Thu</span>
-                                <span class="forecast-temp">23°</span>
+                            <div id="lamp-slider-track"
+                                style="width: 100%; height: 32px; background: #3a322c; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0);">
+                                <!-- Fill bar -->
+                                <div id="ios-brightness-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                    <!-- Blue Sun Icon -->
+                                    <div
+                                        style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;">
+                                        <svg viewBox="0 0 24 24"
+                                            style="width: 14px; height: 14px; fill: #0055ff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));">
+                                            <path
+                                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 10-1.06-1.061l-1.59 1.591z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="100" id="slider-living-lamp"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
 
                     <!-- Air Conditioner / Thermostat Widget (Radial Dial) -->
-                    <div class="widget radial-dial-widget col-3 active" data-glow="blue" id="widget-living-ac"
+                    <div class="widget radial-dial-widget col-4 active" data-glow="blue" id="widget-living-ac"
                         style="flex-direction: column;">
                         <div class="widget-header"
                             style="width: 100%; position: absolute; top: 20px; left: 20px; right: 20px;">
@@ -147,25 +152,36 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <div class="dial-container" style="margin-top: 30px;">
-                            <svg class="dial-svg" viewBox="0 0 140 140" id="svg-living-ac">
-                                <circle class="dial-track" cx="70" cy="70" r="60"></circle>
-                                <circle class="dial-progress" cx="70" cy="70" r="60" id="progress-living-ac"></circle>
-                            </svg>
-                            <div class="dial-info">
-                                <span class="dial-value" id="val-living-ac">16.0°</span>
-                                <span class="dial-unit">Celsius</span>
-                                <span class="dial-status" id="status-living-ac">Cooling</span>
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-evenly; width: 100%; margin-top: 30px; padding: 0 10px;">
+                            <!-- Dial Container -->
+                            <div class="dial-container" style="margin: 0; width: 160px; height: 160px;">
+                                <svg class="dial-svg" viewBox="0 0 160 160" id="svg-living-ac"
+                                    style="width: 100%; height: 100%;">
+                                    <circle class="dial-track" cx="80" cy="80" r="72"></circle>
+                                    <circle class="dial-progress" cx="80" cy="80" r="72" id="progress-living-ac">
+                                    </circle>
+                                </svg>
+                                <div class="dial-info"
+                                    style="top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.15); width: 100%;">
+                                    <span class="dial-value" id="val-living-ac">16.0°</span>
+                                    <span class="dial-unit">Celsius</span>
+                                    <span class="dial-status" id="status-living-ac">Cooling</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="dial-controls" style="margin-top: -10px;">
-                            <button class="dial-btn" id="btn-living-ac-up">+</button>
-                            <button class="dial-btn" id="btn-living-ac-down">-</button>
+                            <!-- Stacked Buttons -->
+                            <div class="dial-controls"
+                                style="display: flex; flex-direction: column; gap: 15px; margin: 0;">
+                                <button class="dial-btn" id="btn-living-ac-up"
+                                    style="width: 48px; height: 48px; font-size: 26px;">+</button>
+                                <button class="dial-btn" id="btn-living-ac-down"
+                                    style="width: 48px; height: 48px; font-size: 26px;">-</button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Smart TV Widget -->
-                    <div class="widget col-3 active" data-glow="blue" id="widget-living-tv">
+                    <div class="widget col-4 active" data-glow="blue" id="widget-living-tv">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart TV</span>
@@ -200,8 +216,18 @@
                         </div>
                     </div>
 
+                    <!-- Camera Widget -->
+                    <div class="widget camera-widget col-4"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 01: Living Room</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
+
                     <!-- Wifi Router Widget -->
-                    <div class="widget col-3 active" data-glow="green" id="widget-living-router">
+                    <div class="widget col-4 active" data-glow="green" id="widget-living-router">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">WiFi Router</span>
@@ -265,49 +291,12 @@
                         </div>
                     </div>
 
-                    <!-- Camera Widget -->
-                    <div class="widget camera-widget col-6"
-                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                        <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera">
-                        <div class="camera-overlay">
-                            <span class="camera-name">Camera 01: Living Room</span>
-                            <span class="camera-live">LIVE</span>
-                        </div>
-                    </div>
-
-                    <!-- LED Lamp Widget -->
-                    <div class="widget col-3 active" data-glow="yellow" id="widget-living-lamp">
-                        <div class="widget-header">
-                            <div>
-                                <span class="widget-title">LED Lamp</span>
-                                <div class="widget-subtitle">Floor Lamp</div>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" class="toggle-control" checked data-target="widget-living-lamp">
-                                <span class="slider yellow"></span>
-                            </label>
-                        </div>
-                        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
-                            <div id="living-lamp-icon"
-                                style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
-                                💡</div>
-                        </div>
-                        <div class="range-container">
-                            <div class="range-label">
-                                <span>Brightness</span>
-                                <span id="label-living-lamp">100%</span>
-                            </div>
-                            <input type="range" min="0" max="100" value="100" class="range-slider"
-                                id="slider-living-lamp">
-                        </div>
-                    </div>
-
                     <!-- Smart Speaker Widget -->
-                    <div class="widget col-3 active" data-glow="blue" id="widget-living-speaker">
+                    <div class="widget col-4 active" data-glow="blue" id="widget-living-speaker">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Smart Speaker</span>
-                                <div class="widget-subtitle" id="status-living-speaker-text">Amazon Echo • Lofi Beats
+                                <div class="widget-subtitle" id="status-living-speaker-text">Auraphon • Lofi Beats
                                 </div>
                             </div>
                             <label class="switch">
@@ -316,21 +305,100 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
-                            <div style="width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(from 0deg, #00a2ff, #00e272, #00a2ff); animation: spin 4s linear infinite; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 20px rgba(0,162,255,0.3);"
-                                id="speaker-disc">
+                        <div
+                            style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 10px; padding-bottom: 5px;">
+                            <!-- CSS Drawn Auraphon Speakers -->
+                            <div id="speaker-graphic-container"
+                                style="display: flex; gap: 12px; align-items: center; justify-content: center; height: 95px; transform: scale(1.05); transition: opacity 0.3s, filter 0.3s;">
+                                <!-- Left Speaker -->
                                 <div
-                                    style="width: 60px; height: 60px; border-radius: 50%; background: #0c0e12; display:flex; align-items:center; justify-content:center; font-size:24px;">
-                                    🎵</div>
+                                    style="position: relative; width: 60px; height: 85px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 3px; box-shadow: 0 10px 15px rgba(0,0,0,0.4), inset -2px -2px 5px rgba(0,0,0,0.1), inset 2px 2px 5px rgba(255,255,255,0.8);">
+                                    <!-- Tweeter -->
+                                    <div
+                                        style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 14px; height: 14px; background: radial-gradient(circle at center, #333 0%, #000 100%); border-radius: 50%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.3);">
+                                    </div>
+                                    <!-- Woofer -->
+                                    <div
+                                        style="position: absolute; top: 28px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; background: radial-gradient(circle at 50% 30%, #444 0%, #111 60%, #000 100%); border-radius: 50%; border: 1px solid #aaa; box-shadow: inset 0 5px 8px rgba(0,0,0,0.9), 0 2px 5px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                                        <div
+                                            style="width: 12px; height: 12px; background: radial-gradient(circle, #222, #000); border-radius: 50%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);">
+                                        </div>
+                                    </div>
+                                    <!-- Brand -->
+                                    <div
+                                        style="position: absolute; bottom: 22px; width: 100%; text-align: center; font-size: 4px; color: #888; font-weight: 700; letter-spacing: 0.5px;">
+                                        AURAPHON</div>
+                                    <!-- Bass Port -->
+                                    <div
+                                        style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 18px; height: 5px; background: #000; border-radius: 3px; box-shadow: inset 0 2px 3px rgba(0,0,0,1);">
+                                    </div>
+                                    <!-- Green Knob -->
+                                    <div
+                                        style="position: absolute; bottom: 10px; left: 6px; width: 7px; height: 7px; border-radius: 50%; background: #222; border: 1px solid #111; box-shadow: 0 0 6px #00ff00, inset 0 1px 2px rgba(255,255,255,0.4);">
+                                    </div>
+                                    <!-- Legs -->
+                                    <div
+                                        style="position: absolute; bottom: -4px; left: 8px; width: 5px; height: 4px; background: linear-gradient(to bottom, #333, #000); border-radius: 1px;">
+                                    </div>
+                                    <div
+                                        style="position: absolute; bottom: -4px; right: 8px; width: 5px; height: 4px; background: linear-gradient(to bottom, #333, #000); border-radius: 1px;">
+                                    </div>
+                                </div>
+
+                                <!-- Right Speaker -->
+                                <div
+                                    style="position: relative; width: 60px; height: 85px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 3px; box-shadow: 0 10px 15px rgba(0,0,0,0.4), inset -2px -2px 5px rgba(0,0,0,0.1), inset 2px 2px 5px rgba(255,255,255,0.8);">
+                                    <!-- Tweeter -->
+                                    <div
+                                        style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 14px; height: 14px; background: radial-gradient(circle at center, #333 0%, #000 100%); border-radius: 50%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.3);">
+                                    </div>
+                                    <!-- Woofer -->
+                                    <div
+                                        style="position: absolute; top: 28px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; background: radial-gradient(circle at 50% 30%, #444 0%, #111 60%, #000 100%); border-radius: 50%; border: 1px solid #aaa; box-shadow: inset 0 5px 8px rgba(0,0,0,0.9), 0 2px 5px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+                                        <div
+                                            style="width: 12px; height: 12px; background: radial-gradient(circle, #222, #000); border-radius: 50%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.1);">
+                                        </div>
+                                    </div>
+                                    <!-- Brand -->
+                                    <div
+                                        style="position: absolute; bottom: 22px; width: 100%; text-align: center; font-size: 4px; color: #888; font-weight: 700; letter-spacing: 0.5px;">
+                                        AURAPHON</div>
+                                    <!-- Bass Port -->
+                                    <div
+                                        style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 18px; height: 5px; background: #000; border-radius: 3px; box-shadow: inset 0 2px 3px rgba(0,0,0,1);">
+                                    </div>
+                                    <!-- Legs -->
+                                    <div
+                                        style="position: absolute; bottom: -4px; left: 8px; width: 5px; height: 4px; background: linear-gradient(to bottom, #333, #000); border-radius: 1px;">
+                                    </div>
+                                    <div
+                                        style="position: absolute; bottom: -4px; right: 8px; width: 5px; height: 4px; background: linear-gradient(to bottom, #333, #000); border-radius: 1px;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="range-container">
-                            <div class="range-label">
+
+                        <!-- Custom Brown/Beige Slide Bar Volume -->
+                        <div id="speaker-slider-container" style="margin-top: 15px; width: 100%; transition: opacity 0.3s;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
                                 <span>Volume</span>
                                 <span id="label-living-volume">40%</span>
                             </div>
-                            <input type="range" min="0" max="100" value="40" class="range-slider"
-                                id="slider-living-volume">
+                            <div
+                                style="width: 100%; height: 32px; background: #4a3f35; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.6), 0 1px 2px rgba(255,255,255,0.1);">
+                                <!-- Fill bar -->
+                                <div id="ios-volume-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                </div>
+                                <!-- Icon -->
+                                <div
+                                    style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; filter: grayscale(100%) brightness(0.2);">
+                                    🔊</div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="40" id="slider-living-volume"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                            </div>
                         </div>
                     </div>
                 </section>
