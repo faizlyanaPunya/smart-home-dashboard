@@ -1,5 +1,34 @@
 // Aura Smart Home Dashboard - Interactive Scripting
 
+// ─────────────────────────────────────────────────────────────────────────────
+// CCTV Lightbox — global scope so inline onclick attributes can call them
+// ─────────────────────────────────────────────────────────────────────────────
+function openCctvModal(src, title) {
+    const overlay = document.getElementById('cctv-modal-overlay');
+    const img     = document.getElementById('cctv-modal-img');
+    const lbl     = document.getElementById('cctv-modal-title');
+    if (!overlay || !img) return;
+    img.src = src;
+    if (lbl) lbl.textContent = title || 'Camera';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+    }));
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCctvModal() {
+    const overlay = document.getElementById('cctv-modal-overlay');
+    const img     = document.getElementById('cctv-modal-img');
+    if (!overlay) return;
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        if (img) img.src = '';
+        document.body.style.overflow = '';
+    }, 300);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 1. Clock and Date System
@@ -1158,4 +1187,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial sync
     updateSummaryBanner();
+
+    // -------------------------------------------------------------------------
+    // 17. CCTV Modal — close-button & backdrop wired up here
+    // -------------------------------------------------------------------------
+    const cctvCloseBtn = document.getElementById('btn-close-cctv-modal');
+    const cctvOverlay  = document.getElementById('cctv-modal-overlay');
+
+    if (cctvCloseBtn) cctvCloseBtn.addEventListener('click', closeCctvModal);
+
+    if (cctvOverlay) {
+        cctvOverlay.addEventListener('click', (e) => {
+            if (e.target === cctvOverlay) closeCctvModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeCctvModal();
+    });
 });

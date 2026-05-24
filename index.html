@@ -36,22 +36,14 @@
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                     </svg>
                 </button>
-                <button class="sidebar-btn" id="btn-nav-settings" title="Settings">
-                    <button class="sidebar-btn" id="btn-nav-stats" title="Energy & Stats">
-                        <!-- Chart SVG -->
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-                        </svg>
-                    </button>
-                    <button class="sidebar-btn" id="btn-nav-settings" title="Settings"
-                        onclick="window.location.href='settings.html'">
-                        <!-- Settings SVG -->
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
-                        </svg>
-                    </button>
+                <button class="sidebar-btn" id="btn-nav-settings" title="Settings"
+                    onclick="window.location.href='settings.html'">
+                    <!-- Settings SVG -->
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                    </svg>
+                </button>
             </nav>
             <div class="sidebar-profile" title="Payal (Administrator)">
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100"
@@ -274,7 +266,7 @@
                     </div>
 
                     <!-- Camera Widget -->
-                    <div class="widget camera-widget col-6">
+                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 01: Living Room</span>
@@ -473,7 +465,7 @@
                     </div>
 
                     <!-- Kitchen Camera -->
-                    <div class="widget camera-widget col-6">
+                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 02: Kitchen</span>
@@ -636,7 +628,7 @@
                     </div>
 
                     <!-- Bedroom Camera -->
-                    <div class="widget camera-widget col-6">
+                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera"
                             style="height: 100%; object-fit: cover;">
                         <div class="camera-overlay">
@@ -824,7 +816,7 @@
                     </div>
 
                     <!-- Baby Crib Monitor (Camera) -->
-                    <div class="widget camera-widget col-6">
+                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Monitor">
                         <div class="camera-overlay">
                             <span class="camera-name">Camera 04: Baby Crib</span>
@@ -990,7 +982,7 @@
                     </div>
 
                     <!-- Laundry Camera -->
-                    <div class="widget camera-widget col-6">
+                    <div class="widget camera-widget col-6" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed"
                             src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                             alt="Laundry Camera" style="object-position: center;">
@@ -1084,7 +1076,7 @@
                         style="display:grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap:10px;">
 
                         <!-- Camera 1: Front Door -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_front.png" alt="Front Door Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 01: Front Door</span>
@@ -1093,7 +1085,7 @@
                         </div>
 
                         <!-- Camera 2: Driveway -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_driveway.png" alt="Driveway Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 02: Driveway</span>
@@ -1102,7 +1094,7 @@
                         </div>
 
                         <!-- Camera 3: Backyard -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_backyard.png" alt="Backyard Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 03: Backyard</span>
@@ -1111,7 +1103,7 @@
                         </div>
 
                         <!-- Camera 4: Kitchen -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 04: Kitchen</span>
@@ -1120,7 +1112,7 @@
                         </div>
 
                         <!-- Camera 5: Bedroom -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_bedroom.png" alt="Bedroom Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 05: Bedroom</span>
@@ -1129,7 +1121,7 @@
                         </div>
 
                         <!-- Camera 6: Baby Crib -->
-                        <div class="widget camera-widget">
+                        <div class="widget camera-widget" onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                             <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Camera">
                             <div class="camera-overlay">
                                 <span class="camera-name">CAM 06: Baby Crib</span>
@@ -1404,6 +1396,24 @@
     <!-- Sirens Flashing Vignette Overlay -->
     <div id="emergency-alarm-flash"
         style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; border:20px solid rgba(220, 38, 38, 0); pointer-events:none; z-index:9998; box-sizing:border-box; transition:border-color 0.5s ease;">
+    </div>
+
+    <!-- CCTV Image Modal Overlay -->
+    <div id="cctv-modal-overlay"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); backdrop-filter:blur(10px); z-index:10000; align-items:center; justify-content:center; flex-direction:column; opacity:0; transition:opacity 0.3s ease;">
+        <button id="btn-close-cctv-modal" onclick="closeCctvModal()"
+            style="position:absolute; top:20px; right:30px; background:none; border:none; color:white; font-size:40px; cursor:pointer; font-weight:300; z-index:10001; line-height:1;">
+            &times;
+        </button>
+        <div style="width:80%; max-width:1000px; position:relative;">
+            <img id="cctv-modal-img" src="" alt="CCTV Full Screen" style="width:100%; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.8); object-fit:contain; max-height:80vh;">
+            <div id="cctv-modal-title" style="position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.6); padding:8px 16px; border-radius:8px; color:white; font-weight:600; font-size:16px;">
+                Camera
+            </div>
+            <div style="position:absolute; top:20px; right:20px; background:rgba(220, 38, 38, 0.8); padding:6px 12px; border-radius:6px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px;">
+                ● REC
+            </div>
+        </div>
     </div>
 
     <!-- Script Import -->

@@ -652,6 +652,7 @@ input:checked + .slider:before {
     border-radius: 16px;
     border: var(--glass-border);
     overflow: hidden;
+    cursor: pointer;
 }
 
 .camera-feed {
@@ -659,11 +660,12 @@ input:checked + .slider:before {
     height: 100%;
     object-fit: cover;
     opacity: 0.85;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.35s ease;
 }
 
 .camera-widget:hover .camera-feed {
     opacity: 1;
+    transform: scale(1.03);
 }
 
 .camera-overlay {
