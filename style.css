@@ -413,21 +413,21 @@ body {
     align-items: stretch;
 }
 
-#view-security-center > .col-8 {
+#view-security-center>.col-8 {
     height: 100%;
     min-height: 0;
     grid-auto-rows: 1fr;
     align-content: stretch;
 }
 
-#view-security-center > .col-4 {
+#view-security-center>.col-4 {
     height: 100%;
     min-height: 0;
     overflow-y: auto;
     scrollbar-width: none;
 }
 
-#view-security-center > .col-4::-webkit-scrollbar {
+#view-security-center>.col-4::-webkit-scrollbar {
     display: none;
 }
 
@@ -1435,4 +1435,4 @@ input:checked+.slider:before {
         padding: 0 !important;
         min-height: unset !important;
     }
-}
+}

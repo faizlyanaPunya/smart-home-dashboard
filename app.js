@@ -759,7 +759,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (toggle && toggle.checked && ovenTimer > 0) {
             ovenTimer -= 1;
             updateOvenTimerDisplay();
-            
+
             // If timer reaches 0, turn off the oven
             if (ovenTimer === 0) {
                 toggle.checked = false;
@@ -1362,7 +1362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const laundryFanIcon = document.getElementById("laundry-fan-icon-container");
     const statusLaundryFanText = document.getElementById("status-laundry-fan-text");
     const toggleLaundryFan = document.getElementById("toggle-laundry-fan");
-    
+
     let currentFanSpeed = "MED"; // Default speed
 
     function updateLaundryFanState() {
