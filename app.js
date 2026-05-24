@@ -977,13 +977,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 livingLampIcon.style.textShadow = `0 0 ${glowSize}px ${bulbColor}, 0 0 ${glowSize / 2}px ${bulbColor}`;
                 livingLampIcon.style.opacity = Math.min(1.0, Math.max(0.2, (val / 100) + extraBrightness)).toFixed(2);
                 livingLampIcon.style.transform = `scale(1.1)`; // Keep size constant
+                livingLampIcon.style.filter = "none";
+
+                const lampSliderContainer = document.getElementById("lamp-slider-container");
+                if (lampSliderContainer) {
+                    lampSliderContainer.style.opacity = "1";
+                    lampSliderContainer.style.filter = "none";
+                }
 
                 if (lampSliderTrack) {
                     const trackGlowSize = Math.round(5 + (extraBrightness * 15));
                     lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 ${trackGlowSize}px ${bulbColor}`;
                 }
-                const lampSliderContainer = document.getElementById("lamp-slider-container");
-                if (lampSliderContainer) lampSliderContainer.style.opacity = "1";
             } else {
                 if (lampSliderTrack) {
                     lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0)`;
@@ -991,6 +996,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (livingLampIcon) {
                     livingLampIcon.style.textShadow = "none";
                     livingLampIcon.style.opacity = "0.2";
+                    livingLampIcon.style.filter = "grayscale(100%)";
+                }
+                const lampSliderContainer = document.getElementById("lamp-slider-container");
+                if (lampSliderContainer) {
+                    lampSliderContainer.style.opacity = "0.3";
+                    lampSliderContainer.style.filter = "grayscale(100%)";
                 }
             }
         });
