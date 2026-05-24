@@ -1,5 +1,34 @@
 // Aura Smart Home Dashboard - Interactive Scripting
 
+// ─────────────────────────────────────────────────────────────────────────────
+// CCTV Lightbox — global scope so inline onclick attributes can call them
+// ─────────────────────────────────────────────────────────────────────────────
+function openCctvModal(src, title) {
+    const overlay = document.getElementById('cctv-modal-overlay');
+    const img = document.getElementById('cctv-modal-img');
+    const lbl = document.getElementById('cctv-modal-title');
+    if (!overlay || !img) return;
+    img.src = src;
+    if (lbl) lbl.textContent = title || 'Camera';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+    }));
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCctvModal() {
+    const overlay = document.getElementById('cctv-modal-overlay');
+    const img = document.getElementById('cctv-modal-img');
+    if (!overlay) return;
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        if (img) img.src = '';
+        document.body.style.overflow = '';
+    }, 300);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 1. Clock and Date System
@@ -188,16 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         else if (id === "widget-living-lamp") {
-            const lampSliderVal = document.getElementById("slider-living-lamp").value;
-            const lampIcon = document.getElementById("living-lamp-icon");
-            if (isChecked) {
-                const glowOpacity = lampSliderVal / 100;
-                const glowSize = 20 + (lampSliderVal / 100 * 40);
-                lampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
-                lampIcon.style.opacity = Math.max(0.2, glowOpacity);
-            } else {
-                lampIcon.style.textShadow = "none";
-                lampIcon.style.opacity = "0.2";
+            const lampSlider = document.getElementById("slider-living-lamp");
+            if (lampSlider) {
+                lampSlider.dispatchEvent(new Event("input"));
             }
         }
         else if (id === "widget-living-router") {
@@ -213,6 +235,16 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("status-living-speaker-text").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
             const speakerDisc = document.getElementById("speaker-disc");
             if (speakerDisc) speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
+
+            const speakerGraphic = document.getElementById("speaker-graphic-container");
+            const speakerSlider = document.getElementById("speaker-slider-container");
+            if (speakerGraphic) {
+                speakerGraphic.style.opacity = isChecked ? "1" : "0.5";
+                speakerGraphic.style.filter = isChecked ? "none" : "grayscale(100%)";
+            }
+            if (speakerSlider) {
+                speakerSlider.style.opacity = isChecked ? "1" : "0.3";
+            }
         }
         else if (id === "widget-living-tv") {
             const standby = document.querySelector("#widget-living-tv .tv-glow-indicator");
@@ -225,22 +257,40 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Kitchen updates
-        else if (id === "widget-kitchen-fridge") {
-            document.getElementById("val-fridge-temp").style.opacity = isChecked ? "1" : "0.3";
-            document.getElementById("val-freezer-temp").style.opacity = isChecked ? "1" : "0.3";
+        else if (id === "widget-kitchen-lamp") {
+            updateKitchenLight();
         }
         else if (id === "widget-kitchen-dishwasher") {
             document.getElementById("status-dishwasher-text").textContent = isChecked ? "Heavy Cycle • 35 mins left" : "Off";
+            const icon = document.getElementById("dishwasher-icon");
+            if (icon) {
+                icon.style.opacity = isChecked ? "1" : "0.3";
+            }
         }
-        else if (id === "widget-kitchen-purifier") {
-            document.getElementById("status-purifier-text").textContent = isChecked ? "Filter Good • Running" : "Standby";
+        else if (id === "widget-kitchen-ventilation") {
+            const statusText = document.getElementById("status-ventilation-text");
+            if (statusText) statusText.textContent = isChecked ? "Active • Speed 2" : "Off";
+            const icon = document.getElementById("ventilation-icon");
+            if (icon) {
+                if (isChecked) {
+                    icon.style.animation = "spin 4s linear infinite";
+                    icon.style.opacity = "1";
+                } else {
+                    icon.style.animation = "none";
+                    icon.style.opacity = "0.3";
+                }
+            }
+        }
+        else if (id === "widget-kitchen-door") {
+            const doorStatus = document.getElementById("status-kitchen-door-text");
+            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
         }
         else if (id === "widget-kitchen-oven") {
             const statusText = document.getElementById("status-kitchen-oven-text");
             const ovenGlow = document.getElementById("oven-glow-window");
             const dialInfo = document.getElementById("status-kitchen-oven");
             if (isChecked) {
-                statusText.textContent = `Preheating • ${document.getElementById("val-kitchen-oven").textContent}C`;
+                statusText.textContent = `Preheating • ${document.getElementById("val-kitchen-oven").textContent}`;
                 if (ovenGlow) ovenGlow.style.opacity = "1";
                 if (dialInfo) dialInfo.textContent = "Preheating";
             } else {
@@ -248,18 +298,51 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (ovenGlow) ovenGlow.style.opacity = "0.2";
                 if (dialInfo) dialInfo.textContent = "Off";
             }
+            if (typeof updateOvenTimerDisplay === 'function') {
+                updateOvenTimerDisplay();
+            }
         }
 
         // Bedroom updates
         else if (id === "widget-bedroom-ac") {
             const statusText = document.getElementById("status-bedroom-ac");
             const acLed = document.getElementById("ac-led-bedroom");
+            const acImg = document.getElementById("bedroom-ac-img");
+            const valText = document.getElementById("val-bedroom-ac");
+            const progress = document.getElementById("progress-bedroom-ac");
+            const btnDown = document.getElementById("btn-bedroom-ac-down");
+            const btnUp = document.getElementById("btn-bedroom-ac-up");
+
             if (isChecked) {
-                statusText.textContent = "Cooling";
-                if (acLed) acLed.style.opacity = "1";
+                // Restore active values and colors
+                updateBedroomAc(bedroomAcVal);
             } else {
                 statusText.textContent = "Off";
-                if (acLed) acLed.style.opacity = "0";
+                if (valText) valText.textContent = "--";
+                if (acLed) {
+                    acLed.textContent = "--";
+                    acLed.style.color = "rgba(255, 255, 255, 0.3)";
+                    acLed.style.textShadow = "none";
+                }
+                if (acImg) {
+                    acImg.style.background = "rgba(255, 255, 255, 0.12)";
+                    acImg.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    const flap = acImg.querySelector("div");
+                    const vents = acImg.querySelectorAll("div")[1];
+                    if (flap) flap.style.opacity = "0.3";
+                    if (vents) vents.style.opacity = "0.3";
+                }
+                if (progress) {
+                    progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                }
+                if (btnDown) {
+                    btnDown.style.opacity = "0.4";
+                    btnDown.style.pointerEvents = "none";
+                }
+                if (btnUp) {
+                    btnUp.style.opacity = "0.4";
+                    btnUp.style.pointerEvents = "none";
+                }
             }
         }
         else if (id === "widget-bedroom-lights") {
@@ -273,6 +356,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
                 speakerDisc.style.opacity = isChecked ? "1" : "0.5";
             }
+            const volSlider = document.getElementById("slider-bedroom-volume");
+            const volContainer = volSlider ? volSlider.parentElement : null;
+            if (volContainer) {
+                volContainer.style.opacity = isChecked ? "1" : "0.4";
+                volContainer.style.pointerEvents = isChecked ? "auto" : "none";
+            }
         }
         else if (id === "widget-bedroom-tv") {
             const tvChannel = document.getElementById("val-tv-channel");
@@ -280,42 +369,162 @@ document.addEventListener("DOMContentLoaded", () => {
             const tvScreen = document.querySelector("#tv-screen-bedroom .tv-glow-indicator");
             if (tvScreen) tvScreen.style.opacity = isChecked ? "0" : "1";
         }
+        else if (id === "widget-bedroom-vacuum") {
+            const statusText = document.getElementById("status-bedroom-vacuum-text");
+            if (statusText) statusText.textContent = isChecked ? "Cleaning" : "Docked • 100%";
+            const vacuumLed = document.getElementById("vacuum-led");
+            if (vacuumLed) {
+                vacuumLed.style.background = isChecked ? "var(--accent-green)" : "rgba(255, 255, 255, 0.2)";
+                vacuumLed.style.boxShadow = isChecked ? "0 0 5px var(--accent-green)" : "none";
+            }
+            const chassis = document.getElementById("vacuum-chassis");
+            if (chassis) {
+                if (isChecked) {
+                    chassis.style.animation = "spin 4s linear infinite";
+                } else {
+                    chassis.style.animation = "none";
+                }
+            }
+        }
+        else if (id === "widget-bedroom-door") {
+            const doorStatus = document.getElementById("status-bedroom-door-text");
+            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+            const doorIcon = document.getElementById("bedroom-door-icon");
+            if (doorIcon) {
+                doorIcon.style.opacity = isChecked ? "1" : "0.5";
+            }
+        }
 
         // Nursery updates
-        else if (id === "widget-nursery-humidifier") {
-            const humValue = document.querySelector("#widget-nursery-humidifier .sensor-value");
-            humValue.textContent = isChecked ? "50%" : "--";
+        else if (id === "widget-nursery-ac") {
+            const statusText = document.getElementById("status-nursery-ac-text");
+            const valText = document.getElementById("val-nursery-ac");
+            const statusDial = document.getElementById("status-nursery-ac");
+            const progress = document.getElementById("progress-nursery-ac");
+            const btnDown = document.getElementById("btn-nursery-ac-down");
+            const btnUp = document.getElementById("btn-nursery-ac-up");
+
+            if (isChecked) {
+                if (btnDown) {
+                    btnDown.style.opacity = "1";
+                    btnDown.style.pointerEvents = "";
+                }
+                if (btnUp) {
+                    btnUp.style.opacity = "1";
+                    btnUp.style.pointerEvents = "";
+                }
+                updateNurseryAc(nurseryAcVal);
+            } else {
+                if (statusText) statusText.textContent = "Off";
+                if (valText) valText.textContent = "--";
+                if (statusDial) statusDial.textContent = "Off";
+                if (progress) progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                if (btnDown) {
+                    btnDown.style.opacity = "0.4";
+                    btnDown.style.pointerEvents = "none";
+                }
+                if (btnUp) {
+                    btnUp.style.opacity = "0.4";
+                    btnUp.style.pointerEvents = "none";
+                }
+            }
         }
-        else if (id === "widget-nursery-sound") {
-            const playBtn = document.getElementById("btn-nursery-play");
-            if (!isChecked) {
-                playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`; // Pause / Play icon
-                soundPlaying = false;
+        else if (id === "widget-nursery-purifier") {
+            const statusText = document.getElementById("status-nursery-purifier-text");
+            const valAqi = document.getElementById("val-purifier-aqi");
+            const gaugeProgress = document.getElementById("purifier-gauge-progress");
+            const valStatus = document.getElementById("val-purifier-status");
+
+            if (isChecked) {
+                if (statusText) statusText.textContent = "Active • Excellent";
+                if (valAqi) valAqi.textContent = "12 AQI";
+                if (gaugeProgress) {
+                    gaugeProgress.style.borderColor = "var(--accent-green)";
+                    gaugeProgress.style.borderBottomColor = "transparent";
+                    gaugeProgress.style.borderRightColor = "transparent";
+                }
+                if (valStatus) valStatus.textContent = "Good";
+            } else {
+                if (statusText) statusText.textContent = "Off";
+                if (valAqi) valAqi.textContent = "--";
+                if (gaugeProgress) {
+                    gaugeProgress.style.borderColor = "rgba(255, 255, 255, 0.15)";
+                    gaugeProgress.style.borderBottomColor = "transparent";
+                    gaugeProgress.style.borderRightColor = "transparent";
+                }
+                if (valStatus) valStatus.textContent = "Inactive";
             }
         }
 
         // Laundry updates
         else if (id === "widget-laundry-washer") {
-            document.getElementById("status-washer-mode").textContent = isChecked ? "Washing" : "Off";
-            document.getElementById("val-washer-time").textContent = isChecked ? "45m" : "--";
-            document.querySelector("#widget-laundry-washer .dial-progress").style.strokeDashoffset = isChecked ? 150 : 377;
+            const statusMode = document.getElementById("status-washer-mode");
+            const valTime = document.getElementById("val-washer-time");
+            const deviceImg = document.getElementById("img-laundry-washer");
+            const led = document.getElementById("washer-led");
+            const panelText = document.getElementById("washer-panel-text");
+            const doorRing = document.getElementById("washer-door-ring");
+            const chassis = document.getElementById("washer-chassis");
+
+            if (statusMode) statusMode.textContent = isChecked ? "Washing" : "Off";
+            if (valTime) valTime.textContent = isChecked ? "45m" : "--";
+
+            if (deviceImg) {
+                deviceImg.style.opacity = isChecked ? "1" : "0.2";
+                deviceImg.style.animationPlayState = isChecked ? "running" : "paused";
+            }
+            if (led) {
+                led.style.background = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.2)";
+                led.style.boxShadow = isChecked ? "0 0 5px var(--accent-blue)" : "none";
+            }
+            if (panelText) {
+                panelText.textContent = isChecked ? "45 MIN" : "OFF";
+                panelText.style.color = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.3)";
+            }
+            if (doorRing) {
+                doorRing.style.borderColor = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.2)";
+                doorRing.style.boxShadow = isChecked ? "0 0 12px rgba(0, 168, 255, 0.4)" : "none";
+            }
+            if (chassis) {
+                chassis.style.borderColor = isChecked ? "#2d3748" : "rgba(255, 255, 255, 0.1)";
+                chassis.style.boxShadow = isChecked ? "0 10px 20px rgba(0,0,0,0.5)" : "none";
+            }
         }
         else if (id === "widget-laundry-dryer") {
-            document.getElementById("status-dryer-mode").textContent = isChecked ? "Drying" : "Off";
-            document.getElementById("val-dryer-time").textContent = isChecked ? "1h 20m" : "--";
-            document.querySelector("#widget-laundry-dryer .dial-progress").style.strokeDashoffset = isChecked ? 220 : 377;
-        }
-        else if (id === "widget-laundry-iron") {
-            document.getElementById("status-iron-text").textContent = isChecked ? "Heating • 150°C" : "Off";
-        }
-        else if (id === "widget-laundry-steam") {
-            document.getElementById("status-steam-text").textContent = isChecked ? "Refresh Cycle • On" : "Off";
-        }
-        else if (id === "widget-laundry-robot") {
-            document.getElementById("status-robot-text").textContent = isChecked ? "Active • Folding" : "Docked • 100%";
+            const statusMode = document.getElementById("status-dryer-mode");
+            const valTime = document.getElementById("val-dryer-time");
+            const deviceImg = document.getElementById("img-laundry-dryer");
+            const led = document.getElementById("dryer-led");
+            const panelText = document.getElementById("dryer-panel-text");
+            const doorRing = document.getElementById("dryer-door-ring");
+            const chassis = document.getElementById("dryer-chassis");
+
+            if (statusMode) statusMode.textContent = isChecked ? "Drying" : "Off";
+            if (valTime) valTime.textContent = isChecked ? "1h 20m" : "--";
+
+            if (deviceImg) {
+                deviceImg.style.opacity = isChecked ? "1" : "0.2";
+                deviceImg.style.animationPlayState = isChecked ? "running" : "paused";
+            }
+            if (led) {
+                led.style.background = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.2)";
+                led.style.boxShadow = isChecked ? "0 0 5px var(--accent-orange)" : "none";
+            }
+            if (panelText) {
+                panelText.textContent = isChecked ? "1H 20M" : "OFF";
+                panelText.style.color = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.3)";
+            }
+            if (doorRing) {
+                doorRing.style.borderColor = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.2)";
+                doorRing.style.boxShadow = isChecked ? "0 0 12px rgba(245, 158, 11, 0.4)" : "none";
+            }
+            if (chassis) {
+                chassis.style.borderColor = isChecked ? "#2d3748" : "rgba(255, 255, 255, 0.1)";
+                chassis.style.boxShadow = isChecked ? "0 10px 20px rgba(0,0,0,0.5)" : "none";
+            }
         }
         else if (id === "widget-laundry-light") {
-            document.getElementById("status-laundry-light-text").textContent = isChecked ? "Bright White • On" : "Off";
+            updateLaundryLight();
         }
 
         updateSummaryBanner();
@@ -332,6 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (document.getElementById("widget-nursery-lights").classList.contains("active")) activeLights += 5;
         if (document.getElementById("widget-nursery-nightlight").classList.contains("active")) activeLights += 3;
         if (document.getElementById("widget-laundry-light") && document.getElementById("widget-laundry-light").classList.contains("active")) activeLights += 2;
+        if (document.getElementById("widget-kitchen-lamp") && document.getElementById("widget-kitchen-lamp").classList.contains("active")) activeLights += 1;
 
         const lightsBanner = document.getElementById("banner-lights-status");
         lightsBanner.textContent = activeLights > 0 ? `${activeLights} Lights On` : "All Lights Off";
@@ -347,6 +557,14 @@ document.addEventListener("DOMContentLoaded", () => {
             climateActive = true;
             temps.push(parseFloat(document.getElementById("val-bedroom-ac").textContent));
         }
+        if (document.getElementById("widget-nursery-ac") && document.getElementById("widget-nursery-ac").classList.contains("active")) {
+            const valEl = document.getElementById("val-nursery-ac");
+            const valStr = valEl ? valEl.textContent : "";
+            if (valStr && valStr !== "--") {
+                climateActive = true;
+                temps.push(parseFloat(valStr));
+            }
+        }
 
         const climateBanner = document.getElementById("banner-climate-status");
         if (climateActive && temps.length > 0) {
@@ -360,13 +578,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 6. SVG Circular Dials
     // -------------------------------------------------------------------------
-    const CIRCUMFERENCE = 377; // 2 * Math.PI * 60
-
     function setDialProgress(progressCircle, valText, statusText, val, min, max, unit, statusMsg, isOven = false) {
         // Map value to angle / stroke-dashoffset
+        const r = parseFloat(progressCircle.getAttribute("r")) || 60;
+        const circ = 2 * Math.PI * r;
         const ratio = (val - min) / (max - min);
-        const offset = CIRCUMFERENCE - (ratio * CIRCUMFERENCE);
+        const offset = circ - (ratio * circ);
 
+        progressCircle.style.strokeDasharray = circ;
         progressCircle.style.strokeDashoffset = offset;
         valText.textContent = `${val.toFixed(isOven ? 0 : 1)}${unit}`;
 
@@ -406,12 +625,49 @@ document.addEventListener("DOMContentLoaded", () => {
     const svgBedroomAc = document.getElementById("svg-bedroom-ac");
 
     function updateBedroomAc(val) {
+        const toggle = document.querySelector('#widget-bedroom-ac .toggle-control');
+        if (toggle && !toggle.checked) return;
+
         bedroomAcVal = Math.max(16.0, Math.min(30.0, val));
         let status = "Cooling";
         if (bedroomAcVal > 24.0) status = "Heating";
         else if (bedroomAcVal > 22.0) status = "Auto";
 
         setDialProgress(progressBedroomAc, valBedroomAc, statusBedroomAc, bedroomAcVal, 16.0, 30.0, "°", status);
+
+        const acLed = document.getElementById("ac-led-bedroom");
+        if (acLed) {
+            acLed.textContent = `${Math.round(bedroomAcVal)}°`;
+            acLed.style.color = "#00d4ff";
+            acLed.style.textShadow = "0 0 5px #00d4ff";
+        }
+
+        const acImg = document.getElementById("bedroom-ac-img");
+        if (acImg) {
+            acImg.style.background = "#fff";
+            acImg.style.borderColor = "#ddd";
+            const flap = acImg.querySelector("div");
+            const vents = acImg.querySelectorAll("div")[1];
+            if (flap) flap.style.opacity = "1";
+            if (vents) vents.style.opacity = "1";
+        }
+
+        const progress = document.getElementById("progress-bedroom-ac");
+        if (progress) {
+            progress.style.stroke = ""; // Clear inline stroke to fall back to CSS theme (accent blue)
+        }
+
+        const btnDown = document.getElementById("btn-bedroom-ac-down");
+        const btnUp = document.getElementById("btn-bedroom-ac-up");
+        if (btnDown) {
+            btnDown.style.opacity = "1";
+            btnDown.style.pointerEvents = "";
+        }
+        if (btnUp) {
+            btnUp.style.opacity = "1";
+            btnUp.style.pointerEvents = "";
+        }
+
         updateSummaryBanner();
     }
     updateBedroomAc(bedroomAcVal);
@@ -455,6 +711,111 @@ document.addEventListener("DOMContentLoaded", () => {
             updateOvenDialDisplay();
         }
     }, 1500);
+
+    // D. Kitchen Oven Timer Logic
+    let ovenTimer = 30; // default 30 mins
+    const valKitchenOvenTimer = document.getElementById("val-kitchen-oven-timer");
+
+    function updateOvenTimerDisplay() {
+        if (!valKitchenOvenTimer) return;
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && toggle.checked) {
+            valKitchenOvenTimer.textContent = `${ovenTimer}m`;
+            valKitchenOvenTimer.style.display = "";
+        } else {
+            valKitchenOvenTimer.textContent = "Off";
+            valKitchenOvenTimer.style.display = "none"; // Hide timer when oven is off to keep dial clean
+        }
+    }
+
+    // Set up click listeners for the timer buttons
+    const btnTimerUp = document.getElementById("btn-kitchen-timer-up");
+    const btnTimerDown = document.getElementById("btn-kitchen-timer-down");
+
+    if (btnTimerUp) {
+        btnTimerUp.addEventListener("click", () => {
+            const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+            if (toggle && !toggle.checked) return; // Only allow when Oven is ON
+            ovenTimer = Math.min(120, ovenTimer + 5);
+            updateOvenTimerDisplay();
+        });
+    }
+
+    if (btnTimerDown) {
+        btnTimerDown.addEventListener("click", () => {
+            const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+            if (toggle && !toggle.checked) return; // Only allow when Oven is ON
+            ovenTimer = Math.max(5, ovenTimer - 5);
+            updateOvenTimerDisplay();
+        });
+    }
+
+    // Countdown logic: decrement the timer every minute (60 seconds) if the oven is active
+    setInterval(() => {
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && toggle.checked && ovenTimer > 0) {
+            ovenTimer -= 1;
+            updateOvenTimerDisplay();
+            
+            // If timer reaches 0, turn off the oven
+            if (ovenTimer === 0) {
+                toggle.checked = false;
+                toggle.dispatchEvent(new Event("change"));
+                ovenTimer = 30; // reset for next use
+                updateOvenTimerDisplay();
+            }
+        }
+    }, 60000);
+
+    // Initial render call for timer
+    updateOvenTimerDisplay();
+
+    // E. Nursery AC (Range: 16.0 to 30.0)
+    let nurseryAcVal = 22.0;
+    const progressNurseryAc = document.getElementById("progress-nursery-ac");
+    const valNurseryAc = document.getElementById("val-nursery-ac");
+    const statusNurseryAc = document.getElementById("status-nursery-ac");
+    const svgNurseryAc = document.getElementById("svg-nursery-ac");
+
+    function updateNurseryAc(val) {
+        const toggle = document.querySelector('#widget-nursery-ac .toggle-control');
+        if (toggle && !toggle.checked) return;
+
+        nurseryAcVal = Math.max(16.0, Math.min(30.0, val));
+        let status = "Cooling";
+        if (nurseryAcVal > 24.0) status = "Heating";
+        else if (nurseryAcVal > 22.0) status = "Auto";
+
+        setDialProgress(progressNurseryAc, valNurseryAc, statusNurseryAc, nurseryAcVal, 16.0, 30.0, "°", status);
+
+        const statusText = document.getElementById("status-nursery-ac-text");
+        if (statusText) {
+            statusText.textContent = `${status} • ${Math.round(nurseryAcVal)}°C`;
+        }
+
+        const btnDown = document.getElementById("btn-nursery-ac-down");
+        const btnUp = document.getElementById("btn-nursery-ac-up");
+        if (btnDown) {
+            btnDown.style.opacity = "1";
+            btnDown.style.pointerEvents = "";
+        }
+        if (btnUp) {
+            btnUp.style.opacity = "1";
+            btnUp.style.pointerEvents = "";
+        }
+
+        updateSummaryBanner();
+    }
+    updateNurseryAc(nurseryAcVal);
+
+    const btnNurseryAcUp = document.getElementById("btn-nursery-ac-up");
+    const btnNurseryAcDown = document.getElementById("btn-nursery-ac-down");
+    if (btnNurseryAcUp) {
+        btnNurseryAcUp.addEventListener("click", () => updateNurseryAc(nurseryAcVal + 0.5));
+    }
+    if (btnNurseryAcDown) {
+        btnNurseryAcDown.addEventListener("click", () => updateNurseryAc(nurseryAcVal - 0.5));
+    }
 
     // -------------------------------------------------------------------------
     // 7. Interactive Dials Angle Drag Handling
@@ -515,32 +876,60 @@ document.addEventListener("DOMContentLoaded", () => {
     setupDialDrag(svgLivingAc, updateLivingAc, 16.0, 30.0);
     setupDialDrag(svgBedroomAc, updateBedroomAc, 16.0, 30.0);
     setupDialDrag(svgKitchenOven, updateOven, 50, 250);
+    setupDialDrag(svgNurseryAc, updateNurseryAc, 16.0, 30.0);
 
     // -------------------------------------------------------------------------
-    // 8. Fridge Target Selector
+    // 8. Kitchen Lamp Control
     // -------------------------------------------------------------------------
-    const fridgeSlider = document.getElementById("slider-fridge-set");
-    const fridgeLabel = document.getElementById("label-fridge-set");
+    const toggleKitchenLights = document.getElementById("toggle-kitchen-lights");
+    const sliderKitchenBrightness = document.getElementById("slider-kitchen-brightness");
+    const valKitchenBrightness = document.getElementById("val-kitchen-brightness");
+    const widgetKitchenLamp = document.getElementById("widget-kitchen-lamp");
 
-    fridgeSlider.addEventListener("input", (e) => {
-        const val = e.target.value;
-        fridgeLabel.textContent = `${val}°C`;
-        document.getElementById("val-fridge-temp").textContent = `${val}°C`;
-    });
+    function updateKitchenLight() {
+        if (!sliderKitchenBrightness || !valKitchenBrightness || !widgetKitchenLamp) return;
+        const val = sliderKitchenBrightness.value;
+        valKitchenBrightness.textContent = `${val}%`;
 
-    // -------------------------------------------------------------------------
-    // 9. Kitchen Brightness Slider
-    // -------------------------------------------------------------------------
-    const kitchenBrightSlider = document.getElementById("slider-kitchen-brightness");
-    const kitchenBrightLabel = document.getElementById("val-kitchen-brightness");
-    const iosBrightnessFill = document.getElementById("ios-brightness-fill");
+        // Update iOS fill bar
+        const fillBar = document.getElementById("ios-kitchen-brightness-fill");
+        if (fillBar) fillBar.style.width = `${val}%`;
 
-    kitchenBrightSlider.addEventListener("input", (e) => {
-        kitchenBrightLabel.textContent = `${e.target.value}%`;
-        if (iosBrightnessFill) {
-            iosBrightnessFill.style.width = `${e.target.value}%`;
+        const isOn = toggleKitchenLights ? toggleKitchenLights.checked : true;
+
+        // Toggle slider container interactivity
+        const sliderContainer = sliderKitchenBrightness.parentElement;
+        if (sliderContainer) {
+            sliderContainer.style.opacity = isOn ? "1" : "0.4";
+            sliderContainer.style.pointerEvents = isOn ? "auto" : "none";
         }
-    });
+
+        // Toggle bulb icon appearance
+        const icon = document.getElementById("kitchen-light-icon");
+        if (icon) {
+            icon.style.opacity = isOn ? "1" : "0.3";
+            icon.style.filter = isOn ? `drop-shadow(0 2px ${2 + (val / 10)}px rgba(255, 183, 0, ${0.2 + (val / 125)}))` : "none";
+        }
+
+        if (!isOn) {
+            widgetKitchenLamp.style.boxShadow = "none";
+            widgetKitchenLamp.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            widgetKitchenLamp.classList.remove("active");
+        } else {
+            widgetKitchenLamp.classList.add("active");
+            const opacity = val / 100;
+            const glowSize = 10 + (opacity * 30); // 10px to 40px
+            // Yellow light (hsl(45, 100%, 70%))
+            widgetKitchenLamp.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+            widgetKitchenLamp.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+        }
+        updateSummaryBanner();
+    }
+
+    if (toggleKitchenLights) toggleKitchenLights.addEventListener("change", updateKitchenLight);
+    if (sliderKitchenBrightness) {
+        sliderKitchenBrightness.addEventListener("input", updateKitchenLight);
+    }
 
     // -------------------------------------------------------------------------
     // 10. Bedroom Color Bar Picker & Smart Lights Toggle
@@ -551,13 +940,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleBedroomLights = document.getElementById("toggle-bedroom-lights");
     const bedBrightnessSlider = document.getElementById("slider-bedroom-brightness");
     const bedBrightnessLabel = document.getElementById("label-bedroom-brightness");
-    
+
     let isColorDragging = false;
 
     if (toggleBedroomLights) {
         toggleBedroomLights.addEventListener("change", (e) => {
             const isChecked = e.target.checked;
             if (colorBar) colorBar.style.opacity = isChecked ? "1" : "0.3";
+            const brightSlider = document.getElementById("slider-bedroom-brightness");
+            const brightContainer = brightSlider ? brightSlider.parentElement : null;
+            if (brightContainer) {
+                brightContainer.style.opacity = isChecked ? "1" : "0.4";
+                brightContainer.style.pointerEvents = isChecked ? "auto" : "none";
+            }
             if (bedroomLightsWidget) {
                 if (!isChecked) {
                     bedroomLightsWidget.style.boxShadow = "none";
@@ -594,7 +989,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update color indicator color and widget shadow based on brightness
         colorIndicator.style.backgroundColor = colorString;
-        
+
         // Let the brightness slider update the shadow
         if (bedBrightnessSlider) {
             bedBrightnessSlider.dispatchEvent(new Event("input"));
@@ -604,45 +999,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    colorBar.addEventListener("mousedown", (e) => {
-        isColorDragging = true;
-        handleColorPick(e.clientX);
-    });
+    if (colorBar) {
+        colorBar.addEventListener("mousedown", (e) => {
+            isColorDragging = true;
+            handleColorPick(e.clientX);
+        });
 
-    window.addEventListener("mousemove", (e) => {
-        if (!isColorDragging) return;
-        handleColorPick(e.clientX);
-    });
+        window.addEventListener("mousemove", (e) => {
+            if (!isColorDragging) return;
+            handleColorPick(e.clientX);
+        });
 
-    window.addEventListener("mouseup", () => {
-        isColorDragging = false;
-    });
+        window.addEventListener("mouseup", () => {
+            isColorDragging = false;
+        });
 
-    // Touch support for color bar
-    colorBar.addEventListener("touchstart", (e) => {
-        isColorDragging = true;
-        if (e.touches.length > 0) {
-            handleColorPick(e.touches[0].clientX);
-        }
-    });
+        // Touch support for color bar
+        colorBar.addEventListener("touchstart", (e) => {
+            isColorDragging = true;
+            if (e.touches.length > 0) {
+                handleColorPick(e.touches[0].clientX);
+            }
+        });
 
-    window.addEventListener("touchmove", (e) => {
-        if (!isColorDragging) return;
-        if (e.touches.length > 0) {
-            handleColorPick(e.touches[0].clientX);
-        }
-    });
+        window.addEventListener("touchmove", (e) => {
+            if (!isColorDragging) return;
+            if (e.touches.length > 0) {
+                handleColorPick(e.touches[0].clientX);
+            }
+        });
 
-    window.addEventListener("touchend", () => {
-        isColorDragging = false;
-    });
+        window.addEventListener("touchend", () => {
+            isColorDragging = false;
+        });
+    }
 
     // Bedroom Brightness slider
     if (bedBrightnessSlider) {
         bedBrightnessSlider.addEventListener("input", (e) => {
             const val = e.target.value;
             bedBrightnessLabel.textContent = `${val}%`;
-            
+
+            const iosBrightFill = document.getElementById("ios-bedroom-brightness-fill");
+            if (iosBrightFill) {
+                iosBrightFill.style.width = `${val}%`;
+            }
+
             const isLightsOn = toggleBedroomLights ? toggleBedroomLights.checked : true;
             if (isLightsOn && bedroomLightsWidget) {
                 const opacity = val / 100;
@@ -650,9 +1052,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (colorIndicator && colorIndicator.style.backgroundColor) {
                     currentColor = colorIndicator.style.backgroundColor;
                 }
-                
+
                 bedroomLightsWidget.style.borderColor = currentColor;
-                
+
                 // Adjust shadow based on brightness
                 let shadowColor;
                 if (currentColor.startsWith('hsl')) {
@@ -664,7 +1066,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (currentColor.startsWith('rgb')) {
                     shadowColor = currentColor.replace('rgb', 'rgba').replace(')', `, ${Math.max(0.2, opacity)})`);
                 }
-                
+
                 if (shadowColor) {
                     const glowSize = 10 + (opacity * 30); // 10px to 40px
                     bedroomLightsWidget.style.boxShadow = `0 0 ${glowSize}px ${shadowColor}`;
@@ -676,31 +1078,53 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 10.5. Nursery Lighting Control
     // -------------------------------------------------------------------------
-    
+
     // Ceiling Light
     const toggleNurseryLight1 = document.getElementById("toggle-nursery-light1");
     const sliderNurseryLight1 = document.getElementById("slider-nursery-light1");
     const labelNurseryLight1 = document.getElementById("val-nursery-light1");
     const widgetNurseryLight1 = document.getElementById("widget-nursery-lights");
-    
+
     function updateNurseryLight1() {
         if (!sliderNurseryLight1 || !labelNurseryLight1 || !widgetNurseryLight1) return;
         const val = sliderNurseryLight1.value;
         labelNurseryLight1.textContent = `${val}%`;
-        
+
+        // Update iOS fill bar
+        const fillBar = document.getElementById("ios-nursery-light1-fill");
+        if (fillBar) fillBar.style.width = `${val}%`;
+
         const isOn = toggleNurseryLight1 ? toggleNurseryLight1.checked : true;
+
+        // Toggle slider container interactivity
+        const sliderContainer = sliderNurseryLight1.parentElement;
+        if (sliderContainer) {
+            sliderContainer.style.opacity = isOn ? "1" : "0.4";
+            sliderContainer.style.pointerEvents = isOn ? "auto" : "none";
+        }
+
+        // Toggle bulb icon appearance
+        const icon = document.getElementById("nursery-light1-icon");
+        if (icon) {
+            icon.style.opacity = isOn ? "1" : "0.3";
+            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
+        }
+
         if (!isOn) {
             widgetNurseryLight1.style.boxShadow = "none";
             widgetNurseryLight1.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            widgetNurseryLight1.classList.remove("active");
         } else {
+            widgetNurseryLight1.classList.add("active");
             const opacity = val / 100;
             const glowSize = 10 + (opacity * 30); // 10px to 40px
             // Warm white (hsl(45, 100%, 70%))
             widgetNurseryLight1.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
             widgetNurseryLight1.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
         }
+        updateSummaryBanner();
     }
-    
+
     if (toggleNurseryLight1) toggleNurseryLight1.addEventListener("change", updateNurseryLight1);
     if (sliderNurseryLight1) sliderNurseryLight1.addEventListener("input", updateNurseryLight1);
 
@@ -709,28 +1133,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const sliderNurseryLight2 = document.getElementById("slider-nursery-light2");
     const labelNurseryLight2 = document.getElementById("val-nursery-light2");
     const widgetNurseryLight2 = document.getElementById("widget-nursery-nightlight");
-    
+
     function updateNurseryLight2() {
         if (!sliderNurseryLight2 || !labelNurseryLight2 || !widgetNurseryLight2) return;
         const val = sliderNurseryLight2.value;
         labelNurseryLight2.textContent = `${val}%`;
-        
+
+        // Update iOS fill bar
+        const fillBar = document.getElementById("ios-nursery-light2-fill");
+        if (fillBar) fillBar.style.width = `${val}%`;
+
         const isOn = toggleNurseryLight2 ? toggleNurseryLight2.checked : true;
+
+        // Toggle slider container interactivity
+        const sliderContainer = sliderNurseryLight2.parentElement;
+        if (sliderContainer) {
+            sliderContainer.style.opacity = isOn ? "1" : "0.4";
+            sliderContainer.style.pointerEvents = isOn ? "auto" : "none";
+        }
+
+        // Toggle moon icon appearance
+        const icon = document.getElementById("nursery-light2-icon");
+        if (icon) {
+            icon.style.opacity = isOn ? "1" : "0.3";
+            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
+        }
+
         if (!isOn) {
             widgetNurseryLight2.style.boxShadow = "none";
             widgetNurseryLight2.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            widgetNurseryLight2.classList.remove("active");
         } else {
+            widgetNurseryLight2.classList.add("active");
             const opacity = val / 100;
             const glowSize = 10 + (opacity * 30); // 10px to 40px
             // Soft Amber (hsl(30, 100%, 50%))
             widgetNurseryLight2.style.borderColor = `hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
             widgetNurseryLight2.style.boxShadow = `0 0 ${glowSize}px hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
         }
+        updateSummaryBanner();
     }
 
     if (toggleNurseryLight2) toggleNurseryLight2.addEventListener("change", updateNurseryLight2);
     if (sliderNurseryLight2) sliderNurseryLight2.addEventListener("input", updateNurseryLight2);
-    
+
     // Initialize Nursery Lights on load
     updateNurseryLight1();
     updateNurseryLight2();
@@ -738,21 +1184,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // Living Room New Widgets Logic
     // -------------------------------------------------------------------------
-    
+
     // Living Room Lamp Brightness slider
     const livingLampSlider = document.getElementById("slider-living-lamp");
     if (livingLampSlider) {
         const livingLampLabel = document.getElementById("label-living-lamp");
         const livingLampIcon = document.getElementById("living-lamp-icon");
+        const iosBrightnessFill = document.getElementById("ios-brightness-fill");
+        const lampSliderTrack = document.getElementById("lamp-slider-track");
+
         livingLampSlider.addEventListener("input", (e) => {
             const val = e.target.value;
             livingLampLabel.textContent = `${val}%`;
+            if (iosBrightnessFill) iosBrightnessFill.style.width = `${val}%`;
+
             const isLampActive = document.querySelector("#widget-living-lamp input").checked;
             if (isLampActive) {
-                const glowOpacity = val / 100;
-                const glowSize = 20 + (val / 100 * 40); // 20px to 60px
-                livingLampIcon.style.textShadow = `0 0 ${glowSize}px rgba(255,183,0,${glowOpacity})`;
-                livingLampIcon.style.opacity = Math.max(0.2, glowOpacity);
+                // Adjust brightness to be significantly more bright once user slides above 40%
+                let extraBrightness = 0;
+                if (val > 40) {
+                    extraBrightness = (val - 40) / 60; // 0.0 to 1.0 multiplier
+                }
+
+                const glowOpacity = Math.min(1.0, (val / 100) + (extraBrightness * 0.8)).toFixed(2);
+                const glowSize = Math.round(20 + (val / 100 * 40) + (extraBrightness * 60)); // Max 120px
+
+                const r = 255;
+                const g = Math.round(183 + (extraBrightness * 72)); // 183 to 255
+                const b = Math.round(extraBrightness * 150); // 0 to 150
+                const bulbColor = `rgba(${r}, ${g}, ${b}, ${glowOpacity})`;
+
+                livingLampIcon.style.textShadow = `0 0 ${glowSize}px ${bulbColor}, 0 0 ${glowSize / 2}px ${bulbColor}`;
+                livingLampIcon.style.opacity = Math.min(1.0, Math.max(0.2, (val / 100) + extraBrightness)).toFixed(2);
+                livingLampIcon.style.transform = `scale(1.1)`; // Keep size constant
+                livingLampIcon.style.filter = "none";
+
+                const lampSliderContainer = document.getElementById("lamp-slider-container");
+                if (lampSliderContainer) {
+                    lampSliderContainer.style.opacity = "1";
+                    lampSliderContainer.style.filter = "none";
+                }
+
+                if (lampSliderTrack) {
+                    const trackGlowSize = Math.round(5 + (extraBrightness * 15));
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 ${trackGlowSize}px ${bulbColor}`;
+                }
+            } else {
+                if (lampSliderTrack) {
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0)`;
+                }
+                if (livingLampIcon) {
+                    livingLampIcon.style.textShadow = "none";
+                    livingLampIcon.style.opacity = "0.2";
+                    livingLampIcon.style.filter = "grayscale(100%)";
+                }
+                const lampSliderContainer = document.getElementById("lamp-slider-container");
+                if (lampSliderContainer) {
+                    lampSliderContainer.style.opacity = "0.3";
+                    lampSliderContainer.style.filter = "grayscale(100%)";
+                }
             }
         });
     }
@@ -761,8 +1251,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const livingVolumeSlider = document.getElementById("slider-living-volume");
     if (livingVolumeSlider) {
         const livingVolumeLabel = document.getElementById("label-living-volume");
+        const iosVolFill = document.getElementById("ios-volume-fill");
         livingVolumeSlider.addEventListener("input", (e) => {
-            livingVolumeLabel.textContent = `${e.target.value}%`;
+            const val = e.target.value;
+            livingVolumeLabel.textContent = `${val}%`;
+            if (iosVolFill) iosVolFill.style.width = `${val}%`;
         });
     }
 
@@ -788,101 +1281,68 @@ document.addEventListener("DOMContentLoaded", () => {
     const audioPlayBtn = document.getElementById("btn-audio-play");
     const audioStatus = document.getElementById("status-bedroom-audio");
 
-    audioPlayBtn.addEventListener("click", () => {
-        const isSpeakerOn = document.querySelector("#widget-bedroom-speaker input").checked;
-        if (!isSpeakerOn) return;
+    if (audioPlayBtn) {
+        audioPlayBtn.addEventListener("click", () => {
+            const speakerToggle = document.querySelector("#widget-bedroom-speaker input");
+            const isSpeakerOn = speakerToggle ? speakerToggle.checked : false;
+            if (!isSpeakerOn) return;
 
-        audioPlaying = !audioPlaying;
-        if (audioPlaying) {
-            // Set pause SVG icon
-            audioPlayBtn.innerHTML = `
-                <svg viewBox="0 0 24 24">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            `;
-            audioStatus.textContent = "Amazon Echo • Playing: Lofi Beats";
-        } else {
-            // Set play SVG icon
-            audioPlayBtn.innerHTML = `
-                <svg viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
-            `;
-            audioStatus.textContent = "Amazon Echo • Paused";
-        }
-    });
+            audioPlaying = !audioPlaying;
+            if (audioPlaying) {
+                // Set pause SVG icon
+                audioPlayBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                `;
+                if (audioStatus) audioStatus.textContent = "Amazon Echo • Playing: Lofi Beats";
+            } else {
+                // Set play SVG icon
+                audioPlayBtn.innerHTML = `
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                `;
+                if (audioStatus) audioStatus.textContent = "Amazon Echo • Paused";
+            }
+        });
+    }
+
+    // Bedroom Speaker Volume Slider
+    const bedVolumeSlider = document.getElementById("slider-bedroom-volume");
+    if (bedVolumeSlider) {
+        const bedVolumeLabel = document.getElementById("label-bedroom-volume");
+        const iosVolFill = document.getElementById("ios-bedroom-volume-fill");
+        bedVolumeSlider.addEventListener("input", (e) => {
+            const val = e.target.value;
+            if (bedVolumeLabel) bedVolumeLabel.textContent = `${val}%`;
+            if (iosVolFill) iosVolFill.style.width = `${val}%`;
+        });
+        // Initial setup
+        bedVolumeSlider.dispatchEvent(new Event("input"));
+    }
 
     // TV Channels
     let currentChannel = 4;
     const channelLabel = document.getElementById("val-tv-channel");
-    document.getElementById("btn-tv-channel-up").addEventListener("click", () => {
-        currentChannel = (currentChannel % 10) + 1;
-        channelLabel.textContent = `CH ${String(currentChannel).padStart(2, "0")}`;
-    });
-    document.getElementById("btn-tv-channel-down").addEventListener("click", () => {
-        currentChannel = currentChannel - 1 || 10;
-        channelLabel.textContent = `CH ${String(currentChannel).padStart(2, "0")}`;
-    });
-
-    // -------------------------------------------------------------------------
-    // 12. Nursery Sound Machine
-    // -------------------------------------------------------------------------
-    let soundPlaying = false;
-    const nurseryPlayBtn = document.getElementById("btn-nursery-play");
-    const nurserySoundBtns = [
-        document.getElementById("btn-sound-white"),
-        document.getElementById("btn-sound-lullaby"),
-        document.getElementById("btn-sound-rain")
-    ];
-
-    nurseryPlayBtn.addEventListener("click", () => {
-        const isSoundOn = document.querySelector("#widget-nursery-sound input").checked;
-        if (!isSoundOn) return;
-
-        soundPlaying = !soundPlaying;
-        if (soundPlaying) {
-            nurseryPlayBtn.innerHTML = `
-                <svg viewBox="0 0 24 24">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-            `;
-        } else {
-            nurseryPlayBtn.innerHTML = `
-                <svg viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
-            `;
-        }
-    });
-
-    nurserySoundBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            nurserySoundBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+    const tvChannelUpBtn = document.getElementById("btn-tv-channel-up");
+    const tvChannelDownBtn = document.getElementById("btn-tv-channel-down");
+    if (tvChannelUpBtn && channelLabel) {
+        tvChannelUpBtn.addEventListener("click", () => {
+            currentChannel = (currentChannel % 10) + 1;
+            channelLabel.textContent = `CH ${String(currentChannel).padStart(2, "0")}`;
         });
-    });
+    }
+    if (tvChannelDownBtn && channelLabel) {
+        tvChannelDownBtn.addEventListener("click", () => {
+            currentChannel = currentChannel - 1 || 10;
+            channelLabel.textContent = `CH ${String(currentChannel).padStart(2, "0")}`;
+        });
+    }
 
-    // Nursery Dimmer labels
-    const dim1 = document.getElementById("slider-nursery-light1");
-    const valDim1 = document.getElementById("val-nursery-light1");
-    dim1.addEventListener("input", (e) => {
-        valDim1.textContent = `${e.target.value}%`;
-        updateSummaryBanner();
-    });
-
-    const dim2 = document.getElementById("slider-nursery-light2");
-    const valDim2 = document.getElementById("val-nursery-light2");
-    dim2.addEventListener("input", (e) => {
-        valDim2.textContent = `${e.target.value}%`;
-        updateSummaryBanner();
-    });
-
-    // Nursery humidity slider
-    const humSlider = document.getElementById("slider-nursery-humidity");
-    const humLabel = document.getElementById("label-nursery-humidity");
-    humSlider.addEventListener("input", (e) => {
-        humLabel.textContent = `${e.target.value}%`;
-    });
+    // -------------------------------------------------------------------------
+    // 12. Nursery Sound Machine (Removed)
+    // -------------------------------------------------------------------------
 
     // Laundry Fan
     const laundryFanSlider = document.getElementById("slider-laundry-fan");
@@ -893,6 +1353,62 @@ document.addEventListener("DOMContentLoaded", () => {
             laundryFanLabel.textContent = fanModes[e.target.value];
         });
     }
+    // Laundry Overhead Light Control
+    const toggleLaundryLight = document.getElementById("toggle-laundry-light");
+    const sliderLaundryLight = document.getElementById("slider-laundry-light");
+    const labelLaundryLight = document.getElementById("val-laundry-light");
+    const widgetLaundryLight = document.getElementById("widget-laundry-light");
+
+    function updateLaundryLight() {
+        if (!sliderLaundryLight || !labelLaundryLight || !widgetLaundryLight) return;
+        const val = sliderLaundryLight.value;
+        labelLaundryLight.textContent = `${val}%`;
+
+        // Update iOS fill bar
+        const fillBar = document.getElementById("ios-laundry-light-fill");
+        if (fillBar) fillBar.style.width = `${val}%`;
+
+        const isOn = toggleLaundryLight ? toggleLaundryLight.checked : true;
+
+        // Toggle slider container interactivity
+        const sliderContainer = sliderLaundryLight.parentElement;
+        if (sliderContainer) {
+            sliderContainer.style.opacity = isOn ? "1" : "0.4";
+            sliderContainer.style.pointerEvents = isOn ? "auto" : "none";
+        }
+
+        // Toggle bulb icon appearance
+        const icon = document.getElementById("laundry-light-icon");
+        if (icon) {
+            icon.style.opacity = isOn ? "1" : "0.3";
+            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
+        }
+
+        const statusText = document.getElementById("status-laundry-light-text");
+        if (statusText) {
+            statusText.textContent = isOn ? "Bright White" : "Off";
+        }
+
+        if (!isOn) {
+            widgetLaundryLight.style.boxShadow = "none";
+            widgetLaundryLight.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            widgetLaundryLight.classList.remove("active");
+        } else {
+            widgetLaundryLight.classList.add("active");
+            const opacity = val / 100;
+            const glowSize = 10 + (opacity * 30); // 10px to 40px
+            // Yellow light (hsl(45, 100%, 70%))
+            widgetLaundryLight.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+            widgetLaundryLight.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+        }
+    }
+
+    if (toggleLaundryLight) toggleLaundryLight.addEventListener("change", updateLaundryLight);
+    if (sliderLaundryLight) sliderLaundryLight.addEventListener("input", updateLaundryLight);
+
+    // Initial sync
+    updateLaundryLight();
+    updateKitchenLight();
 
     // -------------------------------------------------------------------------
     // 13. Simulated Sensors Oscillation (Aesthetic Polish)
@@ -903,7 +1419,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (noiseElement) {
             const baseNoise = 12;
             const diff = (Math.random() * 4 - 2); // -2 to +2
-            const isAsleep = document.getElementById("widget-nursery-sound").classList.contains("active");
+            const widgetNurserySound = document.getElementById("widget-nursery-sound");
+            const isAsleep = widgetNurserySound ? widgetNurserySound.classList.contains("active") : false;
             const modifier = isAsleep ? 3 : 0; // sound machine adds minor decibels
             noiseElement.textContent = `${Math.round(baseNoise + diff + modifier)} dB`;
         }
@@ -939,7 +1456,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 10);
 
         callCountdown = 5;
-        
+
         if (type === "911") {
             if (callTitle) callTitle.textContent = "Calling 911";
             if (callIcon) callIcon.textContent = "📞";
@@ -975,7 +1492,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (emergencyCallBtn) {
             emergencyCallBtn.addEventListener("click", () => startEmergencySequence("911"));
         }
-        
+
         if (kitchenFireAlarmBtn) {
             kitchenFireAlarmBtn.addEventListener("click", () => startEmergencySequence("fire"));
         }
@@ -1158,4 +1675,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial sync
     updateSummaryBanner();
+
+    // Initial sync for iOS style range sliders
+    if (bedBrightnessSlider) {
+        bedBrightnessSlider.dispatchEvent(new Event("input"));
+    }
+
+    // -------------------------------------------------------------------------
+    // 17. CCTV Modal — close-button & backdrop wired up here
+    // -------------------------------------------------------------------------
+    const cctvCloseBtn = document.getElementById('btn-close-cctv-modal');
+    const cctvOverlay = document.getElementById('cctv-modal-overlay');
+
+    if (cctvCloseBtn) cctvCloseBtn.addEventListener('click', closeCctvModal);
+
+    if (cctvOverlay) {
+        cctvOverlay.addEventListener('click', (e) => {
+            if (e.target === cctvOverlay) closeCctvModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeCctvModal();
+    });
 });
