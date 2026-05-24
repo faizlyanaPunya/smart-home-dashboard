@@ -1426,4 +1426,9 @@ input:checked+.slider:before {
         height: 24px !important;
         font-size: 12px !important;
     }
+
+    .camera-widget {
+        padding: 0 !important;
+        min-height: unset !important;
+    }
 }
