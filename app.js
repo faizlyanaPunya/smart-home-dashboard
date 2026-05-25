@@ -360,16 +360,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (id === "widget-bedroom-speaker") {
             document.getElementById("status-bedroom-audio").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
-            const speakerDisc = document.getElementById("speaker-disc-bedroom");
-            if (speakerDisc) {
-                speakerDisc.style.animationPlayState = isChecked ? "running" : "paused";
-                speakerDisc.style.opacity = isChecked ? "1" : "0.5";
+            const speakerGraphic = document.getElementById("speaker-graphic-container-bedroom");
+            const speakerSlider = document.getElementById("speaker-slider-container-bedroom");
+            if (speakerGraphic) {
+                speakerGraphic.style.opacity = isChecked ? "1" : "0.5";
+                speakerGraphic.style.filter = isChecked ? "none" : "grayscale(100%)";
             }
-            const volSlider = document.getElementById("slider-bedroom-volume");
-            const volContainer = volSlider ? volSlider.parentElement : null;
-            if (volContainer) {
-                volContainer.style.opacity = isChecked ? "1" : "0.4";
-                volContainer.style.pointerEvents = isChecked ? "auto" : "none";
+            if (speakerSlider) {
+                speakerSlider.style.opacity = isChecked ? "1" : "0.3";
+                speakerSlider.style.pointerEvents = isChecked ? "auto" : "none";
             }
         }
         else if (id === "widget-bedroom-tv") {
@@ -469,7 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const disc = document.getElementById("nursery-sound-disc");
             const volContainer = document.getElementById("slider-nursery-volume")?.parentElement?.parentElement;
             const pillsContainer = document.getElementById("nursery-sound-pills");
-            
+
             if (isChecked) {
                 if (statusText) statusText.textContent = document.querySelector("#nursery-sound-pills .sound-pill.active")?.textContent || "Lullaby";
                 if (disc) {
@@ -517,13 +516,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mainStatus) mainStatus.textContent = isChecked ? "Ready" : "Off";
             if (statusMode) statusMode.textContent = isChecked ? "Ready" : "Off";
             if (valTime) valTime.textContent = "--";
-            
+
             if (waveAnim) waveAnim.style.animationPlayState = "paused";
             if (progressRing) progressRing.style.opacity = isChecked ? "1" : "0.5";
-            
+
             btnPills.forEach(btn => btn.style.pointerEvents = isChecked ? "auto" : "none");
             btnPills.forEach(btn => btn.style.opacity = isChecked ? "1" : "0.5");
-            
+
             if (typeof window.resetWasherBtns === "function") window.resetWasherBtns();
         }
         else if (id === "widget-laundry-dryer") {
@@ -543,13 +542,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mainStatus) mainStatus.textContent = isChecked ? "Ready" : "Off";
             if (statusMode) statusMode.textContent = isChecked ? "Ready" : "Off";
             if (valTime) valTime.textContent = "--";
-            
+
             if (waveAnim) waveAnim.style.animationPlayState = "paused";
             if (progressRing) progressRing.style.opacity = isChecked ? "1" : "0.5";
-            
+
             btnPills.forEach(btn => btn.style.pointerEvents = isChecked ? "auto" : "none");
             btnPills.forEach(btn => btn.style.opacity = isChecked ? "1" : "0.5");
-            
+
             if (typeof window.resetDryerBtns === "function") window.resetDryerBtns();
         }
         else if (id === "widget-laundry-light") {
@@ -1424,7 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (light1Toggle && light1Toggle.checked) {
                 light1Toggle.click(); // toggle off
             }
-            
+
             // 2. Dim Nightlight to 15%
             const nightlightToggle = document.getElementById("toggle-nursery-light2");
             if (nightlightToggle && !nightlightToggle.checked) {
@@ -1451,7 +1450,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const lullabyPill = document.querySelector('#nursery-sound-pills .sound-pill[data-track="lullaby"]');
             if (lullabyPill) lullabyPill.click();
-            
+
             // Visual feedback on button
             btnNurserySleep.style.transform = "scale(0.95)";
             setTimeout(() => {
@@ -1899,12 +1898,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     // 18. Landscape Dashboard Pill Clicks & Buttons
     // -------------------------------------------------------------------------
-    
+
     // Washer Pills
     const washerPills = document.querySelectorAll("#washer-pills .cycle-pill");
     const washerCycleVal = document.getElementById("washer-info-cycle");
     const washerTempVal = document.getElementById("washer-info-temp");
-    
+
     washerPills.forEach(pill => {
         pill.addEventListener("click", () => {
             washerPills.forEach(p => {
@@ -1913,12 +1912,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 p.style.color = "#aaa";
                 p.style.border = "1px solid rgba(255,255,255,0.1)";
             });
-            
+
             pill.classList.add("active");
             pill.style.background = "rgba(0,168,255,0.2)";
             pill.style.color = "var(--accent-blue)";
             pill.style.border = "1px solid var(--accent-blue)";
-            
+
             const cycle = pill.dataset.cycle;
             if (washerCycleVal) {
                 if (cycle === "eco") { washerCycleVal.textContent = "Cotton Eco"; washerTempVal.textContent = "40°C"; }
@@ -1932,7 +1931,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dryerPills = document.querySelectorAll("#dryer-pills .cycle-pill");
     const dryerCycleVal = document.getElementById("dryer-info-cycle");
     const dryerHeatVal = document.getElementById("dryer-info-heat");
-    
+
     dryerPills.forEach(pill => {
         pill.addEventListener("click", () => {
             dryerPills.forEach(p => {
@@ -1941,12 +1940,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 p.style.color = "#aaa";
                 p.style.border = "1px solid rgba(255,255,255,0.1)";
             });
-            
+
             pill.classList.add("active-orange");
             pill.style.background = "rgba(245,158,11,0.2)";
             pill.style.color = "var(--accent-orange)";
             pill.style.border = "1px solid var(--accent-orange)";
-            
+
             const cycle = pill.dataset.cycle;
             if (dryerCycleVal) {
                 if (cycle === "normal") { dryerCycleVal.textContent = "Towels"; dryerHeatVal.textContent = "Medium"; }
@@ -1964,8 +1963,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const washerMainStatus = document.getElementById("washer-main-status");
     const statusWasherMode = document.getElementById("status-washer-mode");
     const imgWasher = document.getElementById("img-laundry-washer");
-    
-    window.resetWasherBtns = function() {
+
+    window.resetWasherBtns = function () {
         if (btnWasherStart) {
             btnWasherStart.style.background = "rgba(255,255,255,0.05)";
             btnWasherStart.style.border = "1px solid rgba(255,255,255,0.1)";
@@ -1989,14 +1988,14 @@ document.addEventListener("DOMContentLoaded", () => {
             btnWasherStart.style.background = "rgba(0,168,255,0.15)";
             btnWasherStart.style.border = "1px solid var(--accent-blue)";
             btnWasherStart.style.color = "var(--accent-blue)";
-            
+
             if (washerMainStatus) washerMainStatus.textContent = "Main Wash";
             if (statusWasherMode) statusWasherMode.textContent = "Washing";
             const valWasherTime = document.getElementById("val-washer-time");
             if (valWasherTime) valWasherTime.textContent = "45m";
             if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "running";
             if (imgWasher) imgWasher.style.animationPlayState = "running";
-            
+
             const circlePct = document.getElementById("washer-circle-pct");
             const circleTime = document.getElementById("washer-circle-time");
             const circleStatus = document.getElementById("washer-circle-status");
@@ -2012,7 +2011,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnWasherPause.style.background = "rgba(245,158,11,0.15)";
             btnWasherPause.style.border = "1px solid var(--accent-orange)";
             btnWasherPause.style.color = "var(--accent-orange)";
-            
+
             if (washerMainStatus) washerMainStatus.textContent = "Paused";
             if (statusWasherMode) statusWasherMode.textContent = "Paused";
             if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "paused";
@@ -2026,14 +2025,14 @@ document.addEventListener("DOMContentLoaded", () => {
             btnWasherStop.style.background = "rgba(239,68,68,0.15)";
             btnWasherStop.style.border = "1px solid #ef4444";
             btnWasherStop.style.color = "#ef4444";
-            
+
             if (washerMainStatus) washerMainStatus.textContent = "Stopped";
             if (statusWasherMode) statusWasherMode.textContent = "Stopped";
             const valWasherTime = document.getElementById("val-washer-time");
             if (valWasherTime) valWasherTime.textContent = "--";
             if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "paused";
             if (imgWasher) imgWasher.style.animationPlayState = "paused";
-            
+
             const circlePct = document.getElementById("washer-circle-pct");
             const circleTime = document.getElementById("washer-circle-time");
             const circleStatus = document.getElementById("washer-circle-status");
@@ -2051,8 +2050,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dryerMainStatus = document.getElementById("dryer-main-status");
     const statusDryerMode = document.getElementById("status-dryer-mode");
     const imgDryer = document.getElementById("img-laundry-dryer");
-    
-    window.resetDryerBtns = function() {
+
+    window.resetDryerBtns = function () {
         if (btnDryerStart) {
             btnDryerStart.style.background = "rgba(255,255,255,0.05)";
             btnDryerStart.style.border = "1px solid rgba(255,255,255,0.1)";
@@ -2076,14 +2075,14 @@ document.addEventListener("DOMContentLoaded", () => {
             btnDryerStart.style.background = "rgba(245,158,11,0.15)";
             btnDryerStart.style.border = "1px solid var(--accent-orange)";
             btnDryerStart.style.color = "var(--accent-orange)";
-            
+
             if (dryerMainStatus) dryerMainStatus.textContent = "Sensor Dry";
             if (statusDryerMode) statusDryerMode.textContent = "Drying";
             const valDryerTime = document.getElementById("val-dryer-time");
             if (valDryerTime) valDryerTime.textContent = "1h 20m";
             if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "running";
             if (imgDryer) imgDryer.style.animationPlayState = "running";
-            
+
             const circlePct = document.getElementById("dryer-circle-pct");
             const circleTime = document.getElementById("dryer-circle-time");
             const circleStatus = document.getElementById("dryer-circle-status");
@@ -2099,7 +2098,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnDryerPause.style.background = "rgba(234,179,8,0.15)";
             btnDryerPause.style.border = "1px solid #eab308";
             btnDryerPause.style.color = "#eab308";
-            
+
             if (dryerMainStatus) dryerMainStatus.textContent = "Paused";
             if (statusDryerMode) statusDryerMode.textContent = "Paused";
             if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "paused";
@@ -2113,14 +2112,14 @@ document.addEventListener("DOMContentLoaded", () => {
             btnDryerStop.style.background = "rgba(239,68,68,0.15)";
             btnDryerStop.style.border = "1px solid #ef4444";
             btnDryerStop.style.color = "#ef4444";
-            
+
             if (dryerMainStatus) dryerMainStatus.textContent = "Stopped";
             if (statusDryerMode) statusDryerMode.textContent = "Stopped";
             const valDryerTime = document.getElementById("val-dryer-time");
             if (valDryerTime) valDryerTime.textContent = "--";
             if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "paused";
             if (imgDryer) imgDryer.style.animationPlayState = "paused";
-            
+
             const circlePct = document.getElementById("dryer-circle-pct");
             const circleTime = document.getElementById("dryer-circle-time");
             const circleStatus = document.getElementById("dryer-circle-status");
@@ -2144,7 +2143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let lastFanSpeed = 65;
 
-    window.updateLaundryFanState = function(isChecked) {
+    window.updateLaundryFanState = function (isChecked) {
         if (!isChecked) {
             lastFanSpeed = fanSlider ? fanSlider.value : 65;
             updateFanSpeed(0);
@@ -2167,53 +2166,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateFanSpeed(speed) {
         // Update slider and visuals
-        if(fanSlider) fanSlider.value = speed;
-        if(fanThumb) fanThumb.style.left = `${speed}%`;
-        if(fanFill) fanFill.style.width = `${speed}%`;
-        
+        if (fanSlider) fanSlider.value = speed;
+        if (fanThumb) fanThumb.style.left = `${speed}%`;
+        if (fanFill) fanFill.style.width = `${speed}%`;
+
         // Update circular ring (circumference is 263.89)
-        if(fanRing) {
+        if (fanRing) {
             const dashoffset = 263.89 - (speed / 100 * 263.89);
             fanRing.style.strokeDashoffset = dashoffset;
         }
 
         // Update Text
-        if(fanPctText) fanPctText.textContent = `${speed}%`;
+        if (fanPctText) fanPctText.textContent = `${speed}%`;
 
         // Update Status and Icon Speed
-        if(speed == 0) {
-            if(fanStatusText) {
+        if (speed == 0) {
+            if (fanStatusText) {
                 fanStatusText.textContent = "Off";
                 fanStatusText.style.color = "rgba(255,255,255,0.5)";
             }
-            if(fanIconContainer) fanIconContainer.style.animationPlayState = "paused";
-            if(fanRing) fanRing.style.stroke = "rgba(255,255,255,0.2)";
-            if(fanFill) fanFill.style.background = "rgba(255,255,255,0.2)";
-            if(fanThumb) fanThumb.style.background = "rgba(255,255,255,0.5)";
-            if(fanIconContainer) fanIconContainer.style.color = "rgba(255,255,255,0.2)";
+            if (fanIconContainer) fanIconContainer.style.animationPlayState = "paused";
+            if (fanRing) fanRing.style.stroke = "rgba(255,255,255,0.2)";
+            if (fanFill) fanFill.style.background = "rgba(255,255,255,0.2)";
+            if (fanThumb) fanThumb.style.background = "rgba(255,255,255,0.5)";
+            if (fanIconContainer) fanIconContainer.style.color = "rgba(255,255,255,0.2)";
         } else {
             let label = "Low";
             let animDuration = "2s";
-            if(speed > 33 && speed <= 66) { label = "Med"; animDuration = "1s"; }
-            else if(speed > 66 && speed <= 99) { label = "High"; animDuration = "0.5s"; }
-            else if(speed == 100) { label = "Boost"; animDuration = "0.2s"; }
-            
-            if(fanStatusText) {
+            if (speed > 33 && speed <= 66) { label = "Med"; animDuration = "1s"; }
+            else if (speed > 66 && speed <= 99) { label = "High"; animDuration = "0.5s"; }
+            else if (speed == 100) { label = "Boost"; animDuration = "0.2s"; }
+
+            if (fanStatusText) {
                 fanStatusText.textContent = `Running - ${label}`;
                 fanStatusText.style.color = "#4ade80";
             }
-            if(fanIconContainer) {
+            if (fanIconContainer) {
                 fanIconContainer.style.animationPlayState = "running";
                 fanIconContainer.style.animationDuration = animDuration;
                 fanIconContainer.style.color = "#00e5ff";
             }
-            if(fanRing) fanRing.style.stroke = "#00e5ff";
-            if(fanFill) fanFill.style.background = "#00e5ff";
-            if(fanThumb) fanThumb.style.background = "#00e5ff";
+            if (fanRing) fanRing.style.stroke = "#00e5ff";
+            if (fanFill) fanFill.style.background = "#00e5ff";
+            if (fanThumb) fanThumb.style.background = "#00e5ff";
         }
 
         // Update pills
-        if(fanPills) {
+        if (fanPills) {
             fanPills.forEach(p => {
                 p.classList.remove("active");
                 p.style.background = "rgba(255,255,255,0.02)";
@@ -2226,7 +2225,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Highlight matching pill if any, or update custom pill
             let matched = false;
             fanPills.forEach(p => {
-                if(p.id !== "fan-pill-custom" && p.dataset.speed == speed) {
+                if (p.id !== "fan-pill-custom" && p.dataset.speed == speed) {
                     p.classList.add("active");
                     p.style.background = "rgba(0, 229, 255, 0.2)";
                     p.style.border = "1px solid #00e5ff";
@@ -2238,12 +2237,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const customPill = document.getElementById("fan-pill-custom");
-            if(customPill) {
-                if(!matched && speed > 0) {
+            if (customPill) {
+                if (!matched && speed > 0) {
                     customPill.dataset.speed = speed;
                     customPill.textContent = `${speed}%`;
                     customPill.style.display = "inline-block";
-                    
+
                     customPill.classList.add("active");
                     customPill.style.background = "#00e5ff";
                     customPill.style.border = "1px solid #00e5ff";
@@ -2282,7 +2281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusDoorFront = document.getElementById("status-door-front");
     const btnDoorBack = document.getElementById("btn-door-back");
     const statusDoorBack = document.getElementById("status-door-back");
-    
+
     const toggleLivingDoor = document.getElementById("toggle-living-door");
     const statusDoorLiving = document.getElementById("status-door-living");
     const btnDoorLiving = document.getElementById("btn-door-living");
