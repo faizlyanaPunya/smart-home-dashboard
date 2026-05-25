@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -218,7 +218,7 @@
                     </div>
 
                     <!-- Camera Widget -->
-                    <div class="widget camera-widget col-4"
+                    <div class="widget camera-widget col-4" style="min-height: 220px !important;"
                         onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera"
                             style="width: 100%; height: 100%; object-fit: cover;">
@@ -409,198 +409,167 @@
                 <!-- ------------------- KITCHEN VIEW ------------------- -->
                 <section class="room-view" id="view-kitchen">
 
-                    <!-- Column 1: Lamp + CCTV -->
-                    <div class="col-4 flex-col-gap">
-                        <!-- Kitchen Lamp Widget -->
-                        <div class="widget active" data-glow="yellow" id="widget-kitchen-lamp" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
-                                    <span class="widget-title">Lamp</span>
-                                    <div class="widget-subtitle" id="status-kitchen-lamp-text">Ceiling Lamp</div>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="toggle-kitchen-lights" checked>
-                                    <span class="slider yellow"></span>
-                                </label>
+                    <!-- Kitchen Lamp Widget -->
+                    <div class="widget col-4 active" data-glow="yellow" id="widget-kitchen-lamp">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Lamp</span>
+                                <div class="widget-subtitle" id="status-kitchen-lamp-text">Ceiling Lamp</div>
                             </div>
-                            <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
-                                <!-- Icon (Bulb) -->
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                    id="kitchen-light-icon">💡</div>
-                            </div>
-                            <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
-                                <div
-                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px;">
-                                    <span>Brightness</span>
-                                    <span id="val-kitchen-brightness">52%</span>
-                                </div>
-                                <div
-                                    style="width: 100%; height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
-                                    <!-- Fill bar -->
-                                    <div id="ios-kitchen-brightness-fill"
-                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 52%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
-                                    </div>
-                                    <!-- Icon -->
-                                    <div
-                                        style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
-                                        ☀️</div>
-                                    <!-- Input Range -->
-                                    <input type="range" min="0" max="100" value="52" id="slider-kitchen-brightness"
-                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
-                                </div>
-                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-kitchen-lights" checked>
+                                <span class="slider yellow"></span>
+                            </label>
                         </div>
-
-                        <!-- Kitchen Camera -->
-                        <div class="widget camera-widget" style="flex: 1;"
-                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                            <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="camera-overlay">
-                                <span class="camera-name">Camera 02: Kitchen</span>
-                                <span class="camera-live">LIVE</span>
+                        <div style="flex-grow:1; display:flex; align-items:center; justify-content:center;">
+                            <div id="kitchen-light-icon"
+                                style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                💡</div>
+                        </div>
+                        <!-- Custom Brown/Beige Slide Bar Brightness -->
+                        <div id="kitchen-lamp-slider-container"
+                            style="margin-top: 15px; width: 100%; transition: opacity 0.3s;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                <span>Brightness</span>
+                                <span id="val-kitchen-brightness">52%</span>
+                            </div>
+                            <div id="kitchen-lamp-slider-track"
+                                style="width: 100%; height: 32px; background: #3a322c; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0);">
+                                <!-- Fill bar -->
+                                <div id="ios-kitchen-brightness-fill"
+                                    style="position: absolute; top: 0; left: 0; height: 100%; width: 52%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                    <!-- Blue Sun Icon -->
+                                    <div
+                                        style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;">
+                                        <svg viewBox="0 0 24 24"
+                                            style="width: 14px; height: 14px; fill: #0055ff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));">
+                                            <path
+                                                d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 10-1.06-1.061l-1.59 1.591z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <!-- Input Range -->
+                                <input type="range" min="0" max="100" value="52" id="slider-kitchen-brightness"
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Column 2: Smart Oven + Dishwasher -->
-                    <div class="col-4 flex-col-gap">
-                        <!-- Smart Oven Widget -->
-                        <div class="widget active" data-glow="orange" id="widget-kitchen-oven" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
-                                    <span class="widget-title">Smart Oven</span>
-                                    <div class="widget-subtitle" id="status-kitchen-oven-text">Preheating • 180°C</div>
-                                </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-kitchen-oven">
-                                    <span class="slider orange"></span>
-                                </label>
+                    <!-- Smart Oven Widget -->
+                    <div class="widget col-4 active" data-glow="orange" id="widget-kitchen-oven">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Smart Oven</span>
+                                <div class="widget-subtitle" id="status-kitchen-oven-text">Preheating • 180°C</div>
                             </div>
-                            <div
-                                style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
-                                <!-- Oven CSS Image (Shrunk to fit) -->
-                                <div style="width: 75px; height: 75px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"
-                                    id="oven-img-container">
-                                    <div
-                                        style="width: 90%; height: 12px; margin-top: 4px; display: flex; justify-content: space-evenly; align-items: center;">
-                                        <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
-                                        </div>
-                                        <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
-                                        </div>
-                                        <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
-                                        </div>
-                                        <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
-                                        </div>
-                                    </div>
-                                    <div id="oven-glow-window"
-                                        style="width: 80%; flex-grow: 1; margin: 4px 0 8px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
-                                        <div
-                                            style="position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.6);">
-                                        </div>
-                                    </div>
-                                    <div
-                                        style="position: absolute; top: 24px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                                    </div>
-                                </div>
-
-                                <!-- Radial Dial (Optimized) -->
-                                <div class="dial-container"
-                                    style="width: 80px; height: 80px; margin: 0; flex-shrink: 0;">
-                                    <svg class="dial-svg" viewBox="0 0 140 140" id="svg-kitchen-oven"
-                                        style="width: 100%; height: 100%;">
-                                        <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
-                                        <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
-                                            id="progress-kitchen-oven" style="stroke: var(--accent-orange);"></circle>
-                                    </svg>
-                                    <div class="dial-info"
-                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                        <span class="dial-value" id="val-kitchen-oven"
-                                            style="font-size: 14px; letter-spacing: -0.5px;">180°C</span>
-                                        <span class="dial-status" id="status-kitchen-oven"
-                                            style="color: var(--accent-orange); font-size: 8px; text-transform: uppercase; margin-top: 1px;">Ready</span>
-                                        <span id="val-kitchen-oven-timer"
-                                            style="font-size: 9px; color: var(--color-text-secondary); margin-top: 1px; font-weight: 500;">30m</span>
-                                    </div>
-                                </div>
-
-                                <!-- Dual Controls Side Stack -->
-                                <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center; font-size: 11px; flex-shrink: 0;"
-                                    id="oven-controls-side">
-                                    <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <span
-                                            style="font-size: 8px; color: var(--color-text-secondary); margin-bottom: 2px; font-weight: 600; text-transform: uppercase;">Temp</span>
-                                        <div style="display: flex; gap: 4px;">
-                                            <button class="dial-btn" id="btn-kitchen-oven-down"
-                                                style="width: 22px; height: 22px; font-size: 11px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
-                                            <button class="dial-btn" id="btn-kitchen-oven-up"
-                                                style="width: 22px; height: 22px; font-size: 11px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
-                                        </div>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <span
-                                            style="font-size: 8px; color: var(--color-text-secondary); margin-bottom: 2px; font-weight: 600; text-transform: uppercase;">Timer</span>
-                                        <div style="display: flex; gap: 4px;">
-                                            <button class="dial-btn" id="btn-kitchen-timer-down"
-                                                style="width: 22px; height: 22px; font-size: 11px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
-                                            <button class="dial-btn" id="btn-kitchen-timer-up"
-                                                style="width: 22px; height: 22px; font-size: 11px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-kitchen-oven">
+                                <span class="slider orange"></span>
+                            </label>
                         </div>
-
-                        <!-- Dishwasher Widget -->
-                        <div class="widget active" data-glow="blue" id="widget-kitchen-dishwasher" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
-                                    <span class="widget-title">Dishwasher</span>
-                                    <div class="widget-subtitle" id="status-dishwasher-text">Heavy Cycle • 35 mins left
+                        <div
+                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
+                            <!-- Oven CSS Image (Shrunk to fit) -->
+                            <div style="width: 75px; height: 75px; background: #222; border-radius: 8px; border: 2px solid #444; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; flex-shrink: 0;"
+                                id="oven-img-container">
+                                <div
+                                    style="width: 90%; height: 12px; margin-top: 4px; display: flex; justify-content: space-evenly; align-items: center;">
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
+                                    </div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
+                                    </div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
+                                    </div>
+                                    <div style="width: 5px; height: 5px; border-radius: 50%; background: #111;">
                                     </div>
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-kitchen-dishwasher">
-                                    <span class="slider"></span>
-                                </label>
+                                <div id="oven-glow-window"
+                                    style="width: 80%; flex-grow: 1; margin: 4px 0 8px 0; border-radius: 4px; background: linear-gradient(180deg, rgba(255,100,0,0.6) 0%, rgba(255,50,0,0.2) 100%); border: 2px solid #111; position: relative; overflow: hidden; transition: 0.3s; box-shadow: inset 0 0 15px rgba(255,100,0,0.5);">
+                                    <div
+                                        style="position: absolute; top: 50%; width: 100%; height: 2px; background: rgba(0,0,0,0.6);">
+                                    </div>
+                                </div>
+                                <div
+                                    style="position: absolute; top: 24px; width: 60%; height: 4px; background: #777; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                </div>
                             </div>
-                            <!-- Icon / animation area -->
-                            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 38px; transition: all 0.3s;"
-                                id="dishwasher-icon">🍽️</div>
+
+                            <!-- Radial Dial (Optimized) -->
+                            <div class="dial-container"
+                                style="width: 120px; height: 120px; margin: 0; flex-shrink: 0;">
+                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-kitchen-oven"
+                                    style="width: 100%; height: 100%;">
+                                    <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
+                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
+                                        id="progress-kitchen-oven" style="stroke: var(--accent-orange);"></circle>
+                                </svg>
+                                <div class="dial-info"
+                                    style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <span class="dial-value" id="val-kitchen-oven"
+                                        style="font-size: 20px; letter-spacing: -0.5px; font-weight: bold;">180°C</span>
+                                    <span class="dial-status" id="status-kitchen-oven"
+                                        style="color: var(--accent-orange); font-size: 11px; text-transform: uppercase; margin-top: 2px; font-weight: bold;">Ready</span>
+                                    <span id="val-kitchen-oven-timer"
+                                        style="font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; font-weight: 500;">30m</span>
+                                </div>
+                            </div>
+
+                            <!-- Dual Controls Side Stack -->
+                            <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center; font-size: 11px; flex-shrink: 0;"
+                                id="oven-controls-side">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span
+                                        style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; font-weight: 600; text-transform: uppercase;">Temp</span>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="dial-btn" id="btn-kitchen-oven-down"
+                                            style="width: 32px; height: 32px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
+                                        <button class="dial-btn" id="btn-kitchen-oven-up"
+                                            style="width: 32px; height: 32px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span
+                                        style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; font-weight: 600; text-transform: uppercase;">Timer</span>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="dial-btn" id="btn-kitchen-timer-down"
+                                            style="width: 32px; height: 32px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
+                                        <button class="dial-btn" id="btn-kitchen-timer-up"
+                                            style="width: 32px; height: 32px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Column 3: 4 Stacked Status Cards -->
-                    <div class="col-4 flex-col-gap">
+                    <div class="col-4 flex-col-gap" style="grid-row: span 2;">
                         <!-- Card 1: FIRE 911 -->
                         <div class="widget active" data-glow="orange"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.05); cursor: pointer;"
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.15); cursor: pointer;"
                             id="btn-kitchen-fire-alarm">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 20px;">🚒</span>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 30px;">🚒</span>
                                 <div>
-                                    <span class="widget-title" style="font-size: 13px; color: #ff6b6b;">FIRE 911</span>
+                                    <span class="widget-title" style="font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">FIRE 911</span>
                                     <div class="widget-subtitle"
-                                        style="font-size: 9px; color: rgba(255, 107, 107, 0.7);">Emergency Call</div>
+                                        style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">Emergency Call</div>
                                 </div>
                             </div>
                             <div style="font-size: 16px; color: #ff6b6b;">➔</div>
                         </div>
 
                         <!-- Card 2: Sprinklers -->
-                        <div class="widget active" data-glow="blue"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.05); cursor: pointer;"
-                            onclick="alert('Activating Sprinklers! 💦')">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 20px;">💦</span>
+                        <div class="widget active" data-glow="blue" id="btn-kitchen-sprinklers"
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.15); cursor: pointer;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 30px;">💦</span>
                                 <div>
                                     <span class="widget-title"
-                                        style="font-size: 13px; color: #60a5fa;">Sprinklers</span>
+                                        style="font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">Sprinklers</span>
                                     <div class="widget-subtitle"
-                                        style="font-size: 9px; color: rgba(96, 165, 250, 0.7);">Fire Suppression</div>
+                                        style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">Fire Suppression</div>
                                 </div>
                             </div>
                             <div style="font-size: 16px; color: #60a5fa;">➔</div>
@@ -608,12 +577,12 @@
 
                         <!-- Card 3: Air Ventilation -->
                         <div class="widget active" data-glow="green" id="widget-kitchen-ventilation"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 20px; display: inline-block;" id="ventilation-icon">🌀</span>
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(0, 226, 114, 0.4); background: rgba(0, 226, 114, 0.15);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 30px; display: inline-block;" id="ventilation-icon">🌀</span>
                                 <div>
-                                    <span class="widget-title" style="font-size: 13px;">Air Ventilation</span>
-                                    <div class="widget-subtitle" id="status-ventilation-text" style="font-size: 9px;">
+                                    <span class="widget-title" style="font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">Air Ventilation</span>
+                                    <div class="widget-subtitle" id="status-ventilation-text" style="font-size: 12px;">
                                         Active • Speed 2</div>
                                 </div>
                             </div>
@@ -625,13 +594,13 @@
                         </div>
 
                         <!-- Card 4: Sliding Door -->
-                        <div class="widget active" data-glow="blue" id="widget-kitchen-door"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 20px;">🚪</span>
+                        <div class="widget active" data-glow="yellow" id="widget-kitchen-door"
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(255, 183, 0, 0.4); background: rgba(255, 183, 0, 0.15);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 30px;">🚪</span>
                                 <div>
-                                    <span class="widget-title" style="font-size: 13px;">Sliding Door</span>
-                                    <div class="widget-subtitle" id="status-kitchen-door-text" style="font-size: 9px;">
+                                    <span class="widget-title" style="font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">Sliding Door</span>
+                                    <div class="widget-subtitle" id="status-kitchen-door-text" style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">
                                         Locked</div>
                                 </div>
                             </div>
@@ -639,6 +608,38 @@
                                 <input type="checkbox" class="toggle-control" checked data-target="widget-kitchen-door">
                                 <span class="slider"></span>
                             </label>
+                        </div>
+                    </div>
+
+                    <!-- Kitchen Camera -->
+                    <div class="widget camera-widget col-4" style="min-height: 220px !important;"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 02: Kitchen</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- Dishwasher Widget -->
+                    <div class="widget col-4 active" data-glow="blue" id="widget-kitchen-dishwasher" style="min-height: 240px;">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Dishwasher</span>
+                                <div class="widget-subtitle" id="status-dishwasher-text">Heavy Cycle • 35 mins left
+                                </div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-kitchen-dishwasher">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <!-- Icon / animation area -->
+                        <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; transition: all 0.3s; padding: 5px;"
+                            id="dishwasher-icon">
+                            <img src="assets/dishwasher4.png" alt="Dishwasher" style="height: 180px; width: 100%; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5));" />
                         </div>
                     </div>
                 </section>

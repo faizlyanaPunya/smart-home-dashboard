@@ -1509,6 +1509,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------------------------------------------------
     const emergencyCallBtn = document.getElementById("btn-emergency-call");
     const kitchenFireAlarmBtn = document.getElementById("btn-kitchen-fire-alarm");
+    const kitchenSprinklersBtn = document.getElementById("btn-kitchen-sprinklers");
     const cancelCallBtn = document.getElementById("btn-cancel-emergency-call");
     const callOverlay = document.getElementById("emergency-call-overlay");
     const callStatusText = document.getElementById("emergency-call-status");
@@ -1529,15 +1530,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (type === "911") {
             if (callTitle) callTitle.textContent = "Calling 911";
-            if (callIcon) callIcon.textContent = "📞";
+            if (callIcon) { callIcon.textContent = "📞"; callIcon.style.background = "#dc2626"; }
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
+            cancelCallBtn.textContent = "Cancel Emergency Call";
         } else if (type === "fire") {
             if (callTitle) callTitle.textContent = "Calling Fire Dept";
-            if (callIcon) callIcon.textContent = "🚒";
+            if (callIcon) { callIcon.textContent = "🚒"; callIcon.style.background = "#dc2626"; }
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
+            cancelCallBtn.textContent = "Cancel Emergency Call";
+        } else if (type === "sprinklers") {
+            if (callTitle) callTitle.textContent = "Activating Sprinklers";
+            if (callIcon) { callIcon.textContent = "💦"; callIcon.style.background = "#1e3a8a"; }
+            callStatusText.textContent = `Initializing water suppression system in ${callCountdown}s... Press Cancel to abort.`;
+            cancelCallBtn.textContent = "Cancel Activation";
         }
 
-        cancelCallBtn.textContent = "Cancel Emergency Call";
         cancelCallBtn.style.background = "#dc2626";
 
         callTimer = setInterval(() => {
@@ -1549,10 +1556,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 callTimer = null;
                 if (type === "911") {
                     callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">CONNECTED TO DISPATCH</span><br><br>Help is on the way to 1042 Aura Way. Stay on the line.`;
+                    cancelCallBtn.textContent = "Hang Up";
                 } else if (type === "fire") {
                     callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">FIRE DEPT DISPATCHED</span><br><br>Engines are en route to 1042 Aura Way. Evacuate immediately.`;
+                    cancelCallBtn.textContent = "Hang Up";
+                } else if (type === "sprinklers") {
+                    callStatusText.innerHTML = `<span style="color: #60a5fa; font-weight: bold;">SPRINKLERS ACTIVATED</span><br><br>Water suppression systems are running in the Kitchen.`;
+                    cancelCallBtn.textContent = "Close";
                 }
-                cancelCallBtn.textContent = "Hang Up";
                 cancelCallBtn.style.background = "#4b5563"; // gray hang up
             }
         }, 1000);
@@ -1565,6 +1576,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (kitchenFireAlarmBtn) {
             kitchenFireAlarmBtn.addEventListener("click", () => startEmergencySequence("fire"));
+        }
+
+        if (kitchenSprinklersBtn) {
+            kitchenSprinklersBtn.addEventListener("click", () => startEmergencySequence("sprinklers"));
         }
 
         cancelCallBtn.addEventListener("click", () => {
