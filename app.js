@@ -223,13 +223,22 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         else if (id === "widget-living-router") {
-            document.getElementById("status-living-router-text").textContent = isChecked ? "212 kWh • Connected" : "Disconnected";
+            document.getElementById("status-living-router-text").textContent = isChecked ? "Connected" : "Disconnected";
             const routerNetworkInfo = document.getElementById("router-network-info");
             const routerLeds = document.getElementById("router-leds");
             const routerImg = document.getElementById("router-img");
             if (routerNetworkInfo) routerNetworkInfo.style.opacity = isChecked ? "1" : "0.3";
             if (routerLeds) routerLeds.style.opacity = isChecked ? "1" : "0";
             if (routerImg) routerImg.style.opacity = isChecked ? "1" : "0.5";
+        }
+        else if (id === "widget-living-door") {
+            const doorStatus = document.getElementById("status-living-door-text");
+            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+            const doorIcon = document.getElementById("living-door-icon");
+            if (doorIcon) {
+                doorIcon.textContent = isChecked ? "🔒" : "🔓";
+                doorIcon.style.opacity = isChecked ? "1" : "0.5";
+            }
         }
         else if (id === "widget-living-speaker") {
             document.getElementById("status-living-speaker-text").textContent = isChecked ? "Amazon Echo • Lofi Beats" : "Off";
@@ -569,7 +578,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (document.getElementById("widget-kitchen-lamp") && document.getElementById("widget-kitchen-lamp").classList.contains("active")) activeLights += 1;
 
         const lightsBanner = document.getElementById("banner-lights-status");
-        lightsBanner.textContent = activeLights > 0 ? `${activeLights} Lights On` : "All Lights Off";
+        if (lightsBanner) {
+            lightsBanner.textContent = activeLights > 0 ? `${activeLights} Lights On` : "All Lights Off";
+        }
 
         // Calculate climate summary
         let climateActive = false;
@@ -592,11 +603,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const climateBanner = document.getElementById("banner-climate-status");
-        if (climateActive && temps.length > 0) {
-            const avg = (temps.reduce((a, b) => a + b, 0) / temps.length).toFixed(1);
-            climateBanner.textContent = `Climate Systems On (${avg}°C Avg)`;
-        } else {
-            climateBanner.textContent = "Climate Systems Off";
+        if (climateBanner) {
+            if (climateActive && temps.length > 0) {
+                const avg = (temps.reduce((a, b) => a + b, 0) / temps.length).toFixed(1);
+                climateBanner.textContent = `Climate Systems On (${avg}°C Avg)`;
+            } else {
+                climateBanner.textContent = "Climate Systems Off";
+            }
         }
     }
 
@@ -2261,5 +2274,148 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize fan
     updateFanSpeed(65);
+
+    // -------------------------------------------------------------------------
+    // 7. Doors & Windows Interactive Logic & Bidirectional Sync
+    // -------------------------------------------------------------------------
+    const btnDoorFront = document.getElementById("btn-door-front");
+    const statusDoorFront = document.getElementById("status-door-front");
+    const btnDoorBack = document.getElementById("btn-door-back");
+    const statusDoorBack = document.getElementById("status-door-back");
+    
+    const toggleLivingDoor = document.getElementById("toggle-living-door");
+    const statusDoorLiving = document.getElementById("status-door-living");
+    const btnDoorLiving = document.getElementById("btn-door-living");
+
+    const toggleBedroomDoor = document.querySelector('input[data-target="widget-bedroom-door"]');
+    const statusDoorBedroom = document.getElementById("status-door-bedroom");
+    const btnDoorBedroom = document.getElementById("btn-door-bedroom");
+
+    // Dynamic Security Banner Update
+    function updateSecurityBanner() {
+        const securityBanner = document.getElementById("banner-security-status");
+        if (!securityBanner) return;
+
+        const doorFrontLocked = statusDoorFront && statusDoorFront.textContent.includes("🔒");
+        const doorBackLocked = statusDoorBack && statusDoorBack.textContent.includes("🔒");
+        const doorLivingLocked = statusDoorLiving && statusDoorLiving.textContent.includes("🔒");
+        const doorBedroomLocked = statusDoorBedroom && statusDoorBedroom.textContent.includes("🔒");
+
+        let unlockedCount = 0;
+        if (!doorFrontLocked) unlockedCount++;
+        if (!doorBackLocked) unlockedCount++;
+        if (!doorLivingLocked) unlockedCount++;
+        if (!doorBedroomLocked) unlockedCount++;
+
+        const parentItem = securityBanner.parentElement;
+
+        if (unlockedCount === 0) {
+            securityBanner.textContent = "Secure • All doors locked";
+            if (parentItem) {
+                parentItem.classList.remove("accent-yellow");
+                parentItem.classList.add("accent-green");
+            }
+        } else {
+            securityBanner.textContent = `Security Alert • ${unlockedCount} Door${unlockedCount > 1 ? "s" : ""} Unlocked`;
+            if (parentItem) {
+                parentItem.classList.remove("accent-green");
+                parentItem.classList.add("accent-yellow");
+            }
+        }
+    }
+
+    // Toggle helper for front/back doors
+    if (btnDoorFront && statusDoorFront) {
+        btnDoorFront.addEventListener("click", () => {
+            const isLocked = statusDoorFront.textContent.includes("🔒");
+            if (isLocked) {
+                statusDoorFront.innerHTML = "🔓 Unlocked";
+                statusDoorFront.style.color = "var(--accent-yellow)";
+            } else {
+                statusDoorFront.innerHTML = "🔒 Locked";
+                statusDoorFront.style.color = "var(--accent-green)";
+            }
+            updateSecurityBanner();
+        });
+    }
+
+    if (btnDoorBack && statusDoorBack) {
+        btnDoorBack.addEventListener("click", () => {
+            const isLocked = statusDoorBack.textContent.includes("🔒");
+            if (isLocked) {
+                statusDoorBack.innerHTML = "🔓 Unlocked";
+                statusDoorBack.style.color = "var(--accent-yellow)";
+            } else {
+                statusDoorBack.innerHTML = "🔒 Locked";
+                statusDoorBack.style.color = "var(--accent-green)";
+            }
+            updateSecurityBanner();
+        });
+    }
+
+    // Bidirectional sync for Living Room Door
+    function syncLivingDoorState(isLocked) {
+        if (statusDoorLiving) {
+            if (isLocked) {
+                statusDoorLiving.innerHTML = "🔒 Locked";
+                statusDoorLiving.style.color = "var(--accent-green)";
+            } else {
+                statusDoorLiving.innerHTML = "🔓 Unlocked";
+                statusDoorLiving.style.color = "var(--accent-yellow)";
+            }
+        }
+        updateSecurityBanner();
+    }
+
+    if (toggleLivingDoor) {
+        toggleLivingDoor.addEventListener("change", (e) => {
+            syncLivingDoorState(e.target.checked);
+        });
+    }
+
+    if (btnDoorLiving && statusDoorLiving && toggleLivingDoor) {
+        btnDoorLiving.addEventListener("click", () => {
+            const isCurrentlyLocked = statusDoorLiving.textContent.includes("🔒");
+            toggleLivingDoor.checked = !isCurrentlyLocked;
+            toggleLivingDoor.dispatchEvent(new Event("change"));
+        });
+    }
+
+    // Bidirectional sync for Bedroom Door
+    function syncBedroomDoorState(isLocked) {
+        if (statusDoorBedroom) {
+            if (isLocked) {
+                statusDoorBedroom.innerHTML = "🔒 Locked";
+                statusDoorBedroom.style.color = "var(--accent-green)";
+            } else {
+                statusDoorBedroom.innerHTML = "🔓 Unlocked";
+                statusDoorBedroom.style.color = "var(--accent-yellow)";
+            }
+        }
+        updateSecurityBanner();
+    }
+
+    if (toggleBedroomDoor) {
+        toggleBedroomDoor.addEventListener("change", (e) => {
+            syncBedroomDoorState(e.target.checked);
+        });
+    }
+
+    if (btnDoorBedroom && statusDoorBedroom && toggleBedroomDoor) {
+        btnDoorBedroom.addEventListener("click", () => {
+            const isCurrentlyLocked = statusDoorBedroom.textContent.includes("🔒");
+            toggleBedroomDoor.checked = !isCurrentlyLocked;
+            toggleBedroomDoor.dispatchEvent(new Event("change"));
+        });
+    }
+
+    // Initialize states on load
+    if (toggleBedroomDoor) {
+        syncBedroomDoorState(toggleBedroomDoor.checked);
+    }
+    if (toggleLivingDoor) {
+        syncLivingDoorState(toggleLivingDoor.checked);
+    }
+    updateSecurityBanner();
 
 });

@@ -229,67 +229,67 @@
                     </div>
 
                     <!-- Wifi Router Widget -->
-                    <div class="widget col-4 active" data-glow="green" id="widget-living-router">
+                    <div class="widget col-2 active" data-glow="green" id="widget-living-router" style="min-height: 110px;">
                         <div class="widget-header">
                             <div>
-                                <span class="widget-title">WiFi Router</span>
-                                <div class="widget-subtitle" id="status-living-router-text">212 kWh • Connected</div>
+                                <span class="widget-title" style="font-size: 13px;">WiFi Router</span>
+                                <div class="widget-subtitle" id="status-living-router-text" style="font-size: 9px;">Connected</div>
                             </div>
-                            <label class="switch">
+                            <label class="switch" style="width: 36px; height: 20px;">
                                 <input type="checkbox" class="toggle-control" checked
                                     data-target="widget-living-router">
-                                <span class="slider green"></span>
+                                <span class="slider green" style="border-radius: 20px;"></span>
                             </label>
                         </div>
                         <div
-                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 10px; padding-top: 10px;">
+                            style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 8px; padding-top: 5px;">
                             <!-- CSS Drawn 3D Router -->
-                            <div style="position: relative; width: 120px; height: 70px;" id="router-img">
+                            <div style="position: relative; width: 100px; height: 60px; transform: scale(0.8); transform-origin: center;" id="router-img">
                                 <!-- Antennas -->
                                 <div
-                                    style="position: absolute; bottom: 25px; left: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(-25deg); transform-origin: bottom; z-index: 1;">
+                                    style="position: absolute; bottom: 20px; left: 20px; width: 4px; height: 40px; background: linear-gradient(to right, #333, #666); border-radius: 2px; transform: rotate(-25deg); transform-origin: bottom; z-index: 1;">
                                 </div>
                                 <div
-                                    style="position: absolute; bottom: 25px; left: 57px; width: 5px; height: 55px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform-origin: bottom; z-index: 1;">
+                                    style="position: absolute; bottom: 20px; left: 47px; width: 4px; height: 45px; background: linear-gradient(to right, #333, #666); border-radius: 2px; transform-origin: bottom; z-index: 1;">
                                 </div>
                                 <div
-                                    style="position: absolute; bottom: 25px; right: 25px; width: 5px; height: 50px; background: linear-gradient(to right, #333, #666); border-radius: 3px; transform: rotate(25deg); transform-origin: bottom; z-index: 1;">
+                                    style="position: absolute; bottom: 20px; right: 20px; width: 4px; height: 40px; background: linear-gradient(to right, #333, #666); border-radius: 2px; transform: rotate(25deg); transform-origin: bottom; z-index: 1;">
                                 </div>
 
                                 <!-- Router Body -->
                                 <div
-                                    style="position: absolute; bottom: 0; left: 0; width: 120px; height: 35px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 50% 50% 6px 6px / 100% 100% 15% 15%; box-shadow: 0 15px 20px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.8); z-index: 2;">
+                                    style="position: absolute; bottom: 0; left: 0; width: 100px; height: 30px; background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%); border-radius: 50% 50% 6px 6px / 100% 100% 15% 15%; box-shadow: 0 10px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.8); z-index: 2;">
                                     <!-- Glowing strip -->
                                     <div
-                                        style="position: absolute; bottom: 3px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, #ff6b00, #ff00ea, #00c3ff); border-radius: 2px; box-shadow: 0 0 5px rgba(255,255,255,0.5);">
+                                        style="position: absolute; bottom: 3px; left: 5%; width: 90%; height: 2px; background: linear-gradient(90deg, #ff6b00, #ff00ea, #00c3ff); border-radius: 2px; box-shadow: 0 0 4px rgba(255,255,255,0.5);">
                                     </div>
                                     <!-- Status Lights -->
-                                    <div style="position: absolute; top: 10px; left: 45px; display: flex; gap: 6px;"
+                                    <div style="position: absolute; top: 8px; left: 38px; display: flex; gap: 5px;"
                                         id="router-leds">
                                         <div
-                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                            style="width: 4px; height: 4px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 5px #88ff00;">
                                         </div>
                                         <div
-                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                            style="width: 4px; height: 4px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 5px #88ff00;">
                                         </div>
                                         <div
-                                            style="width: 5px; height: 5px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 6px #88ff00;">
+                                            style="width: 4px; height: 4px; background: #88ff00; border-radius: 50%; box-shadow: 0 0 5px #88ff00;">
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Floating WiFi symbol -->
                                 <svg viewBox="0 0 24 24"
-                                    style="position: absolute; right: -30px; top: -5px; width: 45px; height: 45px; fill: none; stroke: #99d968; stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); z-index: 3;">
+                                    style="position: absolute; right: -25px; top: -5px; width: 35px; height: 35px; fill: none; stroke: #99d968; stroke-width: 3.5; stroke-linecap: round; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3)); z-index: 3;">
                                     <path
                                         d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0" />
                                     <circle cx="12" cy="20" r="1.5" fill="#99d968" stroke="none" />
                                 </svg>
                             </div>
                         </div>
-                        <div style="text-align: center; font-size: 11px; color: var(--color-text-secondary); margin-top:10px;"
+                        <div style="text-align: center; font-size: 9px; color: var(--color-text-secondary); margin-top: 5px;"
                             id="router-network-info">
-                            Network: Aura-5G<br>Speed: 850 Mbps
+                            Aura-5G • 850 Mbps
                         </div>
                     </div>
 
@@ -404,6 +404,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Living Room Door Widget -->
+                    <div class="widget col-2 active" data-glow="yellow" id="widget-living-door" style="min-height: 110px;">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title" style="font-size: 13px;">Door</span>
+                                <div class="widget-subtitle" id="status-living-door-text" style="font-size: 9px;">Unlocked</div>
+                            </div>
+                            <label class="switch" style="width: 36px; height: 20px;">
+                                <input type="checkbox" class="toggle-control" id="toggle-living-door" data-target="widget-living-door">
+                                <span class="slider yellow" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 38px; transition: all 0.3s;"
+                            id="living-door-icon">🔓</div>
+                    </div>
+
                 </section>
 
                 <!-- ------------------- KITCHEN VIEW ------------------- -->
@@ -1572,25 +1589,25 @@
                                 style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
                                 🔒 Doors & Windows</div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-                                <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
+                                <div class="widget-sm" id="btn-door-front" style="padding:7px 10px; flex-direction:column; gap:1px; cursor:pointer; user-select:none;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Front Door</span>
                                     <span style="font-size:11px; font-weight:700; color:var(--accent-green);"
                                         id="status-door-front">🔒 Locked</span>
                                 </div>
-                                <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
+                                <div class="widget-sm" id="btn-door-back" style="padding:7px 10px; flex-direction:column; gap:1px; cursor:pointer; user-select:none;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Back Door</span>
                                     <span style="font-size:11px; font-weight:700; color:var(--accent-green);"
                                         id="status-door-back">🔒 Locked</span>
                                 </div>
-                                <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
+                                <div class="widget-sm" id="btn-door-living" style="padding:7px 10px; flex-direction:column; gap:1px; cursor:pointer; user-select:none;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Living Room</span>
                                     <span style="font-size:11px; font-weight:700; color:var(--accent-yellow);"
-                                        id="status-door-living">🔓 Open</span>
+                                        id="status-door-living">🔓 Unlocked</span>
                                 </div>
-                                <div class="widget-sm" style="padding:7px 10px; flex-direction:column; gap:1px;">
+                                <div class="widget-sm" id="btn-door-bedroom" style="padding:7px 10px; flex-direction:column; gap:1px; cursor:pointer; user-select:none;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Bedroom</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--color-text-secondary);"
-                                        id="status-door-bedroom">🚪 Closed</span>
+                                    <span style="font-size:11px; font-weight:700; color:var(--accent-green);"
+                                        id="status-door-bedroom">🔒 Locked</span>
                                 </div>
                             </div>
                         </div>
@@ -1635,78 +1652,41 @@
 
                         <div style="width:100%; height:1px; background:rgba(255,255,255,0.08);"></div>
 
-                        <!-- Recent Activity -->
-                        <div style="width:100%;">
-                            <div
-                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
-                                🕐 Recent Activity</div>
-                            <div style="display:flex; flex-direction:column;">
-                                <div
-                                    style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                                    <span
-                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-yellow); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div>
-                                        <div style="font-size:10px; font-weight:600;">Motion detected — Driveway</div>
-                                        <div style="font-size:9px; color:var(--color-text-muted);">11:19 PM</div>
-                                    </div>
-                                </div>
-                                <div
-                                    style="display:flex; gap:7px; align-items:flex-start; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);">
-                                    <span
-                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-green); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div>
-                                        <div style="font-size:10px; font-weight:600;">Front door locked by Payal</div>
-                                        <div style="font-size:9px; color:var(--color-text-muted);">10:47 PM</div>
-                                    </div>
-                                </div>
-                                <div style="display:flex; gap:7px; align-items:flex-start; padding:4px 0;">
-                                    <span
-                                        style="width:5px; height:5px; border-radius:50%; background:var(--accent-blue); display:inline-block; margin-top:4px; flex-shrink:0;"></span>
-                                    <div>
-                                        <div style="font-size:10px; font-weight:600;">Thermostat set to 20°C</div>
-                                        <div style="font-size:9px; color:var(--color-text-muted);">09:30 PM</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="width:100%; height:1px; background:rgba(255,255,255,0.08);"></div>
-
                         <!-- Air Quality + Energy compact 2x2 -->
                         <div style="width:100%;">
                             <div
-                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                style="font-size:11px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
                                 🌬️ Air &nbsp;·&nbsp; ⚡ Energy</div>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                                 <div class="widget-sm"
-                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
-                                    <span style="font-size:9px; color:var(--color-text-muted);">Temperature</span>
-                                    <span style="font-size:14px; font-weight:700;" id="aq-temp">18.3°C</span>
-                                    <span style="font-size:9px; color:var(--accent-green);">Normal</span>
+                                    style="padding:14px 16px; flex-direction:column; gap:4px; align-items:flex-start;">
+                                    <span style="font-size:10px; color:var(--color-text-muted);">Temperature</span>
+                                    <span style="font-size:20px; font-weight:800; color:#fff; margin-top:2px;" id="aq-temp">18.3°C</span>
+                                    <span style="font-size:10px; color:var(--accent-green); font-weight:600; margin-top:2px;">Normal</span>
                                 </div>
                                 <div class="widget-sm"
-                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
-                                    <span style="font-size:9px; color:var(--color-text-muted);">Humidity</span>
-                                    <span style="font-size:14px; font-weight:700;" id="aq-humidity">62%</span>
+                                    style="padding:14px 16px; flex-direction:column; gap:4px; align-items:flex-start;">
+                                    <span style="font-size:10px; color:var(--color-text-muted);">Humidity</span>
+                                    <span style="font-size:20px; font-weight:800; color:#fff; margin-top:2px;" id="aq-humidity">62%</span>
                                     <div
-                                        style="width:100%; height:3px; background:rgba(255,255,255,0.1); border-radius:2px; margin-top:2px;">
+                                        style="width:100%; height:5px; background:rgba(255,255,255,0.1); border-radius:3px; margin-top:6px;">
                                         <div
-                                            style="width:62%; height:100%; background:var(--accent-blue); border-radius:2px;">
+                                            style="width:62%; height:100%; background:var(--accent-blue); border-radius:3px;">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-sm"
-                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
-                                    <span style="font-size:9px; color:var(--color-text-muted);">Used Today</span>
-                                    <span style="font-size:14px; font-weight:700;" id="energy-used">18.7 kWh</span>
-                                    <span style="font-size:9px; color:var(--accent-green);">-8% vs yesterday</span>
+                                    style="padding:14px 16px; flex-direction:column; gap:4px; align-items:flex-start;">
+                                    <span style="font-size:10px; color:var(--color-text-muted);">Used Today</span>
+                                    <span style="font-size:20px; font-weight:800; color:#fff; margin-top:2px;" id="energy-used">18.7 kWh</span>
+                                    <span style="font-size:10px; color:var(--accent-green); font-weight:600; margin-top:2px;">-8% vs yesterday</span>
                                 </div>
                                 <div class="widget-sm"
-                                    style="padding:8px 10px; flex-direction:column; gap:1px; align-items:flex-start;">
-                                    <span style="font-size:9px; color:var(--color-text-muted);">Est. Cost</span>
-                                    <span style="font-size:14px; font-weight:700; color:var(--accent-yellow);"
+                                    style="padding:14px 16px; flex-direction:column; gap:4px; align-items:flex-start;">
+                                    <span style="font-size:10px; color:var(--color-text-muted);">Est. Cost</span>
+                                    <span style="font-size:20px; font-weight:800; color:var(--accent-yellow); margin-top:2px;"
                                         id="energy-cost">RM 4.20</span>
-                                    <span style="font-size:9px; color:var(--color-text-muted);">Monthly: RM 126</span>
+                                    <span style="font-size:10px; color:var(--color-text-muted); margin-top:2px;">Monthly: RM 126</span>
                                 </div>
                             </div>
                         </div>
@@ -1714,29 +1694,7 @@
 
                 </section>
 
-                <!-- Bottom Status Banner Info -->
-                <div class="info-banner">
-                    <div class="info-item accent-yellow">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                        </svg>
-                        <span id="banner-lights-status">13 Lights On</span>
-                    </div>
-                    <div class="info-item">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" />
-                        </svg>
-                        <span id="banner-climate-status">Climate Systems On (19.46°C Avg)</span>
-                    </div>
-                    <div class="info-item accent-green">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                        </svg>
-                        <span id="banner-security-status">Secure • All doors locked</span>
-                    </div>
-                </div>
+
 
             </div>
         </main>
