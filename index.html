@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -908,7 +908,7 @@
                             <div
                                 style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
                                 <!-- Icon (Bulb) -->
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                <div style="font-size: 44px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
                                     id="nursery-light1-icon">💡</div>
                             </div>
                             <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
@@ -963,7 +963,7 @@
                             <div
                                 style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
                                 <!-- Icon (Moon) -->
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                <div style="font-size: 44px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
                                     id="nursery-light2-icon">🌙</div>
                             </div>
                             <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
@@ -989,14 +989,46 @@
                             </div>
                         </div>
 
-                        <!-- CCTV 2: Whole Room Camera -->
-                        <div class="widget camera-widget" style="flex: 1;"
-                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                            <img class="camera-feed" src="assets/nursery_bg.png" alt="Nursery Whole Room"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="camera-overlay">
-                                <span class="camera-name">Camera 05: Whole Room</span>
-                                <span class="camera-live">LIVE</span>
+                        <!-- Sound Machine Widget -->
+                        <div class="widget active" data-glow="purple" id="widget-nursery-sound" style="flex: 1;">
+                            <div class="widget-header" style="margin-bottom: 0px;">
+                                <div>
+                                    <span class="widget-title">Sound Machine</span>
+                                    <div class="widget-subtitle" id="status-nursery-sound-text">Lullaby</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-control" checked data-target="widget-nursery-sound">
+                                    <span class="slider purple"></span>
+                                </label>
+                            </div>
+                            
+                            <div style="flex-grow:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 4px 0;">
+                                <!-- CSS Disc -->
+                                <div style="width: 65px; height: 65px; border-radius: 50%; background: conic-gradient(from 0deg, #c471ed, #f64f59, #12c2e9, #c471ed); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(196, 113, 237, 0.4); animation: spin 6s linear infinite;" id="nursery-sound-disc">
+                                    <div style="width: 22px; height: 22px; background: #222; border-radius: 50%; border: 2px solid #111;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div style="width: 100%;">
+                                <!-- Pills -->
+                                <div style="display:flex; justify-content: space-between; gap:4px; margin-bottom: 8px;" id="nursery-sound-pills">
+                                    <div class="sound-pill active" data-track="lullaby" style="flex:1; text-align:center; padding: 4px 0; background: rgba(196,113,237,0.3); color: #e6b3ff; border: 1px solid #c471ed; border-radius: 12px; font-size: 9px; font-weight: bold; cursor: pointer;">Lullaby</div>
+                                    <div class="sound-pill" data-track="rain" style="flex:1; text-align:center; padding: 4px 0; background: rgba(255,255,255,0.1); color: #e0e0e0; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; font-size: 9px; cursor: pointer;">Rain</div>
+                                    <div class="sound-pill" data-track="shush" style="flex:1; text-align:center; padding: 4px 0; background: rgba(255,255,255,0.1); color: #e0e0e0; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; font-size: 9px; cursor: pointer;">Shush</div>
+                                </div>
+                                <!-- Volume -->
+                                <div class="range-container" style="width: 100%;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
+                                        <span>Volume</span>
+                                        <span id="val-nursery-volume">40%</span>
+                                    </div>
+                                    <div style="width: 100%; height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                        <div id="ios-nursery-volume-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;"></div>
+                                        <div style="position: absolute; left: 8px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">🔊</div>
+                                        <input type="range" min="0" max="100" value="40" id="slider-nursery-volume" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1010,17 +1042,22 @@
                                     <span class="widget-title">Air Conditioner</span>
                                     <div class="widget-subtitle" id="status-nursery-ac-text">Cooling • 22°C</div>
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-nursery-ac">
-                                    <span class="slider blue"></span>
-                                </label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <button id="btn-nursery-sleep" style="background: rgba(196,113,237,0.15); border: 1px solid #c471ed; color: #c471ed; border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 0 5px rgba(196,113,237,0.2);">
+                                        🌙 Sleep Mode
+                                    </button>
+                                    <label class="switch">
+                                        <input type="checkbox" class="toggle-control" checked
+                                            data-target="widget-nursery-ac">
+                                        <span class="slider blue"></span>
+                                    </label>
+                                </div>>
                             </div>
                             <div
                                 style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
                                 <!-- Radial Dial -->
                                 <div class="dial-container"
-                                    style="width: 80px; height: 80px; margin: 0; flex-shrink: 0;">
+                                    style="width: 100px; height: 100px; margin: 0; flex-shrink: 0;">
                                     <svg class="dial-svg" viewBox="0 0 140 140" id="svg-nursery-ac"
                                         style="width: 100%; height: 100%;">
                                         <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
@@ -1030,18 +1067,18 @@
                                     <div class="dial-info"
                                         style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                                         <span class="dial-value" id="val-nursery-ac"
-                                            style="font-size: 14px; letter-spacing: -0.5px;">22.0°</span>
+                                            style="font-size: 18px; letter-spacing: -0.5px;">22.0°</span>
                                         <span class="dial-status" id="status-nursery-ac"
-                                            style="color: var(--accent-blue); font-size: 8px; text-transform: uppercase; margin-top: 1px;">Cooling</span>
+                                            style="color: var(--accent-blue); font-size: 10px; text-transform: uppercase; margin-top: 1px;">Cooling</span>
                                     </div>
                                 </div>
                                 <!-- Stacked Buttons -->
-                                <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center;"
+                                <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center;"
                                     id="nursery-ac-controls">
                                     <button class="dial-btn" id="btn-nursery-ac-up"
-                                        style="width: 26px; height: 26px; font-size: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
+                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
                                     <button class="dial-btn" id="btn-nursery-ac-down"
-                                        style="width: 26px; height: 26px; font-size: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
+                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
                                 </div>
                             </div>
                         </div>
@@ -1060,27 +1097,40 @@
                                     <span class="slider green"></span>
                                 </label>
                             </div>
-                            <div
-                                style="flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 20px; padding: 10px 0;">
-                                <!-- Semi-circular Gauge / Air Quality Info -->
-                                <div style="position: relative; width: 70px; height: 35px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 5px;"
-                                    id="purifier-gauge-container">
-                                    <!-- Gauge Background Arc -->
-                                    <div
-                                        style="position: absolute; top: 0; left: 0; width: 70px; height: 70px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.08); box-sizing: border-box;">
+                            <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: center; padding: 5px 0;">
+                                <!-- Top Row: Gauge + Basic Info -->
+                                <div style="display: flex; align-items: center; justify-content: space-around; margin-bottom: 8px;">
+                                    <div style="position: relative; width: 75px; height: 37.5px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center;"
+                                        id="purifier-gauge-container">
+                                        <!-- Gauge Background Arc -->
+                                        <div style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.08); box-sizing: border-box;"></div>
+                                        <!-- Gauge Progress Arc (Green) -->
+                                        <div style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid var(--accent-green); border-bottom-color: transparent; border-right-color: transparent; box-sizing: border-box; transform: rotate(45deg); transition: transform 0.8s ease;"
+                                            id="purifier-gauge-progress"></div>
+                                        <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; z-index: 2;"
+                                            id="val-purifier-aqi">12 AQI</div>
                                     </div>
-                                    <!-- Gauge Progress Arc (Green) -->
-                                    <div style="position: absolute; top: 0; left: 0; width: 70px; height: 70px; border-radius: 50%; border: 6px solid var(--accent-green); border-bottom-color: transparent; border-right-color: transparent; box-sizing: border-box; transform: rotate(45deg); transition: transform 0.8s ease;"
-                                        id="purifier-gauge-progress"></div>
-                                    <!-- Inner Value -->
-                                    <div style="font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 2px; z-index: 2;"
-                                        id="val-purifier-aqi">12 AQI</div>
+                                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                        <span style="font-size: 13px; font-weight: 700; color: var(--accent-green);"
+                                            id="lbl-purifier-quality">Good</span>
+                                        <span style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px;" id="val-purifier-status">Air Quality</span>
+                                    </div>
                                 </div>
-                                <div style="display: flex; flex-direction: column; justify-content: center;">
-                                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-green);"
-                                        id="lbl-purifier-quality">Air Quality</span>
-                                    <span style="font-size: 10px; color: var(--color-text-secondary); margin-top: 1px;"
-                                        id="val-purifier-status">Good</span>
+                                
+                                <!-- Bottom Row: PM2.5 & Humidity & Filter -->
+                                <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <span style="font-size: 13px; font-weight: bold; color: #fff;" id="val-purifier-pm25">8</span>
+                                        <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">PM2.5</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <span style="font-size: 13px; font-weight: bold; color: #fff;" id="val-purifier-hum">52%</span>
+                                        <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">Humid</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <span style="font-size: 13px; font-weight: bold; color: #fff;" id="val-purifier-filter">95%</span>
+                                        <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">Filter</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1145,33 +1195,64 @@
                     <!-- Column 2: Smart Fan + Smart Washer -->
                     <div class="col-4 flex-col-gap">
                         <!-- Smart Fan Widget -->
-                        <div class="widget active" data-glow="blue" id="widget-laundry-fan" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
+                        <div class="widget active" data-glow="cyan" id="widget-laundry-fan" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 12px; min-height: 250px;">
+                            <div class="widget-header" style="margin-bottom: 5px;">
+                                <div style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
                                     <span class="widget-title">Smart Fan</span>
-                                    <div class="widget-subtitle" id="status-laundry-fan-text">Active • Medium</div>
+                                    <label class="switch">
+                                        <input type="checkbox" class="toggle-control" checked data-target="widget-laundry-fan">
+                                        <span class="slider"></span>
+                                    </label>
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" id="toggle-laundry-fan" checked
-                                        data-target="widget-laundry-fan">
-                                    <span class="slider blue"></span>
-                                </label>
                             </div>
-                            <div
-                                style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
-                                <!-- Spinning Fan Icon -->
-                                <div style="font-size: 38px; display: flex; align-items: center; justify-content: center; width: 75px; height: 75px; transition: all 0.3s; transform-origin: center;"
-                                    id="laundry-fan-icon-container">🌀</div>
-                                <!-- Stacked Speed Buttons -->
-                                <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center;"
-                                    class="segmented-control-vertical" id="laundry-fan-speed-container">
-                                    <button class="segment-btn-ver" data-speed="HIGH"
-                                        style="padding: 4px 12px; font-size: 10px; font-weight: bold; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: all 0.2s;">HIGH</button>
-                                    <button class="segment-btn-ver active" data-speed="MED"
-                                        style="padding: 4px 12px; font-size: 10px; font-weight: bold; border-radius: 4px; border: 1px solid var(--accent-blue); background: rgba(0, 168, 255, 0.15); color: var(--accent-blue); cursor: pointer; transition: all 0.2s;">MEDIUM</button>
-                                    <button class="segment-btn-ver" data-speed="LOW"
-                                        style="padding: 4px 12px; font-size: 10px; font-weight: bold; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #fff; cursor: pointer; transition: all 0.2s;">LOW</button>
+                            
+                            <!-- Central Fan Icon -->
+                            <div style="display: flex; justify-content: center; align-items: center; position: relative; margin: 10px 0;">
+                                <!-- Circular progress ring background -->
+                                <svg width="90" height="90" viewBox="0 0 100 100" style="position: absolute; transform: rotate(-90deg);">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="4"></circle>
+                                    <!-- Cyan progress -->
+                                    <circle id="laundry-fan-ring" cx="50" cy="50" r="42" fill="none" stroke="#00e5ff" stroke-width="4" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="92.36" style="transition: stroke-dashoffset 0.3s; filter: drop-shadow(0 0 6px #00e5ff);"></circle>
+                                </svg>
+                                
+                                <!-- Inner Fan Icon -->
+                                <div id="laundry-fan-icon-container" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: #00e5ff; filter: drop-shadow(0 0 10px #00e5ff); animation: spin 1s linear infinite;">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="40" height="40">
+                                        <path d="M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 15.75,6.75C14.16,8.13 12.33,7.58 11.23,7.8C10.63,7.91 10.15,8.22 9.87,8.65C9.37,8.08 8.89,7.4 8.79,6.58C8.59,4.92 9.53,3.31 11.08,2.44C11.54,2.16 12.03,2 12.5,2M6.75,8.25C8.13,9.84 7.58,11.67 7.8,12.77C7.91,13.37 8.22,13.85 8.65,14.13C8.08,14.63 7.4,15.11 6.58,15.21C4.92,15.41 3.31,14.47 2.44,12.92C1.94,11.89 2,10.74 2.66,9.83C3.54,8.5 5.25,7.9 6.75,8.25M17.25,15.75C15.87,14.16 16.42,12.33 16.2,11.23C16.09,10.63 15.78,10.15 15.35,9.87C15.92,10.44 16.6,10.89 17.42,10.79C19.08,10.59 20.69,11.53 21.56,13.08C22.06,14.11 22,15.26 21.34,16.17C20.46,17.5 18.75,18.1 17.25,15.75M11.5,22C7,22 6.89,18.43 8.25,17.25C9.84,15.87 11.67,16.42 12.77,16.2C13.37,16.09 13.85,15.78 14.13,15.35C14.63,15.92 15.11,16.6 15.21,17.42C15.41,19.08 14.47,20.69 12.92,21.56C12.46,21.84 11.97,22 11.5,22Z"/>
+                                    </svg>
                                 </div>
+                            </div>
+
+                            <!-- Speed Slider area -->
+                            <div style="padding: 0 10px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                                    <span style="color: rgba(255,255,255,0.8);">Speed</span>
+                                    <span id="laundry-fan-pct-text" style="color: #00e5ff; font-weight: 500;">65%</span>
+                                </div>
+                                <div style="position: relative; height: 20px; display: flex; align-items: center; margin-bottom: 12px; cursor: pointer;" id="laundry-fan-slider-container">
+                                    <input type="range" id="slider-laundry-fan" min="0" max="100" value="65" 
+                                        style="width: 100%; -webkit-appearance: none; appearance: none; background: transparent; position: relative; z-index: 3; cursor: pointer; height: 100%; margin: 0; outline: none; opacity: 0; ">
+                                    
+                                    <!-- Custom visual track behind the invisible slider -->
+                                    <div style="position: absolute; top: 7px; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; z-index: 1;">
+                                        <div id="laundry-fan-fill" style="width: 65%; height: 100%; background: #00e5ff; box-shadow: 0 0 8px #00e5ff; border-radius: 3px; pointer-events: none;"></div>
+                                    </div>
+                                    
+                                    <!-- Custom Thumb -->
+                                    <div id="laundry-fan-thumb" style="position: absolute; top: 10px; left: 65%; width: 14px; height: 14px; background: #00e5ff; border-radius: 50%; z-index: 2; transform: translate(-50%, -50%); box-shadow: 0 0 10px #00e5ff, 0 0 4px rgba(0,0,0,0.5); pointer-events: none;"></div>
+                                </div>
+
+                                <!-- Speed Pills -->
+                                <div id="laundry-fan-pills" style="display: flex; justify-content: space-between; gap: 4px; margin-bottom: 12px;">
+                                    <button class="fan-pill" data-speed="25" style="flex: 1; padding: 5px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: #aaa; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all 0.2s;">Low</button>
+                                    <button class="fan-pill" data-speed="50" style="flex: 1; padding: 5px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: #aaa; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all 0.2s;">Med</button>
+                                    <button class="fan-pill" data-speed="75" style="flex: 1; padding: 5px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: #aaa; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all 0.2s;">High</button>
+                                    <button class="fan-pill" data-speed="100" style="flex: 1; padding: 5px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: #aaa; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all 0.2s;">Boost</button>
+                                    <button class="fan-pill active" id="fan-pill-custom" data-speed="65" style="flex: 1; padding: 5px 0; background: #00e5ff; border: 1px solid #00e5ff; color: #111; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);">65%</button>
+                                </div>
+
+                                <!-- Status Text -->
+                                <div id="status-laundry-fan-text" style="text-align: center; color: #4ade80; font-size: 13px; font-weight: 500; margin-bottom: 5px;">Running - Med</div>
                             </div>
                         </div>
 
@@ -1191,23 +1272,45 @@
                                     <span class="slider"></span>
                                 </label>
                             </div>
-                            <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
-                                <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
-                                    id="washer-chassis">
-                                    <div
-                                        style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
-                                        <span
-                                            style="font-size: 8px; color: var(--accent-blue); font-family: monospace; font-weight: bold;"
-                                            id="washer-panel-text">45 MIN</span>
-                                        <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-blue); box-shadow: 0 0 5px var(--accent-blue); transition: all 0.3s;"
-                                            id="washer-led"></div>
+                            <div style="flex:1; display:flex; gap:10px; align-items:center; padding: 5px; overflow:hidden; background: linear-gradient(135deg, #1f2735 0%, #141a24 100%); border-radius: 12px; margin: 4px;">
+                                <!-- Left: Circular Wave Progress -->
+                                <div id="washer-progress-ring" style="position: relative; width: 90px; height: 90px; border-radius: 50%; border: 3px solid rgba(0,168,255,0.15); border-top-color: var(--accent-blue); border-right-color: var(--accent-blue); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0,168,255,0.25); flex-shrink: 0; padding: 3px;">
+                                    <div style="width: 100%; height: 100%; border-radius: 50%; background: #1a202c; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1;">
+                                        <!-- Wave -->
+                                        <div id="washer-wave-bg" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to bottom, rgba(0,168,255,0.6), rgba(0,168,255,0.9)); z-index: 0;"></div>
+                                        <div id="washer-wave-anim" style="position: absolute; top: 35%; left: -50%; width: 200%; height: 15px; background: rgba(255,255,255,0.2); border-radius: 50%; animation: waveAnim 3s infinite linear; z-index: 0;"></div>
+                                        
+                                        <!-- Text inside circle -->
+                                        <div style="z-index: 2; text-align: center; line-height: 1.1; margin-top: 5px;">
+                                            <div style="font-size: 20px; font-weight: 800; color: #fff;" id="washer-circle-pct">72<span style="font-size:10px;">%</span></div>
+                                            <div style="font-size: 7px; color: rgba(255,255,255,0.8);" id="washer-circle-time">12 mins left</div>
+                                            <div style="font-size: 7px; color: rgba(255,255,255,0.6);" id="washer-circle-status">1400 RPM</div>
+                                        </div>
                                     </div>
-                                    <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-blue); box-shadow: 0 0 12px rgba(0, 168, 255, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
-                                        id="washer-door-ring">
-                                        <img src="assets/smart_washer.png" alt="Smart Washer"
-                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 8s linear infinite;"
-                                            id="img-laundry-washer">
+                                </div>
+                                
+                                <!-- Right: Controls -->
+                                <div style="display:flex; flex-direction:column; flex:1; justify-content:center; min-width:0; gap: 4px;">
+                                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-blue); letter-spacing: 0.5px;" id="washer-main-status">Main Wash</div>
+                                    
+                                    <!-- Cycle Pills -->
+                                    <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom: 2px;" id="washer-pills">
+                                        <div class="cycle-pill active" data-cycle="eco" style="padding: 3px 8px; background: rgba(0,168,255,0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); border-radius: 12px; font-size: 8px; font-weight: bold; cursor: pointer; white-space: nowrap;">Eco</div>
+                                        <div class="cycle-pill" data-cycle="quick" style="padding: 3px 8px; background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 8px; cursor: pointer; white-space: nowrap;">Quick</div>
+                                        <div class="cycle-pill" data-cycle="heavy" style="padding: 3px 8px; background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 8px; cursor: pointer; white-space: nowrap;">Heavy</div>
+                                    </div>
+                                    
+                                    <!-- Info row -->
+                                    <div style="font-size: 9px; color: #ccc; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; margin-top:2px;">
+                                        <span>Temp: <span style="color:#fff; font-weight:600;" id="washer-info-temp">40°C</span></span>
+                                        <span>Cycle: <span style="color:#fff; font-weight:600;" id="washer-info-cycle">Cotton Eco</span></span>
+                                    </div>
+                                    
+                                    <!-- Buttons -->
+                                    <div style="display:flex; gap:5px; margin-top:2px;">
+                                        <button id="btn-washer-start" style="flex:1; background: rgba(0,168,255,0.15); border: 1px solid var(--accent-blue); border-radius: 6px; color: var(--accent-blue); font-size: 9px; font-weight:bold; padding: 5px 0; cursor: pointer; transition: 0.2s;">Start</button>
+                                        <button id="btn-washer-pause" style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #aaa; font-size: 9px; padding: 5px 0; cursor: pointer; transition: 0.2s;">Pause</button>
+                                        <button id="btn-washer-stop" style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #aaa; font-size: 9px; padding: 5px 0; cursor: pointer; transition: 0.2s;">Stop</button>
                                     </div>
                                 </div>
                             </div>
@@ -1217,33 +1320,52 @@
                     <!-- Column 3: Laundry Environment + Smart Dryer -->
                     <div class="col-4 flex-col-gap">
                         <!-- Laundry Environment -->
-                        <div class="widget active" data-glow="green" id="widget-laundry-sensors" style="flex: 1;">
-                            <div class="widget-header">
+                        <div class="widget active" data-glow="green" id="widget-laundry-sensors" style="flex: 1; display:flex; flex-direction:column; overflow:hidden;">
+                            <div class="widget-header" style="margin-bottom:0; flex-shrink:0;">
                                 <div>
                                     <span class="widget-title">Laundry Environment</span>
                                     <div class="widget-subtitle">Sensors & Supplies</div>
                                 </div>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="env-tab-btn active" id="btn-env-sensors" onclick="switchEnvTab('sensors')">Sensors</button>
+                                    <button class="env-tab-btn" id="btn-env-usage" onclick="switchEnvTab('usage')">Usage</button>
+                                </div>
                             </div>
-                            <div class="sensors-grid" style="margin-top: 10px;">
-                                <div class="sensor-block">
-                                    <span class="sensor-value" style="color: var(--accent-green);">Safe</span>
-                                    <span class="sensor-label">Leak Alert</span>
+                            <!-- Sensors Panel -->
+                            <div id="env-panel-sensors" style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden;">
+                                <div class="sensors-grid" style="margin-top:6px; flex-shrink:0;">
+                                    <div class="sensor-block">
+                                        <span class="sensor-value" style="color: var(--accent-green);" id="laundry-leak-val">Safe</span>
+                                        <span class="sensor-label">Leak</span>
+                                    </div>
+                                    <div class="sensor-block">
+                                        <span class="sensor-value">24°C</span>
+                                        <span class="sensor-label">Temp</span>
+                                    </div>
+                                    <div class="sensor-block">
+                                        <span class="sensor-value">58%</span>
+                                        <span class="sensor-label">Humidity</span>
+                                    </div>
                                 </div>
-                                <div class="sensor-block">
-                                    <span class="sensor-value">24°C</span>
-                                    <span class="sensor-label">Room Temp</span>
+                                <!-- Detergent Wave -->
+                                <div class="detergent-container" id="detergent-container" style="flex:1; min-height:0;">
+                                    <div class="detergent-beaker" id="detergent-beaker">
+                                        <div class="detergent-liquid" id="detergent-liquid">
+                                            <div class="detergent-wave"></div>
+                                        </div>
+                                        <div class="detergent-level-badge" id="detergent-level-badge">65%</div>
+                                    </div>
+                                    <div style="display:flex; flex-direction:column; justify-content:center; gap:3px; flex:1; min-width:0;">
+                                        <div style="font-size:8px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:0.5px;">Detergent</div>
+                                        <div style="font-size:13px; font-weight:700;" id="detergent-pct-text">65%</div>
+                                        <div style="font-size:8px; color:var(--color-text-secondary);">Liquid • Pods 42%</div>
+                                        <button class="detergent-refill-btn" id="btn-detergent-refill" style="display:none;">+ Refill</button>
+                                    </div>
                                 </div>
-                                <div class="sensor-block">
-                                    <span class="sensor-value">58%</span>
-                                    <span class="sensor-label">Humidity</span>
-                                </div>
-                                <div class="sensor-block">
-                                    <span class="sensor-value">65%</span>
-                                    <span class="sensor-label">Detergent</span>
-                                    <span
-                                        style="font-size: 10px; color: var(--color-text-secondary); margin-top: 4px;">Liquid
-                                        65% • Pods 42%</span>
-                                </div>
+                            </div>
+                            <!-- Usage Chart Panel -->
+                            <div id="env-panel-usage" style="flex:1; display:none; flex-direction:column; align-items:stretch; justify-content:center; padding-top:4px; min-height:0; overflow:hidden;">
+                                <canvas id="laundry-usage-chart" style="width:100%; flex:1; min-height:0;"></canvas>
                             </div>
                         </div>
 
@@ -1263,23 +1385,45 @@
                                     <span class="slider orange"></span>
                                 </label>
                             </div>
-                            <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding-top: 8px; margin-bottom: 2px;">
-                                <div style="position: relative; width: 90px; height: 110px; background: linear-gradient(135deg, #3a4454 0%, #1a202c 100%); border: 3px solid #2d3748; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s;"
-                                    id="dryer-chassis">
-                                    <div
-                                        style="width: 100%; height: 18px; background: #0f172a; border-bottom: 2px solid #2d3748; display: flex; align-items: center; justify-content: space-between; padding: 0 6px;">
-                                        <span
-                                            style="font-size: 8px; color: var(--accent-orange); font-family: monospace; font-weight: bold;"
-                                            id="dryer-panel-text">1H 20M</span>
-                                        <div style="width: 4px; height: 4px; border-radius: 50%; background: var(--accent-orange); box-shadow: 0 0 5px var(--accent-orange); transition: all 0.3s;"
-                                            id="dryer-led"></div>
+                            <div style="flex:1; display:flex; gap:10px; align-items:center; padding: 5px; overflow:hidden; background: linear-gradient(135deg, #1f2735 0%, #141a24 100%); border-radius: 12px; margin: 4px;">
+                                <!-- Left: Circular Wave Progress -->
+                                <div id="dryer-progress-ring" style="position: relative; width: 90px; height: 90px; border-radius: 50%; border: 3px solid rgba(245,158,11,0.15); border-top-color: var(--accent-orange); border-right-color: var(--accent-orange); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(245,158,11,0.25); flex-shrink: 0; padding: 3px;">
+                                    <div style="width: 100%; height: 100%; border-radius: 50%; background: #1a202c; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1;">
+                                        <!-- Wave (using orange gradient) -->
+                                        <div id="dryer-wave-bg" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 35%; background: linear-gradient(to bottom, rgba(245,158,11,0.6), rgba(245,158,11,0.9)); z-index: 0;"></div>
+                                        <div id="dryer-wave-anim" style="position: absolute; top: 60%; left: -50%; width: 200%; height: 15px; background: rgba(255,255,255,0.2); border-radius: 50%; animation: waveAnim 4s infinite linear; z-index: 0;"></div>
+                                        
+                                        <!-- Text inside circle -->
+                                        <div style="z-index: 2; text-align: center; line-height: 1.1; margin-top: 5px;">
+                                            <div style="font-size: 20px; font-weight: 800; color: #fff;" id="dryer-circle-pct">35<span style="font-size:10px;">%</span></div>
+                                            <div style="font-size: 7px; color: rgba(255,255,255,0.8);" id="dryer-circle-time">45 mins left</div>
+                                            <div style="font-size: 7px; color: rgba(255,255,255,0.6);" id="dryer-circle-status">Heating</div>
+                                        </div>
                                     </div>
-                                    <div style="margin-top: 10px; width: 62px; height: 62px; border-radius: 50%; background: #2d3748; border: 3px solid var(--accent-orange); box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: all 0.3s;"
-                                        id="dryer-door-ring">
-                                        <img src="assets/smart_dryer.png" alt="Smart Dryer"
-                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; transition: all 0.3s; animation: spin 12s linear infinite reverse;"
-                                            id="img-laundry-dryer">
+                                </div>
+                                
+                                <!-- Right: Controls -->
+                                <div style="display:flex; flex-direction:column; flex:1; justify-content:center; min-width:0; gap: 4px;">
+                                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-orange); letter-spacing: 0.5px;" id="dryer-main-status">Sensor Dry</div>
+                                    
+                                    <!-- Cycle Pills -->
+                                    <div style="display:flex; gap:4px; overflow-x:auto; padding-bottom: 2px;" id="dryer-pills">
+                                        <div class="cycle-pill active-orange" data-cycle="normal" style="padding: 3px 8px; background: rgba(245,158,11,0.2); color: var(--accent-orange); border: 1px solid var(--accent-orange); border-radius: 12px; font-size: 8px; font-weight: bold; cursor: pointer; white-space: nowrap;">Normal</div>
+                                        <div class="cycle-pill" data-cycle="quick" style="padding: 3px 8px; background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 8px; cursor: pointer; white-space: nowrap;">Quick</div>
+                                        <div class="cycle-pill" data-cycle="air" style="padding: 3px 8px; background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 8px; cursor: pointer; white-space: nowrap;">Air</div>
+                                    </div>
+                                    
+                                    <!-- Info row -->
+                                    <div style="font-size: 9px; color: #ccc; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px; margin-top:2px;">
+                                        <span>Heat: <span style="color:#fff; font-weight:600;" id="dryer-info-heat">Medium</span></span>
+                                        <span>Cycle: <span style="color:#fff; font-weight:600;" id="dryer-info-cycle">Towels</span></span>
+                                    </div>
+                                    
+                                    <!-- Buttons -->
+                                    <div style="display:flex; gap:5px; margin-top:2px;">
+                                        <button id="btn-dryer-start" style="flex:1; background: rgba(245,158,11,0.15); border: 1px solid var(--accent-orange); border-radius: 6px; color: var(--accent-orange); font-size: 9px; font-weight:bold; padding: 5px 0; cursor: pointer; transition: 0.2s;">Start</button>
+                                        <button id="btn-dryer-pause" style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #aaa; font-size: 9px; padding: 5px 0; cursor: pointer; transition: 0.2s;">Pause</button>
+                                        <button id="btn-dryer-stop" style="flex:1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #aaa; font-size: 9px; padding: 5px 0; cursor: pointer; transition: 0.2s;">Stop</button>
                                     </div>
                                 </div>
                             </div>
@@ -1640,6 +1784,25 @@
             <div
                 style="position:absolute; top:20px; right:20px; background:rgba(220, 38, 38, 0.8); padding:6px 12px; border-radius:6px; color:white; font-weight:bold; font-size:12px; letter-spacing:1px;">
                 ● REC
+            </div>
+        </div>
+    </div>
+
+    <!-- Laundry Appliance Modals -->
+    <div id="laundry-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:10000; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease;">
+        <div id="laundry-modal-panel" style="background:var(--glass-bg); border:var(--glass-border); border-radius:24px; padding:24px; width:90%; max-width:400px; box-shadow:var(--glass-shadow); position:relative; transform:scale(0.95); transition:transform 0.3s ease;">
+            <button id="btn-close-laundry-modal" onclick="closeLaundryModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:24px; cursor:pointer; opacity:0.7;">&times;</button>
+            <h2 id="laundry-modal-title" style="margin-top:0; margin-bottom:8px; font-size:20px; font-weight:600;">Smart Appliance</h2>
+            <p id="laundry-modal-desc" style="color:var(--color-text-secondary); font-size:12px; margin-bottom:20px;">Select a cycle</p>
+            <div id="laundry-modal-cycles" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
+                <!-- Buttons injected dynamically -->
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1);">
+                <div>
+                    <div style="font-size:10px; color:var(--color-text-secondary); text-transform:uppercase;">Est. Time</div>
+                    <div id="laundry-modal-time" style="font-size:24px; font-weight:700; color:var(--accent-blue);">--:--</div>
+                </div>
+                <button id="btn-laundry-modal-start" style="padding:12px 24px; border-radius:12px; background:var(--accent-blue); color:white; border:none; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(0,168,255,0.3);">START</button>
             </div>
         </div>
     </div>
