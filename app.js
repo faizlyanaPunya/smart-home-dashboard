@@ -455,79 +455,101 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (valStatus) valStatus.textContent = "Inactive";
             }
         }
-
-        // Laundry updates
-        else if (id === "widget-laundry-washer") {
-            const statusMode = document.getElementById("status-washer-mode");
-            const valTime = document.getElementById("val-washer-time");
-            const deviceImg = document.getElementById("img-laundry-washer");
-            const led = document.getElementById("washer-led");
-            const panelText = document.getElementById("washer-panel-text");
-            const doorRing = document.getElementById("washer-door-ring");
-            const chassis = document.getElementById("washer-chassis");
-
-            if (statusMode) statusMode.textContent = isChecked ? "Washing" : "Off";
-            if (valTime) valTime.textContent = isChecked ? "45m" : "--";
-
-            if (deviceImg) {
-                deviceImg.style.opacity = isChecked ? "1" : "0.2";
-                deviceImg.style.animationPlayState = isChecked ? "running" : "paused";
-            }
-            if (led) {
-                led.style.background = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.2)";
-                led.style.boxShadow = isChecked ? "0 0 5px var(--accent-blue)" : "none";
-            }
-            if (panelText) {
-                panelText.textContent = isChecked ? "45 MIN" : "OFF";
-                panelText.style.color = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.3)";
-            }
-            if (doorRing) {
-                doorRing.style.borderColor = isChecked ? "var(--accent-blue)" : "rgba(255, 255, 255, 0.2)";
-                doorRing.style.boxShadow = isChecked ? "0 0 12px rgba(0, 168, 255, 0.4)" : "none";
-            }
-            if (chassis) {
-                chassis.style.borderColor = isChecked ? "#2d3748" : "rgba(255, 255, 255, 0.1)";
-                chassis.style.boxShadow = isChecked ? "0 10px 20px rgba(0,0,0,0.5)" : "none";
+        else if (id === "widget-nursery-sound") {
+            const statusText = document.getElementById("status-nursery-sound-text");
+            const disc = document.getElementById("nursery-sound-disc");
+            const volContainer = document.getElementById("slider-nursery-volume")?.parentElement?.parentElement;
+            const pillsContainer = document.getElementById("nursery-sound-pills");
+            
+            if (isChecked) {
+                if (statusText) statusText.textContent = document.querySelector("#nursery-sound-pills .sound-pill.active")?.textContent || "Lullaby";
+                if (disc) {
+                    disc.style.animationPlayState = "running";
+                    disc.style.opacity = "1";
+                }
+                if (volContainer) {
+                    volContainer.style.opacity = "1";
+                    volContainer.style.pointerEvents = "auto";
+                }
+                if (pillsContainer) {
+                    pillsContainer.style.opacity = "1";
+                    pillsContainer.style.pointerEvents = "auto";
+                }
+            } else {
+                if (statusText) statusText.textContent = "Off";
+                if (disc) {
+                    disc.style.animationPlayState = "paused";
+                    disc.style.opacity = "0.5";
+                }
+                if (volContainer) {
+                    volContainer.style.opacity = "0.4";
+                    volContainer.style.pointerEvents = "none";
+                }
+                if (pillsContainer) {
+                    pillsContainer.style.opacity = "0.4";
+                    pillsContainer.style.pointerEvents = "none";
+                }
             }
         }
+        else if (id === "widget-laundry-washer") {
+            const circlePct = document.getElementById("washer-circle-pct");
+            const circleTime = document.getElementById("washer-circle-time");
+            const circleStatus = document.getElementById("washer-circle-status");
+            const waveAnim = document.getElementById("washer-wave-anim");
+            const progressRing = document.getElementById("washer-progress-ring");
+            const mainStatus = document.getElementById("washer-main-status");
+            const btnPills = document.querySelectorAll("#washer-pills .cycle-pill");
+            const statusMode = document.getElementById("status-washer-mode");
+            const valTime = document.getElementById("val-washer-time");
+
+            if (circlePct) circlePct.innerHTML = isChecked ? '0<span style="font-size:10px;">%</span>' : '--<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = isChecked ? "Ready" : "-- mins left";
+            if (circleStatus) circleStatus.textContent = isChecked ? "0 RPM" : "-- RPM";
+            if (mainStatus) mainStatus.textContent = isChecked ? "Ready" : "Off";
+            if (statusMode) statusMode.textContent = isChecked ? "Ready" : "Off";
+            if (valTime) valTime.textContent = "--";
+            
+            if (waveAnim) waveAnim.style.animationPlayState = "paused";
+            if (progressRing) progressRing.style.opacity = isChecked ? "1" : "0.5";
+            
+            btnPills.forEach(btn => btn.style.pointerEvents = isChecked ? "auto" : "none");
+            btnPills.forEach(btn => btn.style.opacity = isChecked ? "1" : "0.5");
+            
+            if (typeof window.resetWasherBtns === "function") window.resetWasherBtns();
+        }
         else if (id === "widget-laundry-dryer") {
+            const circlePct = document.getElementById("dryer-circle-pct");
+            const circleTime = document.getElementById("dryer-circle-time");
+            const circleStatus = document.getElementById("dryer-circle-status");
+            const waveAnim = document.getElementById("dryer-wave-anim");
+            const progressRing = document.getElementById("dryer-progress-ring");
+            const mainStatus = document.getElementById("dryer-main-status");
+            const btnPills = document.querySelectorAll("#dryer-pills .cycle-pill");
             const statusMode = document.getElementById("status-dryer-mode");
             const valTime = document.getElementById("val-dryer-time");
-            const deviceImg = document.getElementById("img-laundry-dryer");
-            const led = document.getElementById("dryer-led");
-            const panelText = document.getElementById("dryer-panel-text");
-            const doorRing = document.getElementById("dryer-door-ring");
-            const chassis = document.getElementById("dryer-chassis");
 
-            if (statusMode) statusMode.textContent = isChecked ? "Drying" : "Off";
-            if (valTime) valTime.textContent = isChecked ? "1h 20m" : "--";
-
-            if (deviceImg) {
-                deviceImg.style.opacity = isChecked ? "1" : "0.2";
-                deviceImg.style.animationPlayState = isChecked ? "running" : "paused";
-            }
-            if (led) {
-                led.style.background = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.2)";
-                led.style.boxShadow = isChecked ? "0 0 5px var(--accent-orange)" : "none";
-            }
-            if (panelText) {
-                panelText.textContent = isChecked ? "1H 20M" : "OFF";
-                panelText.style.color = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.3)";
-            }
-            if (doorRing) {
-                doorRing.style.borderColor = isChecked ? "var(--accent-orange)" : "rgba(255, 255, 255, 0.2)";
-                doorRing.style.boxShadow = isChecked ? "0 0 12px rgba(245, 158, 11, 0.4)" : "none";
-            }
-            if (chassis) {
-                chassis.style.borderColor = isChecked ? "#2d3748" : "rgba(255, 255, 255, 0.1)";
-                chassis.style.boxShadow = isChecked ? "0 10px 20px rgba(0,0,0,0.5)" : "none";
-            }
+            if (circlePct) circlePct.innerHTML = isChecked ? '0<span style="font-size:10px;">%</span>' : '--<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = isChecked ? "Ready" : "-- mins left";
+            if (circleStatus) circleStatus.textContent = isChecked ? "Off" : "Off";
+            if (mainStatus) mainStatus.textContent = isChecked ? "Ready" : "Off";
+            if (statusMode) statusMode.textContent = isChecked ? "Ready" : "Off";
+            if (valTime) valTime.textContent = "--";
+            
+            if (waveAnim) waveAnim.style.animationPlayState = "paused";
+            if (progressRing) progressRing.style.opacity = isChecked ? "1" : "0.5";
+            
+            btnPills.forEach(btn => btn.style.pointerEvents = isChecked ? "auto" : "none");
+            btnPills.forEach(btn => btn.style.opacity = isChecked ? "1" : "0.5");
+            
+            if (typeof window.resetDryerBtns === "function") window.resetDryerBtns();
         }
         else if (id === "widget-laundry-light") {
             updateLaundryLight();
         }
         else if (id === "widget-laundry-fan") {
-            updateLaundryFanState();
+            if (typeof window.updateLaundryFanState === "function") {
+                window.updateLaundryFanState(isChecked);
+            }
         }
 
         updateSummaryBanner();
@@ -1344,8 +1366,86 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // -------------------------------------------------------------------------
-    // 12. Nursery Sound Machine (Removed)
+    // 12. Nursery Sound Machine & Sleep Mode
     // -------------------------------------------------------------------------
+    const nurseryVolSlider = document.getElementById("slider-nursery-volume");
+    const nurseryVolFill = document.getElementById("ios-nursery-volume-fill");
+    const nurseryVolVal = document.getElementById("val-nursery-volume");
+    if (nurseryVolSlider) {
+        nurseryVolSlider.addEventListener("input", (e) => {
+            const val = e.target.value;
+            if (nurseryVolFill) nurseryVolFill.style.width = `${val}%`;
+            if (nurseryVolVal) nurseryVolVal.textContent = `${val}%`;
+        });
+    }
+
+    const nurserySoundPills = document.querySelectorAll("#nursery-sound-pills .sound-pill");
+    if (nurserySoundPills.length > 0) {
+        nurserySoundPills.forEach(pill => {
+            pill.addEventListener("click", () => {
+                nurserySoundPills.forEach(p => {
+                    p.classList.remove("active");
+                    p.style.background = "rgba(255,255,255,0.1)";
+                    p.style.color = "#e0e0e0";
+                    p.style.border = "1px solid rgba(255,255,255,0.2)";
+                    p.style.fontWeight = "normal";
+                });
+                pill.classList.add("active");
+                pill.style.background = "rgba(196,113,237,0.3)";
+                pill.style.color = "#e6b3ff";
+                pill.style.border = "1px solid #c471ed";
+                pill.style.fontWeight = "bold";
+
+                const statusText = document.getElementById("status-nursery-sound-text");
+                if (statusText) statusText.textContent = pill.textContent;
+            });
+        });
+    }
+
+    // Sleep Mode Quick Action
+    const btnNurserySleep = document.getElementById("btn-nursery-sleep");
+    if (btnNurserySleep) {
+        btnNurserySleep.addEventListener("click", () => {
+            // 1. Turn off Ceiling light
+            const light1Toggle = document.getElementById("toggle-nursery-light1");
+            if (light1Toggle && light1Toggle.checked) {
+                light1Toggle.click(); // toggle off
+            }
+            
+            // 2. Dim Nightlight to 15%
+            const nightlightToggle = document.getElementById("toggle-nursery-light2");
+            if (nightlightToggle && !nightlightToggle.checked) {
+                nightlightToggle.click(); // toggle on if off
+            }
+            const nightlightSlider = document.getElementById("slider-nursery-light2");
+            if (nightlightSlider) {
+                nightlightSlider.value = 15;
+                nightlightSlider.dispatchEvent(new Event("input"));
+            }
+
+            // 3. Set AC to 23
+            const acToggle = document.querySelector('input.toggle-control[data-target="widget-nursery-ac"]');
+            if (acToggle && !acToggle.checked) {
+                acToggle.click();
+            }
+            if (typeof nurseryAcVal !== 'undefined') nurseryAcVal = 23.0;
+            if (typeof updateNurseryAc === "function") updateNurseryAc(23.0);
+
+            // 4. Turn on Sound Machine & set Lullaby
+            const soundToggle = document.querySelector('input.toggle-control[data-target="widget-nursery-sound"]');
+            if (soundToggle && !soundToggle.checked) {
+                soundToggle.click();
+            }
+            const lullabyPill = document.querySelector('#nursery-sound-pills .sound-pill[data-track="lullaby"]');
+            if (lullabyPill) lullabyPill.click();
+            
+            // Visual feedback on button
+            btnNurserySleep.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                btnNurserySleep.style.transform = "scale(1)";
+            }, 150);
+        });
+    }
 
     // Laundry Fan
     const laundryFanSlider = document.getElementById("slider-laundry-fan");
@@ -1783,4 +1883,383 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeCctvModal();
     });
+    // -------------------------------------------------------------------------
+    // 18. Landscape Dashboard Pill Clicks & Buttons
+    // -------------------------------------------------------------------------
+    
+    // Washer Pills
+    const washerPills = document.querySelectorAll("#washer-pills .cycle-pill");
+    const washerCycleVal = document.getElementById("washer-info-cycle");
+    const washerTempVal = document.getElementById("washer-info-temp");
+    
+    washerPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            washerPills.forEach(p => {
+                p.classList.remove("active");
+                p.style.background = "rgba(255,255,255,0.05)";
+                p.style.color = "#aaa";
+                p.style.border = "1px solid rgba(255,255,255,0.1)";
+            });
+            
+            pill.classList.add("active");
+            pill.style.background = "rgba(0,168,255,0.2)";
+            pill.style.color = "var(--accent-blue)";
+            pill.style.border = "1px solid var(--accent-blue)";
+            
+            const cycle = pill.dataset.cycle;
+            if (washerCycleVal) {
+                if (cycle === "eco") { washerCycleVal.textContent = "Cotton Eco"; washerTempVal.textContent = "40°C"; }
+                if (cycle === "quick") { washerCycleVal.textContent = "Quick Wash"; washerTempVal.textContent = "30°C"; }
+                if (cycle === "heavy") { washerCycleVal.textContent = "Heavy Duty"; washerTempVal.textContent = "60°C"; }
+            }
+        });
+    });
+
+    // Dryer Pills
+    const dryerPills = document.querySelectorAll("#dryer-pills .cycle-pill");
+    const dryerCycleVal = document.getElementById("dryer-info-cycle");
+    const dryerHeatVal = document.getElementById("dryer-info-heat");
+    
+    dryerPills.forEach(pill => {
+        pill.addEventListener("click", () => {
+            dryerPills.forEach(p => {
+                p.classList.remove("active-orange");
+                p.style.background = "rgba(255,255,255,0.05)";
+                p.style.color = "#aaa";
+                p.style.border = "1px solid rgba(255,255,255,0.1)";
+            });
+            
+            pill.classList.add("active-orange");
+            pill.style.background = "rgba(245,158,11,0.2)";
+            pill.style.color = "var(--accent-orange)";
+            pill.style.border = "1px solid var(--accent-orange)";
+            
+            const cycle = pill.dataset.cycle;
+            if (dryerCycleVal) {
+                if (cycle === "normal") { dryerCycleVal.textContent = "Towels"; dryerHeatVal.textContent = "Medium"; }
+                if (cycle === "quick") { dryerCycleVal.textContent = "Quick Dry"; dryerHeatVal.textContent = "High"; }
+                if (cycle === "air") { dryerCycleVal.textContent = "Air Fluff"; dryerHeatVal.textContent = "No Heat"; }
+            }
+        });
+    });
+
+    // Washer Action Buttons
+    const btnWasherStart = document.getElementById("btn-washer-start");
+    const btnWasherPause = document.getElementById("btn-washer-pause");
+    const btnWasherStop = document.getElementById("btn-washer-stop");
+    const washerWaveAnim = document.getElementById("washer-wave-anim");
+    const washerMainStatus = document.getElementById("washer-main-status");
+    const statusWasherMode = document.getElementById("status-washer-mode");
+    const imgWasher = document.getElementById("img-laundry-washer");
+    
+    window.resetWasherBtns = function() {
+        if (btnWasherStart) {
+            btnWasherStart.style.background = "rgba(255,255,255,0.05)";
+            btnWasherStart.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnWasherStart.style.color = "#aaa";
+        }
+        if (btnWasherPause) {
+            btnWasherPause.style.background = "rgba(255,255,255,0.05)";
+            btnWasherPause.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnWasherPause.style.color = "#aaa";
+        }
+        if (btnWasherStop) {
+            btnWasherStop.style.background = "rgba(255,255,255,0.05)";
+            btnWasherStop.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnWasherStop.style.color = "#aaa";
+        }
+    };
+
+    if (btnWasherStart) {
+        btnWasherStart.addEventListener("click", () => {
+            window.resetWasherBtns();
+            btnWasherStart.style.background = "rgba(0,168,255,0.15)";
+            btnWasherStart.style.border = "1px solid var(--accent-blue)";
+            btnWasherStart.style.color = "var(--accent-blue)";
+            
+            if (washerMainStatus) washerMainStatus.textContent = "Main Wash";
+            if (statusWasherMode) statusWasherMode.textContent = "Washing";
+            const valWasherTime = document.getElementById("val-washer-time");
+            if (valWasherTime) valWasherTime.textContent = "45m";
+            if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "running";
+            if (imgWasher) imgWasher.style.animationPlayState = "running";
+            
+            const circlePct = document.getElementById("washer-circle-pct");
+            const circleTime = document.getElementById("washer-circle-time");
+            const circleStatus = document.getElementById("washer-circle-status");
+            if (circlePct) circlePct.innerHTML = '72<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = "12 mins left";
+            if (circleStatus) circleStatus.textContent = "1400 RPM";
+        });
+    }
+
+    if (btnWasherPause) {
+        btnWasherPause.addEventListener("click", () => {
+            window.resetWasherBtns();
+            btnWasherPause.style.background = "rgba(245,158,11,0.15)";
+            btnWasherPause.style.border = "1px solid var(--accent-orange)";
+            btnWasherPause.style.color = "var(--accent-orange)";
+            
+            if (washerMainStatus) washerMainStatus.textContent = "Paused";
+            if (statusWasherMode) statusWasherMode.textContent = "Paused";
+            if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "paused";
+            if (imgWasher) imgWasher.style.animationPlayState = "paused";
+        });
+    }
+
+    if (btnWasherStop) {
+        btnWasherStop.addEventListener("click", () => {
+            window.resetWasherBtns();
+            btnWasherStop.style.background = "rgba(239,68,68,0.15)";
+            btnWasherStop.style.border = "1px solid #ef4444";
+            btnWasherStop.style.color = "#ef4444";
+            
+            if (washerMainStatus) washerMainStatus.textContent = "Stopped";
+            if (statusWasherMode) statusWasherMode.textContent = "Stopped";
+            const valWasherTime = document.getElementById("val-washer-time");
+            if (valWasherTime) valWasherTime.textContent = "--";
+            if (washerWaveAnim) washerWaveAnim.style.animationPlayState = "paused";
+            if (imgWasher) imgWasher.style.animationPlayState = "paused";
+            
+            const circlePct = document.getElementById("washer-circle-pct");
+            const circleTime = document.getElementById("washer-circle-time");
+            const circleStatus = document.getElementById("washer-circle-status");
+            if (circlePct) circlePct.innerHTML = '0<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = "0 mins left";
+            if (circleStatus) circleStatus.textContent = "0 RPM";
+        });
+    }
+
+    // Dryer Action Buttons
+    const btnDryerStart = document.getElementById("btn-dryer-start");
+    const btnDryerPause = document.getElementById("btn-dryer-pause");
+    const btnDryerStop = document.getElementById("btn-dryer-stop");
+    const dryerWaveAnim = document.getElementById("dryer-wave-anim");
+    const dryerMainStatus = document.getElementById("dryer-main-status");
+    const statusDryerMode = document.getElementById("status-dryer-mode");
+    const imgDryer = document.getElementById("img-laundry-dryer");
+    
+    window.resetDryerBtns = function() {
+        if (btnDryerStart) {
+            btnDryerStart.style.background = "rgba(255,255,255,0.05)";
+            btnDryerStart.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnDryerStart.style.color = "#aaa";
+        }
+        if (btnDryerPause) {
+            btnDryerPause.style.background = "rgba(255,255,255,0.05)";
+            btnDryerPause.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnDryerPause.style.color = "#aaa";
+        }
+        if (btnDryerStop) {
+            btnDryerStop.style.background = "rgba(255,255,255,0.05)";
+            btnDryerStop.style.border = "1px solid rgba(255,255,255,0.1)";
+            btnDryerStop.style.color = "#aaa";
+        }
+    };
+
+    if (btnDryerStart) {
+        btnDryerStart.addEventListener("click", () => {
+            window.resetDryerBtns();
+            btnDryerStart.style.background = "rgba(245,158,11,0.15)";
+            btnDryerStart.style.border = "1px solid var(--accent-orange)";
+            btnDryerStart.style.color = "var(--accent-orange)";
+            
+            if (dryerMainStatus) dryerMainStatus.textContent = "Sensor Dry";
+            if (statusDryerMode) statusDryerMode.textContent = "Drying";
+            const valDryerTime = document.getElementById("val-dryer-time");
+            if (valDryerTime) valDryerTime.textContent = "1h 20m";
+            if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "running";
+            if (imgDryer) imgDryer.style.animationPlayState = "running";
+            
+            const circlePct = document.getElementById("dryer-circle-pct");
+            const circleTime = document.getElementById("dryer-circle-time");
+            const circleStatus = document.getElementById("dryer-circle-status");
+            if (circlePct) circlePct.innerHTML = '35<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = "45 mins left";
+            if (circleStatus) circleStatus.textContent = "Heating";
+        });
+    }
+
+    if (btnDryerPause) {
+        btnDryerPause.addEventListener("click", () => {
+            window.resetDryerBtns();
+            btnDryerPause.style.background = "rgba(234,179,8,0.15)";
+            btnDryerPause.style.border = "1px solid #eab308";
+            btnDryerPause.style.color = "#eab308";
+            
+            if (dryerMainStatus) dryerMainStatus.textContent = "Paused";
+            if (statusDryerMode) statusDryerMode.textContent = "Paused";
+            if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "paused";
+            if (imgDryer) imgDryer.style.animationPlayState = "paused";
+        });
+    }
+
+    if (btnDryerStop) {
+        btnDryerStop.addEventListener("click", () => {
+            window.resetDryerBtns();
+            btnDryerStop.style.background = "rgba(239,68,68,0.15)";
+            btnDryerStop.style.border = "1px solid #ef4444";
+            btnDryerStop.style.color = "#ef4444";
+            
+            if (dryerMainStatus) dryerMainStatus.textContent = "Stopped";
+            if (statusDryerMode) statusDryerMode.textContent = "Stopped";
+            const valDryerTime = document.getElementById("val-dryer-time");
+            if (valDryerTime) valDryerTime.textContent = "--";
+            if (dryerWaveAnim) dryerWaveAnim.style.animationPlayState = "paused";
+            if (imgDryer) imgDryer.style.animationPlayState = "paused";
+            
+            const circlePct = document.getElementById("dryer-circle-pct");
+            const circleTime = document.getElementById("dryer-circle-time");
+            const circleStatus = document.getElementById("dryer-circle-status");
+            if (circlePct) circlePct.innerHTML = '0<span style="font-size:10px;">%</span>';
+            if (circleTime) circleTime.textContent = "0 mins left";
+            if (circleStatus) circleStatus.textContent = "--";
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // 19. Smart Fan Slider & Pills
+    // -------------------------------------------------------------------------
+    const fanSlider = document.getElementById("slider-laundry-fan");
+    const fanThumb = document.getElementById("laundry-fan-thumb");
+    const fanFill = document.getElementById("laundry-fan-fill");
+    const fanRing = document.getElementById("laundry-fan-ring");
+    const fanPctText = document.getElementById("laundry-fan-pct-text");
+    const fanPills = document.querySelectorAll("#laundry-fan-pills .fan-pill");
+    const fanStatusText = document.getElementById("status-laundry-fan-text");
+    const fanIconContainer = document.getElementById("laundry-fan-icon-container");
+
+    let lastFanSpeed = 65;
+
+    window.updateLaundryFanState = function(isChecked) {
+        if (!isChecked) {
+            lastFanSpeed = fanSlider ? fanSlider.value : 65;
+            updateFanSpeed(0);
+            if (fanSlider) {
+                fanSlider.style.pointerEvents = "none";
+            }
+            if (fanPills) {
+                fanPills.forEach(p => p.style.pointerEvents = "none");
+            }
+        } else {
+            updateFanSpeed(lastFanSpeed);
+            if (fanSlider) {
+                fanSlider.style.pointerEvents = "auto";
+            }
+            if (fanPills) {
+                fanPills.forEach(p => p.style.pointerEvents = "auto");
+            }
+        }
+    };
+
+    function updateFanSpeed(speed) {
+        // Update slider and visuals
+        if(fanSlider) fanSlider.value = speed;
+        if(fanThumb) fanThumb.style.left = `${speed}%`;
+        if(fanFill) fanFill.style.width = `${speed}%`;
+        
+        // Update circular ring (circumference is 263.89)
+        if(fanRing) {
+            const dashoffset = 263.89 - (speed / 100 * 263.89);
+            fanRing.style.strokeDashoffset = dashoffset;
+        }
+
+        // Update Text
+        if(fanPctText) fanPctText.textContent = `${speed}%`;
+
+        // Update Status and Icon Speed
+        if(speed == 0) {
+            if(fanStatusText) {
+                fanStatusText.textContent = "Off";
+                fanStatusText.style.color = "rgba(255,255,255,0.5)";
+            }
+            if(fanIconContainer) fanIconContainer.style.animationPlayState = "paused";
+            if(fanRing) fanRing.style.stroke = "rgba(255,255,255,0.2)";
+            if(fanFill) fanFill.style.background = "rgba(255,255,255,0.2)";
+            if(fanThumb) fanThumb.style.background = "rgba(255,255,255,0.5)";
+            if(fanIconContainer) fanIconContainer.style.color = "rgba(255,255,255,0.2)";
+        } else {
+            let label = "Low";
+            let animDuration = "2s";
+            if(speed > 33 && speed <= 66) { label = "Med"; animDuration = "1s"; }
+            else if(speed > 66 && speed <= 99) { label = "High"; animDuration = "0.5s"; }
+            else if(speed == 100) { label = "Boost"; animDuration = "0.2s"; }
+            
+            if(fanStatusText) {
+                fanStatusText.textContent = `Running - ${label}`;
+                fanStatusText.style.color = "#4ade80";
+            }
+            if(fanIconContainer) {
+                fanIconContainer.style.animationPlayState = "running";
+                fanIconContainer.style.animationDuration = animDuration;
+                fanIconContainer.style.color = "#00e5ff";
+            }
+            if(fanRing) fanRing.style.stroke = "#00e5ff";
+            if(fanFill) fanFill.style.background = "#00e5ff";
+            if(fanThumb) fanThumb.style.background = "#00e5ff";
+        }
+
+        // Update pills
+        if(fanPills) {
+            fanPills.forEach(p => {
+                p.classList.remove("active");
+                p.style.background = "rgba(255,255,255,0.02)";
+                p.style.border = "1px solid rgba(255,255,255,0.1)";
+                p.style.color = "#aaa";
+                p.style.boxShadow = "none";
+                p.style.fontWeight = "normal";
+            });
+
+            // Highlight matching pill if any, or update custom pill
+            let matched = false;
+            fanPills.forEach(p => {
+                if(p.id !== "fan-pill-custom" && p.dataset.speed == speed) {
+                    p.classList.add("active");
+                    p.style.background = "rgba(0, 229, 255, 0.2)";
+                    p.style.border = "1px solid #00e5ff";
+                    p.style.color = "#00e5ff";
+                    p.style.boxShadow = "0 0 10px rgba(0, 229, 255, 0.3)";
+                    p.style.fontWeight = "bold";
+                    matched = true;
+                }
+            });
+
+            const customPill = document.getElementById("fan-pill-custom");
+            if(customPill) {
+                if(!matched && speed > 0) {
+                    customPill.dataset.speed = speed;
+                    customPill.textContent = `${speed}%`;
+                    customPill.style.display = "inline-block";
+                    
+                    customPill.classList.add("active");
+                    customPill.style.background = "#00e5ff";
+                    customPill.style.border = "1px solid #00e5ff";
+                    customPill.style.color = "#111";
+                    customPill.style.boxShadow = "0 0 10px rgba(0, 229, 255, 0.5)";
+                    customPill.style.fontWeight = "bold";
+                } else {
+                    customPill.style.display = "none";
+                }
+            }
+        }
+    }
+
+    if (fanSlider) {
+        fanSlider.addEventListener("input", (e) => {
+            updateFanSpeed(e.target.value);
+        });
+    }
+
+    if (fanPills) {
+        fanPills.forEach(pill => {
+            pill.addEventListener("click", (e) => {
+                const speed = e.target.dataset.speed;
+                updateFanSpeed(speed);
+            });
+        });
+    }
+
+    // Initialize fan
+    updateFanSpeed(65);
+
 });
