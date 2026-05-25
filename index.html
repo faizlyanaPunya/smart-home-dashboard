@@ -989,45 +989,60 @@
                 <!-- ------------------- NURSERY VIEW ------------------- -->
                 <section class="room-view" id="view-nursery">
 
-                    <!-- Column 1: Ceiling Light + CCTV 1 (Baby) -->
+                    <!-- Column 1: Ceiling Light (small) + Night Light (small) + CCTV Baby Crib (large) -->
                     <div class="col-4 flex-col-gap">
-                        <!-- Nursery Ceiling Light Widget -->
-                        <div class="widget active" data-glow="yellow" id="widget-nursery-lights" style="flex: 1;">
+                        <!-- Nursery Ceiling Light Widget (compact) -->
+                        <div class="widget active" data-glow="yellow" id="widget-nursery-lights" style="flex: 0 0 110px; overflow: hidden;">
                             <div class="widget-header">
                                 <div>
-                                    <span class="widget-title">Ceiling Light</span>
-                                    <div class="widget-subtitle">Warm White</div>
+                                    <span class="widget-title" style="font-size: 13px;">Ceiling Light</span>
+                                    <div class="widget-subtitle" style="font-size: 9px;">Warm White</div>
                                 </div>
-                                <label class="switch">
+                                <label class="switch" style="width: 36px; height: 20px;">
                                     <input type="checkbox" id="toggle-nursery-light1" checked>
-                                    <span class="slider yellow"></span>
+                                    <span class="slider yellow" style="border-radius: 20px;"></span>
                                 </label>
                             </div>
-                            <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
+                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:space-between; padding: 4px 0;">
                                 <!-- Icon (Bulb) -->
-                                <div style="font-size: 44px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
                                     id="nursery-light1-icon">💡</div>
-                            </div>
-                            <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
-                                <div
-                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
-                                    <span>Brightness</span>
-                                    <span id="val-nursery-light1">30%</span>
-                                </div>
-                                <div
-                                    style="width: 100%; height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
-                                    <!-- Fill bar -->
-                                    <div id="ios-nursery-light1-fill"
-                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                <!-- Brightness value -->
+                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+                                    <span id="val-nursery-light1" style="font-size:18px; font-weight:700; color:#fff;">30%</span>
+                                    <div style="width: 80px; height: 18px; background: rgba(0,0,0,0.4); border-radius: 9px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div id="ios-nursery-light1-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: rgba(255,255,255,0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 9px;"></div>
+                                        <input type="range" min="0" max="100" value="30" id="slider-nursery-light1"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                                     </div>
-                                    <!-- Icon -->
-                                    <div
-                                        style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
-                                        ☀️</div>
-                                    <!-- Input Range -->
-                                    <input type="range" min="0" max="100" value="30" id="slider-nursery-light1"
-                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nursery Nightlight Widget (compact) -->
+                        <div class="widget active" data-glow="yellow" id="widget-nursery-nightlight" style="flex: 0 0 110px; overflow: hidden;">
+                            <div class="widget-header">
+                                <div>
+                                    <span class="widget-title" style="font-size: 13px;">Nightlight</span>
+                                    <div class="widget-subtitle" style="font-size: 9px;">Soft Amber</div>
+                                </div>
+                                <label class="switch" style="width: 36px; height: 20px;">
+                                    <input type="checkbox" id="toggle-nursery-light2" checked>
+                                    <span class="slider yellow" style="border-radius: 20px;"></span>
+                                </label>
+                            </div>
+                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:space-between; padding: 4px 0;">
+                                <!-- Icon (Moon) -->
+                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
+                                    id="nursery-light2-icon">🌙</div>
+                                <!-- Brightness value -->
+                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+                                    <span id="val-nursery-light2" style="font-size:18px; font-weight:700; color:#fff;">65%</span>
+                                    <div style="width: 80px; height: 18px; background: rgba(0,0,0,0.4); border-radius: 9px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+                                        <div id="ios-nursery-light2-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 65%; background: rgba(255,255,255,0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 9px;"></div>
+                                        <input type="range" min="0" max="100" value="65" id="slider-nursery-light2"
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1044,48 +1059,65 @@
                         </div>
                     </div>
 
-                    <!-- Column 2: Night Light + CCTV 2 (Whole Room) -->
+                    <!-- Column 2: AC (top) + CCTV 2 Whole Room (bottom) -->
                     <div class="col-4 flex-col-gap">
-                        <!-- Nursery Nightlight Widget -->
-                        <div class="widget active" data-glow="yellow" id="widget-nursery-nightlight" style="flex: 1;">
+                        <!-- Nursery AC Widget (moved from Column 3) -->
+                        <div class="widget active" data-glow="blue" id="widget-nursery-ac" style="flex: 0 0 232px; overflow: hidden;">
                             <div class="widget-header">
                                 <div>
-                                    <span class="widget-title">Nightlight</span>
-                                    <div class="widget-subtitle">Soft Amber</div>
+                                    <span class="widget-title" style="font-size: 13px;">Air Conditioner</span>
+                                    <div class="widget-subtitle" id="status-nursery-ac-text" style="font-size: 9px;">Cooling • 22°C</div>
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="toggle-nursery-light2" checked>
-                                    <span class="slider yellow"></span>
+                                <label class="switch" style="width: 36px; height: 20px;">
+                                    <input type="checkbox" class="toggle-control" checked
+                                        data-target="widget-nursery-ac">
+                                    <span class="slider blue" style="border-radius: 20px;"></span>
                                 </label>
                             </div>
                             <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
-                                <!-- Icon (Moon) -->
-                                <div style="font-size: 44px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                    id="nursery-light2-icon">🌙</div>
-                            </div>
-                            <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
-                                <div
-                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
-                                    <span>Brightness</span>
-                                    <span id="val-nursery-light2">65%</span>
-                                </div>
-                                <div
-                                    style="width: 100%; height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
-                                    <!-- Fill bar -->
-                                    <div id="ios-nursery-light2-fill"
-                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 65%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
+                                <!-- Radial Dial -->
+                                <div class="dial-container"
+                                    style="width: 100px; height: 100px; margin: 0; flex-shrink: 0;">
+                                    <svg class="dial-svg" viewBox="0 0 140 140" id="svg-nursery-ac"
+                                        style="width: 100%; height: 100%;">
+                                        <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
+                                        <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
+                                            id="progress-nursery-ac" style="stroke: var(--accent-blue);"></circle>
+                                    </svg>
+                                    <div class="dial-info"
+                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                        <span class="dial-value" id="val-nursery-ac"
+                                            style="font-size: 18px; letter-spacing: -0.5px;">22.0°</span>
+                                        <span class="dial-status" id="status-nursery-ac"
+                                            style="color: var(--accent-blue); font-size: 10px; text-transform: uppercase; margin-top: 1px;">Cooling</span>
                                     </div>
-                                    <!-- Icon -->
-                                    <div
-                                        style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
-                                        ☀️</div>
-                                    <!-- Input Range -->
-                                    <input type="range" min="0" max="100" value="65" id="slider-nursery-light2"
-                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                </div>
+                                <!-- Stacked Buttons -->
+                                <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center;"
+                                    id="nursery-ac-controls">
+                                    <button class="dial-btn" id="btn-nursery-ac-up"
+                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
+                                    <button class="dial-btn" id="btn-nursery-ac-down"
+                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- CCTV 2: Whole Room View -->
+                        <div class="widget camera-widget" style="flex: 1;"
+                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                            <img class="camera-feed" src="assets/camera_nursery.png?v=2" alt="Nursery Whole Room"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            <div class="camera-overlay">
+                                <span class="camera-name">Camera 05: Nursery Room</span>
+                                <span class="camera-live">LIVE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Sound Machine + Air Purifier -->
+                    <div class="col-4 flex-col-gap">
 
                         <!-- Sound Machine Widget -->
                         <div class="widget active" data-glow="purple" id="widget-nursery-sound" style="flex: 1;">
@@ -1145,58 +1177,6 @@
                                         <input type="range" min="0" max="100" value="40" id="slider-nursery-volume"
                                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Column 3: Nursery AC + Air Purifier -->
-                    <div class="col-4 flex-col-gap">
-                        <!-- Nursery AC Widget -->
-                        <div class="widget active" data-glow="blue" id="widget-nursery-ac" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
-                                    <span class="widget-title">Air Conditioner</span>
-                                    <div class="widget-subtitle" id="status-nursery-ac-text">Cooling • 22°C</div>
-                                </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <button id="btn-nursery-sleep"
-                                        style="background: rgba(196,113,237,0.15); border: 1px solid #c471ed; color: #c471ed; border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 0 5px rgba(196,113,237,0.2);">
-                                        🌙 Sleep Mode
-                                    </button>
-                                    <label class="switch">
-                                        <input type="checkbox" class="toggle-control" checked
-                                            data-target="widget-nursery-ac">
-                                        <span class="slider blue"></span>
-                                    </label>
-                                </div>>
-                            </div>
-                            <div
-                                style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0; gap: 8px;">
-                                <!-- Radial Dial -->
-                                <div class="dial-container"
-                                    style="width: 100px; height: 100px; margin: 0; flex-shrink: 0;">
-                                    <svg class="dial-svg" viewBox="0 0 140 140" id="svg-nursery-ac"
-                                        style="width: 100%; height: 100%;">
-                                        <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
-                                        <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
-                                            id="progress-nursery-ac" style="stroke: var(--accent-blue);"></circle>
-                                    </svg>
-                                    <div class="dial-info"
-                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                        <span class="dial-value" id="val-nursery-ac"
-                                            style="font-size: 18px; letter-spacing: -0.5px;">22.0°</span>
-                                        <span class="dial-status" id="status-nursery-ac"
-                                            style="color: var(--accent-blue); font-size: 10px; text-transform: uppercase; margin-top: 1px;">Cooling</span>
-                                    </div>
-                                </div>
-                                <!-- Stacked Buttons -->
-                                <div style="display: flex; flex-direction: column; gap: 12px; justify-content: center;"
-                                    id="nursery-ac-controls">
-                                    <button class="dial-btn" id="btn-nursery-ac-up"
-                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">+</button>
-                                    <button class="dial-btn" id="btn-nursery-ac-down"
-                                        style="width: 34px; height: 34px; font-size: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0;">-</button>
                                 </div>
                             </div>
                         </div>
