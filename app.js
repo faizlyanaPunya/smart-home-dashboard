@@ -1229,6 +1229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const livingLampIcon = document.getElementById("living-lamp-icon");
         const iosBrightnessFill = document.getElementById("ios-brightness-fill");
         const lampSliderTrack = document.getElementById("lamp-slider-track");
+        const widgetLivingLamp = document.getElementById("widget-living-lamp");
 
         livingLampSlider.addEventListener("input", (e) => {
             const val = e.target.value;
@@ -1251,10 +1252,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const b = Math.round(extraBrightness * 150); // 0 to 150
                 const bulbColor = `rgba(${r}, ${g}, ${b}, ${glowOpacity})`;
 
-                livingLampIcon.style.textShadow = `0 0 ${glowSize}px ${bulbColor}, 0 0 ${glowSize / 2}px ${bulbColor}`;
+                livingLampIcon.style.textShadow = "none";
                 livingLampIcon.style.opacity = Math.min(1.0, Math.max(0.2, (val / 100) + extraBrightness)).toFixed(2);
                 livingLampIcon.style.transform = `scale(1.1)`; // Keep size constant
-                livingLampIcon.style.filter = "none";
+                livingLampIcon.style.filter = `drop-shadow(0 2px ${Math.round(2 + (val / 10))}px ${bulbColor})`;
 
                 const lampSliderContainer = document.getElementById("lamp-slider-container");
                 if (lampSliderContainer) {
@@ -1263,12 +1264,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 if (lampSliderTrack) {
-                    const trackGlowSize = Math.round(5 + (extraBrightness * 15));
-                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 ${trackGlowSize}px ${bulbColor}`;
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8)`;
+                }
+
+                if (widgetLivingLamp) {
+                    const cardOpacity = val / 100;
+                    const cardGlowSize = 10 + (cardOpacity * 30);
+                    widgetLivingLamp.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, cardOpacity)})`;
+                    widgetLivingLamp.style.boxShadow = `0 0 ${cardGlowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, cardOpacity)})`;
                 }
             } else {
                 if (lampSliderTrack) {
-                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8), 0 0 0px rgba(255,183,0,0)`;
+                    lampSliderTrack.style.boxShadow = `inset 0 2px 6px rgba(0,0,0,0.8)`;
                 }
                 if (livingLampIcon) {
                     livingLampIcon.style.textShadow = "none";
@@ -1279,6 +1286,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (lampSliderContainer) {
                     lampSliderContainer.style.opacity = "0.3";
                     lampSliderContainer.style.filter = "grayscale(100%)";
+                }
+                if (widgetLivingLamp) {
+                    widgetLivingLamp.style.boxShadow = "none";
+                    widgetLivingLamp.style.borderColor = "rgba(255, 255, 255, 0.1)";
                 }
             }
         });
