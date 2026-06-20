@@ -600,20 +600,16 @@ body {
 }
 
 input:checked+.slider {
-    background-color: var(--accent-blue);
+    background-color: var(--accent-green);
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-input:checked+.slider.orange {
-    background-color: var(--accent-orange);
-}
-
-input:checked+.slider.green {
+input:checked+.slider.orange,
+input:checked+.slider.green,
+input:checked+.slider.yellow,
+input:checked+.slider.blue,
+input:checked+.slider.purple {
     background-color: var(--accent-green);
-}
-
-input:checked+.slider.yellow {
-    background-color: var(--accent-yellow);
 }
 
 input:checked+.slider:before {
