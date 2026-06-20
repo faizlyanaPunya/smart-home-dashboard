@@ -1617,7 +1617,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
 
     // -------------------------------------------------------------------------
-    // 14. Emergency Call 911 / Fire Alarm Simulation
+    // 14. Emergency Call 999 / Fire Alarm Simulation
     // -------------------------------------------------------------------------
     const emergencyCallBtn = document.getElementById("btn-emergency-call");
     const kitchenFireAlarmBtn = document.getElementById("btn-kitchen-fire-alarm");
@@ -1640,8 +1640,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         callCountdown = 5;
 
-        if (type === "911") {
-            if (callTitle) callTitle.textContent = "Calling 911";
+        if (type === "999") {
+            if (callTitle) callTitle.textContent = "Calling 999";
             if (callIcon) { callIcon.textContent = "📞"; callIcon.style.background = "#dc2626"; }
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
             cancelCallBtn.textContent = "Cancel Emergency Call";
@@ -1666,7 +1666,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(callTimer);
                 callTimer = null;
-                if (type === "911") {
+                if (type === "999") {
                     callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">CONNECTED TO DISPATCH</span><br><br>Help is on the way to 1042 Aura Way. Stay on the line.`;
                     cancelCallBtn.textContent = "Hang Up";
                 } else if (type === "fire") {
@@ -1683,7 +1683,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cancelCallBtn && callOverlay && callStatusText) {
         if (emergencyCallBtn) {
-            emergencyCallBtn.addEventListener("click", () => startEmergencySequence("911"));
+            emergencyCallBtn.addEventListener("click", () => startEmergencySequence("999"));
         }
 
         if (kitchenFireAlarmBtn) {
