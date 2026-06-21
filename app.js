@@ -475,12 +475,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 speakerSlider.style.pointerEvents = isChecked ? "auto" : "none";
             }
         }
-        else if (id === "widget-bedroom2-tv") {
-            const tvChannel = document.getElementById("val-tv2-channel");
-            const statusText = document.getElementById("status-bedroom2-tv-text");
-            if (statusText) statusText.textContent = isChecked ? `Netflix • ${tvChannel ? tvChannel.textContent : "CH 04"}` : "Inactive";
-            const tvScreen = document.querySelector("#tv-screen-bedroom2 .tv-glow-indicator");
-            if (tvScreen) tvScreen.style.opacity = isChecked ? "0" : "1";
+        else if (id === "widget-bedroom2-humidifier") {
+            const statusText = document.getElementById("status-bedroom2-humidifier-text");
+            const valText = document.getElementById("val-bedroom2-humidifier");
+            const progress = document.getElementById("progress-bedroom2-humidifier");
+            const btnDown = document.getElementById("btn-bedroom2-humidifier-down");
+            const btnUp = document.getElementById("btn-bedroom2-humidifier-up");
+            const statusDial = document.getElementById("status-bedroom2-humidifier");
+
+            if (isChecked) {
+                if (btnDown) { btnDown.style.opacity = "1"; btnDown.style.pointerEvents = ""; }
+                if (btnUp) { btnUp.style.opacity = "1"; btnUp.style.pointerEvents = ""; }
+                updateBedroom2Humidifier(humidifierTarget);
+            } else {
+                if (statusText) statusText.textContent = "Off";
+                if (statusDial) {
+                    statusDial.textContent = "Off";
+                    statusDial.style.color = "var(--color-text-secondary)";
+                }
+                if (valText) valText.textContent = "--";
+                if (progress) {
+                    progress.style.strokeDashoffset = 320.44; 
+                }
+                if (btnDown) { btnDown.style.opacity = "0.4"; btnDown.style.pointerEvents = "none"; }
+                if (btnUp) { btnUp.style.opacity = "0.4"; btnUp.style.pointerEvents = "none"; }
+            }
         }
         else if (id === "widget-bedroom2-vacuum") {
             const statusText = document.getElementById("status-bedroom2-vacuum-text");
@@ -859,6 +878,61 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBedroom2AcDown.addEventListener("click", () => updateBedroom2Ac(bedroom2AcVal - 0.5));
     }
 
+    // Bedroom 2 Humidifier (Range: 30% to 90%)
+    let humidifierTarget = 72;
+    let humidifierCurrent = 45;
+    const progressHumidifier = document.getElementById("progress-bedroom2-humidifier");
+    const valHumidifier = document.getElementById("val-bedroom2-humidifier");
+    const statusHumidifier = document.getElementById("status-bedroom2-humidifier");
+    const statusHumidifierText = document.getElementById("status-bedroom2-humidifier-text");
+    const svgBedroom2Humidifier = document.getElementById("svg-bedroom2-humidifier");
+
+    function updateBedroom2Humidifier(val) {
+        const toggle = document.querySelector('#widget-bedroom2-humidifier .toggle-control');
+        const isChecked = toggle ? toggle.checked : true;
+
+        if (!isChecked) return;
+
+        humidifierTarget = Math.max(30, Math.min(90, Math.round(val)));
+        
+        // Update circular progress arc
+        if (progressHumidifier) {
+            const r = parseFloat(progressHumidifier.getAttribute("r")) || 68;
+            const fullCirc = 2 * Math.PI * r; // ~427.26
+            const activeArc = 0.75 * fullCirc; // ~320.44
+            const ratio = (humidifierTarget - 30) / (90 - 30);
+            const offset = activeArc - (ratio * activeArc);
+            
+            progressHumidifier.style.strokeDasharray = `${activeArc} ${fullCirc}`;
+            progressHumidifier.style.strokeDashoffset = offset;
+        }
+
+        if (valHumidifier) valHumidifier.textContent = humidifierTarget;
+
+        let status = "Humidifying";
+        if (humidifierTarget <= humidifierCurrent) {
+            status = "Idle";
+        }
+        
+        if (statusHumidifier) {
+            statusHumidifier.textContent = status;
+            statusHumidifier.style.color = status === "Humidifying" ? "var(--accent-blue)" : "var(--color-text-secondary)";
+        }
+        if (statusHumidifierText) {
+            statusHumidifierText.textContent = `${status} • ${humidifierTarget}%`;
+        }
+    }
+    updateBedroom2Humidifier(humidifierTarget);
+
+    const btnHumidifierUp = document.getElementById("btn-bedroom2-humidifier-up");
+    const btnHumidifierDown = document.getElementById("btn-bedroom2-humidifier-down");
+    if (btnHumidifierUp) {
+        btnHumidifierUp.addEventListener("click", () => updateBedroom2Humidifier(humidifierTarget + 1));
+    }
+    if (btnHumidifierDown) {
+        btnHumidifierDown.addEventListener("click", () => updateBedroom2Humidifier(humidifierTarget - 1));
+    }
+
     // C. Kitchen Oven (Range: 50 to 250)
     let ovenTarget = 180;
     let ovenActual = 100;
@@ -1077,11 +1151,77 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function setupHumidifierDrag(svgElement, valueUpdateFn, min, max) {
+        let isDragging = false;
+
+        function handleCoords(clientX, clientY) {
+            const rect = svgElement.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            let angle = Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI);
+            angle += 90; 
+            if (angle < 0) angle += 360;
+
+            let adjAngle = angle - 135;
+            if (adjAngle < 0) adjAngle += 360;
+
+            let fraction = 0;
+            if (adjAngle <= 270) {
+                fraction = adjAngle / 270;
+            } else if (adjAngle > 315) {
+                fraction = 0;
+            } else {
+                fraction = 1;
+            }
+
+            const newValue = min + (fraction * (max - min));
+            valueUpdateFn(newValue);
+        }
+
+        svgElement.addEventListener("mousedown", (e) => {
+            const toggle = document.querySelector('#widget-bedroom2-humidifier .toggle-control');
+            if (toggle && !toggle.checked) return;
+            isDragging = true;
+            handleCoords(e.clientX, e.clientY);
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            handleCoords(e.clientX, e.clientY);
+        });
+
+        window.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        svgElement.addEventListener("touchstart", (e) => {
+            const toggle = document.querySelector('#widget-bedroom2-humidifier .toggle-control');
+            if (toggle && !toggle.checked) return;
+            isDragging = true;
+            if (e.touches.length > 0) {
+                handleCoords(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        window.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            if (e.touches.length > 0) {
+                handleCoords(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+
+        window.addEventListener("touchend", () => {
+            isDragging = false;
+        });
+    }
+
     setupDialDrag(svgLivingAc, updateLivingAc, 16.0, 30.0);
     setupDialDrag(svgBedroomAc, updateBedroomAc, 16.0, 30.0);
     setupDialDrag(svgBedroom2Ac, updateBedroom2Ac, 16.0, 30.0);
     setupDialDrag(svgKitchenOven, updateOven, 50, 250);
     setupDialDrag(svgNurseryAc, updateNurseryAc, 16.0, 30.0);
+    setupHumidifierDrag(svgBedroom2Humidifier, updateBedroom2Humidifier, 30, 90);
 
     // -------------------------------------------------------------------------
     // 8. Kitchen Lamp Control
@@ -1949,8 +2089,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         callCountdown = 5;
 
-        if (type === "911") {
-            if (callTitle) callTitle.textContent = "Calling 911";
+        if (type === "999") {
+            if (callTitle) callTitle.textContent = "Calling 999";
             if (callIcon) { callIcon.textContent = "📞"; callIcon.style.background = "#dc2626"; }
             callStatusText.textContent = `Connecting in ${callCountdown}s... Press Cancel to abort.`;
             cancelCallBtn.textContent = "Cancel Emergency Call";
@@ -1975,7 +2115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 clearInterval(callTimer);
                 callTimer = null;
-                if (type === "911") {
+                if (type === "999") {
                     callStatusText.innerHTML = `<span style="color: #00e272; font-weight: bold;">CONNECTED TO DISPATCH</span><br><br>Help is on the way to 1042 Aura Way. Stay on the line.`;
                     cancelCallBtn.textContent = "Hang Up";
                 } else if (type === "fire") {
@@ -2041,13 +2181,13 @@ document.addEventListener("DOMContentLoaded", () => {
             emergencyCallBtn.addEventListener("click", () => {
                 showCustomConfirm({
                     title: "Emergency Dispatch",
-                    message: "Are you sure you want to call emergency services (911)? This will trigger immediate dispatch.",
+                    message: "Are you sure you want to call emergency services (999)? This will trigger immediate dispatch.",
                     icon: "📞",
                     iconBg: "#dc2626",
                     okBg: "#dc2626",
-                    okText: "Call 911",
+                    okText: "Call 999",
                     onConfirm: () => {
-                        startEmergencySequence("911");
+                        startEmergencySequence("999");
                     }
                 });
             });
@@ -2997,5 +3137,25 @@ document.addEventListener("DOMContentLoaded", () => {
         syncLivingDoorState(toggleLivingDoor.checked);
     }
     updateSecurityBanner();
+
+    // Laundry Env Tab switching
+    window.switchEnvTab = function(tabName) {
+        const sensorsPanel = document.getElementById("env-panel-sensors");
+        const usagePanel = document.getElementById("env-panel-usage");
+        const btnSensors = document.getElementById("btn-env-sensors");
+        const btnUsage = document.getElementById("btn-env-usage");
+
+        if (tabName === "sensors") {
+            if (sensorsPanel) sensorsPanel.style.display = "flex";
+            if (usagePanel) usagePanel.style.display = "none";
+            if (btnSensors) btnSensors.classList.add("active");
+            if (btnUsage) btnUsage.classList.remove("active");
+        } else if (tabName === "usage") {
+            if (sensorsPanel) sensorsPanel.style.display = "none";
+            if (usagePanel) usagePanel.style.display = "flex";
+            if (btnSensors) btnSensors.classList.remove("active");
+            if (btnUsage) btnUsage.classList.add("active");
+        }
+    };
 
 });

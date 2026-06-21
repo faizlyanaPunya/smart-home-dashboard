@@ -1767,3 +1767,80 @@ border: none;
         transform: translate(0, 0) rotate(360deg);
     }
 }
+
+/* Laundry Sensor Sub-cards Grid */
+.laundry-sensors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.laundry-sensor-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.laundry-sensor-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.laundry-sensor-card-title {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.laundry-sensor-card-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.laundry-sensor-card-large-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.laundry-progress-container {
+    margin-top: 4px;
+}
+
+.laundry-progress-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    margin-bottom: 2px;
+    color: var(--color-text-primary);
+}
+
+.laundry-progress-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.laundry-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease-out;
+}
