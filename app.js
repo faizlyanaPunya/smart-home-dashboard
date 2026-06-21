@@ -1147,7 +1147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const bedBrightnessLabel = document.getElementById("label-bedroom-brightness");
 
     let isColorDragging = false;
-
     if (toggleBedroomLights) {
         toggleBedroomLights.addEventListener("change", (e) => {
             const isChecked = e.target.checked;
@@ -1162,6 +1161,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isChecked) {
                     bedroomLightsWidget.style.boxShadow = "none";
                     bedroomLightsWidget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    const bedLightIcon = document.getElementById("bedroom-light-icon");
+                    if (bedLightIcon) {
+                        bedLightIcon.style.textShadow = "none";
+                        bedLightIcon.style.opacity = "0.2";
+                        bedLightIcon.style.filter = "grayscale(100%)";
+                    }
                 } else {
                     // Trigger slider event to restore brightness glow
                     if (bedBrightnessSlider) {
@@ -1172,11 +1177,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         bedroomLightsWidget.style.borderColor = currentColor || 'var(--accent-yellow)';
                         bedroomLightsWidget.style.boxShadow = `0 0 20px ${currentColor || 'var(--accent-yellow)'}`;
                     }
+                    const bedLightIcon = document.getElementById("bedroom-light-icon");
+                    if (bedLightIcon) {
+                        bedLightIcon.style.filter = "none";
+                    }
                 }
             }
         });
     }
-
     function handleColorPick(clientX) {
         const isLightsOn = toggleBedroomLights ? toggleBedroomLights.checked : true;
         if (!isLightsOn) return;
@@ -1276,6 +1284,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     const glowSize = 10 + (opacity * 30); // 10px to 40px
                     bedroomLightsWidget.style.boxShadow = `0 0 ${glowSize}px ${shadowColor}`;
                 }
+
+                const bedLightIcon = document.getElementById("bedroom-light-icon");
+                if (bedLightIcon) {
+                    bedLightIcon.style.opacity = Math.min(1.0, Math.max(0.2, opacity)).toFixed(2);
+                    bedLightIcon.style.filter = "none";
+                    bedLightIcon.style.textShadow = `0 0 ${Math.round(20 + (opacity * 20))}px ${currentColor}`;
+                }
+            } else {
+                const bedLightIcon = document.getElementById("bedroom-light-icon");
+                if (bedLightIcon) {
+                    bedLightIcon.style.textShadow = "none";
+                    bedLightIcon.style.opacity = "0.2";
+                    bedLightIcon.style.filter = "grayscale(100%)";
+                }
             }
         });
     }
@@ -1299,12 +1321,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isChecked) {
                     bedroom2LightsWidget.style.boxShadow = "none";
                     bedroom2LightsWidget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                    const icon = document.getElementById("bedroom2-light-icon");
+                    if (icon) {
+                        icon.style.textShadow = "none";
+                        icon.style.opacity = "0.2";
+                        icon.style.filter = "grayscale(100%)";
+                    }
                 } else {
                     if (bed2BrightnessSlider) {
                         bed2BrightnessSlider.dispatchEvent(new Event("input"));
                     } else {
                         bedroom2LightsWidget.style.borderColor = 'var(--accent-yellow)';
                         bedroom2LightsWidget.style.boxShadow = `0 0 20px var(--accent-yellow)`;
+                    }
+                    const icon = document.getElementById("bedroom2-light-icon");
+                    if (icon) {
+                        icon.style.filter = "none";
                     }
                 }
             }
@@ -1332,6 +1364,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const icon = document.getElementById("bedroom2-light-icon");
                 if (icon) {
                     icon.style.opacity = Math.max(0.3, opacity);
+                    icon.style.filter = "none";
                     icon.style.textShadow = `0 0 ${glowSize + 10}px ${currentColor}`;
                 }
             } else {
@@ -1339,6 +1372,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (icon) {
                     icon.style.opacity = "0.2";
                     icon.style.textShadow = "none";
+                    icon.style.filter = "grayscale(100%)";
                 }
             }
         });
