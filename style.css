@@ -1710,3 +1710,24 @@ border: none;
 .range-label span {
     font-size: 13px !important;
 }
+
+@keyframes vacuumSweep {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    20% {
+        transform: translate(20px, -8px) rotate(45deg);
+    }
+    40% {
+        transform: translate(-15px, 12px) rotate(135deg);
+    }
+    60% {
+        transform: translate(-25px, -10px) rotate(220deg);
+    }
+    80% {
+        transform: translate(12px, 15px) rotate(315deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}

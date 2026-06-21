@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const chassis = document.getElementById("vacuum-chassis");
             if (chassis) {
                 if (isChecked) {
-                    chassis.style.animation = "spin 4s linear infinite";
+                    chassis.style.animation = "vacuumSweep 8s ease-in-out infinite";
                 } else {
                     chassis.style.animation = "none";
                 }
@@ -419,28 +419,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Nursery updates
         else if (id === "widget-nursery-ac") {
-            const statusText = document.getElementById("status-nursery-ac-text");
+            const statusText = document.getElementById("status-nursery-ac");
             const valText = document.getElementById("val-nursery-ac");
-            const statusDial = document.getElementById("status-nursery-ac");
             const progress = document.getElementById("progress-nursery-ac");
             const btnDown = document.getElementById("btn-nursery-ac-down");
             const btnUp = document.getElementById("btn-nursery-ac-up");
 
             if (isChecked) {
-                if (btnDown) {
-                    btnDown.style.opacity = "1";
-                    btnDown.style.pointerEvents = "";
-                }
-                if (btnUp) {
-                    btnUp.style.opacity = "1";
-                    btnUp.style.pointerEvents = "";
-                }
                 updateNurseryAc(nurseryAcVal);
             } else {
                 if (statusText) statusText.textContent = "Off";
                 if (valText) valText.textContent = "--";
-                if (statusDial) statusDial.textContent = "Off";
-                if (progress) progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                if (progress) {
+                    progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                }
                 if (btnDown) {
                     btnDown.style.opacity = "0.4";
                     btnDown.style.pointerEvents = "none";
@@ -830,9 +822,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setDialProgress(progressNurseryAc, valNurseryAc, statusNurseryAc, nurseryAcVal, 16.0, 30.0, "°", status);
 
-        const statusText = document.getElementById("status-nursery-ac-text");
-        if (statusText) {
-            statusText.textContent = `${status} • ${Math.round(nurseryAcVal)}°C`;
+        const progress = document.getElementById("progress-nursery-ac");
+        if (progress) {
+            progress.style.stroke = "";
         }
 
         const btnDown = document.getElementById("btn-nursery-ac-down");
