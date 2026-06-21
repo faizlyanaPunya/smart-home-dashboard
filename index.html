@@ -783,58 +783,44 @@
                     </div>
 
                     <!-- Bedroom Thermostat Widget -->
-                    <div class="widget col-4 active" data-glow="blue" id="widget-bedroom-ac" style="min-height: 110px;">
-                        <div class="widget-header">
+                    <div class="widget radial-dial-widget col-4 active" data-glow="blue" id="widget-bedroom-ac"
+                        style="flex-direction: column;">
+                        <div class="widget-header"
+                            style="width: 100%; position: absolute; top: 20px; left: 20px; right: 20px;">
                             <div>
                                 <span class="widget-title">Air Conditioner</span>
                                 <div class="widget-subtitle">Bedroom AC</div>
                             </div>
-                            <label class="switch">
+                            <label class="switch" style="margin-right: 40px;">
                                 <input type="checkbox" class="toggle-control" checked data-target="widget-bedroom-ac">
                                 <span class="slider blue"></span>
                             </label>
                         </div>
                         <div
-                            style="display: flex; align-items: center; justify-content: space-around; flex-grow: 1; padding: 4px 0;">
-                            <!-- AC CSS Image (Tower / standing design scaled down) -->
-                            <div style="width: 85px; height: 36px; background: #fff; border-radius: 8px; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;"
-                                id="bedroom-ac-img">
-                                <!-- Flap -->
-                                <div
-                                    style="position: absolute; bottom: 3px; width: 90%; height: 3px; background: #ccc; border-radius: 2px;">
-                                </div>
-                                <!-- Vents -->
-                                <div
-                                    style="position: absolute; right: 8px; top: 10px; width: 16px; height: 10px; display: flex; flex-direction: column; gap: 1px;">
-                                    <div style="width: 100%; height: 2px; background: #ccc;"></div>
-                                    <div style="width: 100%; height: 2px; background: #ccc;"></div>
-                                </div>
-                                <div id="ac-led-bedroom"
-                                    style="position: absolute; left: 10px; top: 8px; font-size: 13px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 5px #00d4ff;">
-                                    21°</div>
-                            </div>
-
-                            <!-- Radial Dial -->
-                            <div class="dial-container" style="width: 80px; height: 80px; margin: 0; flex-shrink: 0;">
-                                <svg class="dial-svg" viewBox="0 0 140 140" id="svg-bedroom-ac"
+                            style="display: flex; align-items: center; justify-content: space-evenly; width: 100%; margin-top: 30px; padding: 0 10px;">
+                            <!-- Dial Container -->
+                            <div class="dial-container" style="margin: 0; width: 160px; height: 160px;">
+                                <svg class="dial-svg" viewBox="0 0 160 160" id="svg-bedroom-ac"
                                     style="width: 100%; height: 100%;">
-                                    <circle class="dial-track" cx="70" cy="70" r="60" stroke-width="12"></circle>
-                                    <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
-                                        id="progress-bedroom-ac"></circle>
+                                    <circle class="dial-track" cx="80" cy="80" r="72"></circle>
+                                    <circle class="dial-progress" cx="80" cy="80" r="72" id="progress-bedroom-ac">
+                                    </circle>
                                 </svg>
-                                <div class="dial-info">
-                                    <span class="dial-value" id="val-bedroom-ac" style="font-size: 18px;">21.0°</span>
-                                    <span class="dial-status" id="status-bedroom-ac"
-                                        style="font-size: 9px;">Cooling</span>
+                                <div class="dial-info"
+                                    style="top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.15); width: 100%;">
+                                    <span class="dial-value" id="val-bedroom-ac">21.0°</span>
+                                    <span class="dial-unit">Celsius</span>
+                                    <span class="dial-status" id="status-bedroom-ac">Cooling</span>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            style="display: flex; justify-content: center; gap: 20px; margin-bottom: 14px; margin-top: 4px;">
-                            <button class="dial-btn" id="btn-bedroom-ac-down"
-                                style="width: 58px; height: 58px; font-size: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">-</button>
-                            <button class="dial-btn" id="btn-bedroom-ac-up"
-                                style="width: 58px; height: 58px; font-size: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">+</button>
+                            <!-- Stacked Buttons -->
+                            <div class="dial-controls"
+                                style="display: flex; flex-direction: column; gap: 15px; margin: 0;">
+                                <button class="dial-btn" id="btn-bedroom-ac-up"
+                                    style="width: 48px; height: 48px; font-size: 26px;">+</button>
+                                <button class="dial-btn" id="btn-bedroom-ac-down"
+                                    style="width: 48px; height: 48px; font-size: 26px;">-</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1175,12 +1161,12 @@
                                         <circle class="dial-progress" cx="70" cy="70" r="60" stroke-width="12"
                                             id="progress-nursery-ac" style="stroke: var(--accent-blue);"></circle>
                                     </svg>
-                                    <div class="dial-info"
-                                        style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div class="dial-info">
                                         <span class="dial-value" id="val-nursery-ac"
-                                            style="font-size: 18px; letter-spacing: -0.5px;">22.0°</span>
+                                            style="font-size: 18px; letter-spacing: -0.5px; line-height: 1;">22.0°</span>
+                                        <span class="dial-unit" style="font-size: 9px; line-height: 1.2;">Celsius</span>
                                         <span class="dial-status" id="status-nursery-ac"
-                                            style="color: var(--accent-blue); font-size: 10px; text-transform: uppercase; margin-top: 1px;">Cooling</span>
+                                            style="color: var(--accent-blue); font-size: 8px; text-transform: uppercase; margin-top: 1px; line-height: 1;">Cooling</span>
                                     </div>
                                 </div>
                                 <!-- Stacked Buttons -->

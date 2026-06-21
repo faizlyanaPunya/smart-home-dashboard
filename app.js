@@ -205,15 +205,35 @@ document.addEventListener("DOMContentLoaded", () => {
         // Living Room updates
         if (id === "widget-living-ac") {
             const statusAc = document.getElementById("status-living-ac");
+            const valText = document.getElementById("val-living-ac");
+            const progress = document.getElementById("progress-living-ac");
+            const btnDown = document.getElementById("btn-living-ac-down");
+            const btnUp = document.getElementById("btn-living-ac-up");
+
             if (isChecked) {
-                let status = "Cooling";
-                if (typeof livingAcVal !== 'undefined') {
-                    if (livingAcVal > 24.0) status = "Heating";
-                    else if (livingAcVal > 21.0) status = "Fan Only";
+                if (btnDown) {
+                    btnDown.style.opacity = "1";
+                    btnDown.style.pointerEvents = "";
                 }
-                statusAc.textContent = status;
+                if (btnUp) {
+                    btnUp.style.opacity = "1";
+                    btnUp.style.pointerEvents = "";
+                }
+                updateLivingAc(livingAcVal);
             } else {
-                statusAc.textContent = "Off";
+                if (statusAc) statusAc.textContent = "Off";
+                if (valText) valText.textContent = "--";
+                if (progress) {
+                    progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                }
+                if (btnDown) {
+                    btnDown.style.opacity = "0.4";
+                    btnDown.style.pointerEvents = "none";
+                }
+                if (btnUp) {
+                    btnUp.style.opacity = "0.4";
+                    btnUp.style.pointerEvents = "none";
+                }
             }
         }
         else if (id === "widget-living-lamp") {
@@ -321,8 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Bedroom updates
         else if (id === "widget-bedroom-ac") {
             const statusText = document.getElementById("status-bedroom-ac");
-            const acLed = document.getElementById("ac-led-bedroom");
-            const acImg = document.getElementById("bedroom-ac-img");
             const valText = document.getElementById("val-bedroom-ac");
             const progress = document.getElementById("progress-bedroom-ac");
             const btnDown = document.getElementById("btn-bedroom-ac-down");
@@ -334,19 +352,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 statusText.textContent = "Off";
                 if (valText) valText.textContent = "--";
-                if (acLed) {
-                    acLed.textContent = "--";
-                    acLed.style.color = "rgba(255, 255, 255, 0.3)";
-                    acLed.style.textShadow = "none";
-                }
-                if (acImg) {
-                    acImg.style.background = "rgba(255, 255, 255, 0.12)";
-                    acImg.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                    const flap = acImg.querySelector("div");
-                    const vents = acImg.querySelectorAll("div")[1];
-                    if (flap) flap.style.opacity = "0.3";
-                    if (vents) vents.style.opacity = "0.3";
-                }
                 if (progress) {
                     progress.style.stroke = "rgba(255, 255, 255, 0.15)";
                 }
@@ -648,12 +653,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const svgLivingAc = document.getElementById("svg-living-ac");
 
     function updateLivingAc(val) {
+        const toggle = document.querySelector('#widget-living-ac .toggle-control');
+        if (toggle && !toggle.checked) return;
+
         livingAcVal = Math.max(16.0, Math.min(30.0, val));
         let status = "Cooling";
         if (livingAcVal > 24.0) status = "Heating";
         else if (livingAcVal > 21.0) status = "Fan Only";
 
         setDialProgress(progressLivingAc, valLivingAc, statusLivingAc, livingAcVal, 16.0, 30.0, "°", status);
+
+        const progress = document.getElementById("progress-living-ac");
+        if (progress) {
+            progress.style.stroke = ""; // Clear inline stroke to fall back to CSS theme (accent blue)
+        }
 
         // Update Summary
         updateSummaryBanner();
@@ -680,23 +693,6 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (bedroomAcVal > 22.0) status = "Auto";
 
         setDialProgress(progressBedroomAc, valBedroomAc, statusBedroomAc, bedroomAcVal, 16.0, 30.0, "°", status);
-
-        const acLed = document.getElementById("ac-led-bedroom");
-        if (acLed) {
-            acLed.textContent = `${Math.round(bedroomAcVal)}°`;
-            acLed.style.color = "#00d4ff";
-            acLed.style.textShadow = "0 0 5px #00d4ff";
-        }
-
-        const acImg = document.getElementById("bedroom-ac-img");
-        if (acImg) {
-            acImg.style.background = "#fff";
-            acImg.style.borderColor = "#ddd";
-            const flap = acImg.querySelector("div");
-            const vents = acImg.querySelectorAll("div")[1];
-            if (flap) flap.style.opacity = "1";
-            if (vents) vents.style.opacity = "1";
-        }
 
         const progress = document.getElementById("progress-bedroom-ac");
         if (progress) {
