@@ -233,7 +233,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (id === "widget-living-door") {
             const doorStatus = document.getElementById("status-living-door-text");
-            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+            if (doorStatus) {
+                doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+                doorStatus.style.color = isChecked ? "var(--accent-green)" : "var(--accent-red)";
+            }
             const doorIcon = document.getElementById("living-door-icon");
             if (doorIcon) {
                 doorIcon.textContent = isChecked ? "🔒" : "🔓";
@@ -292,7 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (id === "widget-kitchen-door") {
             const doorStatus = document.getElementById("status-kitchen-door-text");
-            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+            if (doorStatus) {
+                doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+                doorStatus.style.color = isChecked ? "var(--accent-green)" : "var(--accent-red)";
+            }
         }
         else if (id === "widget-kitchen-oven") {
             const statusText = document.getElementById("status-kitchen-oven-text");
@@ -396,7 +402,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else if (id === "widget-bedroom-door") {
             const doorStatus = document.getElementById("status-bedroom-door-text");
-            if (doorStatus) doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+            if (doorStatus) {
+                doorStatus.textContent = isChecked ? "Locked" : "Unlocked";
+                doorStatus.style.color = isChecked ? "var(--accent-green)" : "var(--accent-red)";
+            }
             const doorIcon = document.getElementById("bedroom-door-icon");
             if (doorIcon) {
                 doorIcon.style.opacity = isChecked ? "1" : "0.5";
@@ -1142,22 +1151,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Toggle bulb icon appearance
         const icon = document.getElementById("nursery-light1-icon");
-        if (icon) {
-            icon.style.opacity = isOn ? "1" : "0.3";
-            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
-        }
 
         if (!isOn) {
             widgetNurseryLight1.style.boxShadow = "none";
             widgetNurseryLight1.style.borderColor = "rgba(255, 255, 255, 0.1)";
             widgetNurseryLight1.classList.remove("active");
+            if (icon) {
+                icon.style.opacity = "0.3";
+                icon.style.textShadow = "none";
+            }
         } else {
             widgetNurseryLight1.classList.add("active");
             const opacity = val / 100;
             const glowSize = 10 + (opacity * 30); // 10px to 40px
             // Warm white (hsl(45, 100%, 70%))
+            const currentColor = "hsl(45, 100%, 70%)";
             widgetNurseryLight1.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
             widgetNurseryLight1.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+            
+            if (icon) {
+                icon.style.opacity = Math.max(0.3, opacity);
+                icon.style.textShadow = `0 0 ${glowSize + 10}px ${currentColor}`;
+            }
         }
         updateSummaryBanner();
     }
@@ -1189,24 +1204,30 @@ document.addEventListener("DOMContentLoaded", () => {
             sliderContainer.style.pointerEvents = isOn ? "auto" : "none";
         }
 
-        // Toggle moon icon appearance
+        // Toggle bulb icon appearance
         const icon = document.getElementById("nursery-light2-icon");
-        if (icon) {
-            icon.style.opacity = isOn ? "1" : "0.3";
-            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
-        }
 
         if (!isOn) {
             widgetNurseryLight2.style.boxShadow = "none";
             widgetNurseryLight2.style.borderColor = "rgba(255, 255, 255, 0.1)";
             widgetNurseryLight2.classList.remove("active");
+            if (icon) {
+                icon.style.opacity = "0.3";
+                icon.style.textShadow = "none";
+            }
         } else {
             widgetNurseryLight2.classList.add("active");
             const opacity = val / 100;
             const glowSize = 10 + (opacity * 30); // 10px to 40px
             // Soft Amber (hsl(30, 100%, 50%))
+            const currentColor = "hsl(30, 100%, 50%)";
             widgetNurseryLight2.style.borderColor = `hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
             widgetNurseryLight2.style.boxShadow = `0 0 ${glowSize}px hsla(30, 100%, 50%, ${Math.max(0.2, opacity)})`;
+
+            if (icon) {
+                icon.style.opacity = Math.max(0.3, opacity);
+                icon.style.textShadow = `0 0 ${glowSize + 10}px ${currentColor}`;
+            }
         }
         updateSummaryBanner();
     }
@@ -1572,10 +1593,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Toggle bulb icon appearance
         const icon = document.getElementById("laundry-light-icon");
-        if (icon) {
-            icon.style.opacity = isOn ? "1" : "0.3";
-            icon.style.filter = isOn ? "drop-shadow(0 2px 8px rgba(255, 183, 0, 0.6))" : "none";
-        }
 
         const statusText = document.getElementById("status-laundry-light-text");
         if (statusText) {
@@ -1586,13 +1603,23 @@ document.addEventListener("DOMContentLoaded", () => {
             widgetLaundryLight.style.boxShadow = "none";
             widgetLaundryLight.style.borderColor = "rgba(255, 255, 255, 0.1)";
             widgetLaundryLight.classList.remove("active");
+            if (icon) {
+                icon.style.opacity = "0.3";
+                icon.style.textShadow = "none";
+            }
         } else {
             widgetLaundryLight.classList.add("active");
             const opacity = val / 100;
             const glowSize = 10 + (opacity * 30); // 10px to 40px
             // Yellow light (hsl(45, 100%, 70%))
+            const currentColor = "hsl(45, 100%, 70%)";
             widgetLaundryLight.style.borderColor = `hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
             widgetLaundryLight.style.boxShadow = `0 0 ${glowSize}px hsla(45, 100%, 70%, ${Math.max(0.2, opacity)})`;
+
+            if (icon) {
+                icon.style.opacity = Math.max(0.3, opacity);
+                icon.style.textShadow = `0 0 ${glowSize + 10}px ${currentColor}`;
+            }
         }
     }
 
@@ -1631,8 +1658,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 14. Emergency Call 999 / Fire Alarm Simulation
     // -------------------------------------------------------------------------
     const emergencyCallBtn = document.getElementById("btn-emergency-call");
-    const kitchenFireAlarmBtn = document.getElementById("btn-kitchen-fire-alarm");
-    const kitchenSprinklersBtn = document.getElementById("btn-kitchen-sprinklers");
+    const kitchenFireAlarmBtn = document.getElementById("toggle-kitchen-fire");
+    const kitchenSprinklersBtn = document.getElementById("toggle-kitchen-sprinklers");
     const cancelCallBtn = document.getElementById("btn-cancel-emergency-call");
     const callOverlay = document.getElementById("emergency-call-overlay");
     const callStatusText = document.getElementById("emergency-call-status");
@@ -1698,11 +1725,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (kitchenFireAlarmBtn) {
-            kitchenFireAlarmBtn.addEventListener("click", () => startEmergencySequence("fire"));
+            kitchenFireAlarmBtn.addEventListener("change", (e) => {
+                if (e.target.checked) {
+                    startEmergencySequence("fire");
+                }
+            });
         }
 
         if (kitchenSprinklersBtn) {
-            kitchenSprinklersBtn.addEventListener("click", () => startEmergencySequence("sprinklers"));
+            kitchenSprinklersBtn.addEventListener("change", (e) => {
+                if (e.target.checked) {
+                    startEmergencySequence("sprinklers");
+                }
+            });
         }
 
         cancelCallBtn.addEventListener("click", () => {
@@ -1710,6 +1745,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearInterval(callTimer);
                 callTimer = null;
             }
+            
+            // Turn off the toggles
+            if (kitchenFireAlarmBtn) {
+                kitchenFireAlarmBtn.checked = false;
+                const widget = document.getElementById("widget-kitchen-fire-alarm");
+                if (widget) widget.classList.remove("active");
+            }
+            if (kitchenSprinklersBtn) {
+                kitchenSprinklersBtn.checked = false;
+                const widget = document.getElementById("widget-kitchen-sprinklers");
+                if (widget) widget.classList.remove("active");
+            }
+
             // Hide overlay with transition
             callOverlay.classList.remove("active");
             setTimeout(() => {
@@ -2323,13 +2371,14 @@ document.addEventListener("DOMContentLoaded", () => {
             securityBanner.textContent = "Secure • All doors locked";
             if (parentItem) {
                 parentItem.classList.remove("accent-yellow");
+                parentItem.classList.remove("accent-red");
                 parentItem.classList.add("accent-green");
             }
         } else {
             securityBanner.textContent = `Security Alert • ${unlockedCount} Door${unlockedCount > 1 ? "s" : ""} Unlocked`;
             if (parentItem) {
                 parentItem.classList.remove("accent-green");
-                parentItem.classList.add("accent-yellow");
+                parentItem.classList.add("accent-red");
             }
         }
     }
@@ -2340,7 +2389,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isLocked = statusDoorFront.textContent.includes("🔒");
             if (isLocked) {
                 statusDoorFront.innerHTML = "🔓 Unlocked";
-                statusDoorFront.style.color = "var(--accent-yellow)";
+                statusDoorFront.style.color = "var(--accent-red)";
             } else {
                 statusDoorFront.innerHTML = "🔒 Locked";
                 statusDoorFront.style.color = "var(--accent-green)";
@@ -2354,7 +2403,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isLocked = statusDoorBack.textContent.includes("🔒");
             if (isLocked) {
                 statusDoorBack.innerHTML = "🔓 Unlocked";
-                statusDoorBack.style.color = "var(--accent-yellow)";
+                statusDoorBack.style.color = "var(--accent-red)";
             } else {
                 statusDoorBack.innerHTML = "🔒 Locked";
                 statusDoorBack.style.color = "var(--accent-green)";
@@ -2371,7 +2420,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 statusDoorLiving.style.color = "var(--accent-green)";
             } else {
                 statusDoorLiving.innerHTML = "🔓 Unlocked";
-                statusDoorLiving.style.color = "var(--accent-yellow)";
+                statusDoorLiving.style.color = "var(--accent-red)";
             }
         }
         updateSecurityBanner();
@@ -2399,7 +2448,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 statusDoorBedroom.style.color = "var(--accent-green)";
             } else {
                 statusDoorBedroom.innerHTML = "🔓 Unlocked";
-                statusDoorBedroom.style.color = "var(--accent-yellow)";
+                statusDoorBedroom.style.color = "var(--accent-red)";
             }
         }
         updateSecurityBanner();

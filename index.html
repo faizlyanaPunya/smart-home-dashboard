@@ -214,7 +214,7 @@
                     </div>
 
                     <!-- Camera Widget -->
-                    <div class="widget camera-widget col-4" style="min-height: 220px !important;"
+                    <div class="widget camera-widget col-4" style="cursor: pointer; min-height: 110px;"
                         onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_living.png" alt="Living Room Camera"
                             style="width: 100%; height: 100%; object-fit: cover;">
@@ -410,7 +410,7 @@
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title" style="font-size: 13px;">Door</span>
-                                <div class="widget-subtitle" id="status-living-door-text" style="font-size: 9px;">
+                                <div class="widget-subtitle" id="status-living-door-text" style="font-size: 9px; color: var(--accent-red);">
                                     Unlocked</div>
                             </div>
                             <label class="switch">
@@ -563,11 +563,15 @@
                     <!-- Column 3: 4 Stacked Status Cards -->
                     <div class="col-4 flex-col-gap" style="grid-row: span 2;">
                         <!-- Card 1: FIRE 999 -->
-                        <div class="widget active" data-glow="orange"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(220, 38, 38, 0.4); background: rgba(220, 38, 38, 0.15); cursor: pointer;"
-                            id="btn-kitchen-fire-alarm">
+                        <div class="widget" data-glow="orange" id="widget-kitchen-fire-alarm"
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 30px;">🚒</span>
+                                <!-- Flame Icon SVG -->
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 32px; height: 32px; fill: #ef4444; flex-shrink: 0;">
+                                    <path
+                                        d="M17.55 11.2C17.47 10.9 17.21 10.4 16.83 10C16.14 9.27 15.17 8.78 14.5 8C13.5 6.88 13.5 5 13.5 5S12.5 6.5 12 7.5C11 9.5 11.5 11.5 11.5 11.5S10 11.5 9.5 11C9 10.5 8.5 9.5 8.5 9.5S7 11 7 13.5C7 16.5 9.2 19 12 19C14.8 19 17 16.5 17 13.5C17 12.5 17.2 11.8 17.55 11.2Z" />
+                                </svg>
                                 <div>
                                     <span class="widget-title"
                                         style="font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">FIRE
@@ -576,14 +580,32 @@
                                         style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">Emergency Call</div>
                                 </div>
                             </div>
-                            <div style="font-size: 16px; color: #ff6b6b;">➔</div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-kitchen-fire" class="toggle-control"
+                                    data-target="widget-kitchen-fire-alarm">
+                                <span class="slider green"></span>
+                            </label>
                         </div>
 
                         <!-- Card 2: Sprinklers -->
-                        <div class="widget active" data-glow="blue" id="btn-kitchen-sprinklers"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.15); cursor: pointer;">
+                        <div class="widget" data-glow="blue" id="widget-kitchen-sprinklers"
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 30px;">💦</span>
+                                <!-- Sprinkler Icon SVG -->
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 32px; height: 32px; fill: #60a5fa; flex-shrink: 0;">
+                                    <rect x="5" y="4" width="14" height="2" rx="1" />
+                                    <path d="M10 6 L14 6 L13 10 L11 10 Z" />
+                                    <rect x="9" y="10" width="6" height="1" rx="0.5" />
+                                    <circle cx="7" cy="14" r="1" />
+                                    <circle cx="5" cy="17" r="1" />
+                                    <circle cx="8.5" cy="15.5" r="1" />
+                                    <circle cx="12" cy="14" r="1" />
+                                    <circle cx="12" cy="17.5" r="1.2" />
+                                    <circle cx="17" cy="14" r="1" />
+                                    <circle cx="19" cy="17" r="1" />
+                                    <circle cx="15.5" cy="15.5" r="1" />
+                                </svg>
                                 <div>
                                     <span class="widget-title"
                                         style="font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">Sprinklers</span>
@@ -591,19 +613,49 @@
                                         style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">Fire Suppression</div>
                                 </div>
                             </div>
-                            <div style="font-size: 16px; color: #60a5fa;">➔</div>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-kitchen-sprinklers" class="toggle-control"
+                                    data-target="widget-kitchen-sprinklers">
+                                <span class="slider green"></span>
+                            </label>
                         </div>
 
                         <!-- Card 3: Air Ventilation -->
                         <div class="widget active" data-glow="green" id="widget-kitchen-ventilation"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(0, 226, 114, 0.4); background: rgba(0, 226, 114, 0.15);">
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 30px; display: inline-block;" id="ventilation-icon">🌀</span>
+                                <!-- Animated Air Ventilation Fan & Arrows SVG -->
+                                <span
+                                    style="display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;"
+                                    id="ventilation-icon-wrapper">
+                                    <svg viewBox="0 0 24 24"
+                                        style="width: 32px; height: 32px; fill: #ffffff; stroke: #ffffff; stroke-width: 0.5;">
+                                        <g id="ventilation-icon"
+                                            style="transform-origin: 8px 12px; display: inline-block;">
+                                            <circle cx="8" cy="12" r="6" fill="none" stroke="#ffffff"
+                                                stroke-width="1.5" />
+                                            <circle cx="8" cy="12" r="1.5" fill="#ffffff" />
+                                            <path d="M8 12 Q9 9 8 6 Q7 9 8 12" fill="#ffffff" />
+                                            <path d="M8 12 Q9 15 8 18 Q7 15 8 12" fill="#ffffff" />
+                                            <path d="M8 12 Q5 13 2 12 Q5 11 8 12" fill="#ffffff" />
+                                            <path d="M8 12 Q11 13 14 12 Q11 11 8 12" fill="#ffffff" />
+                                        </g>
+                                        <g>
+                                            <path d="M16 8 H20 M18 6 L20 8 L18 10" stroke="#ffffff" stroke-width="1.5"
+                                                stroke-linecap="round" fill="none" />
+                                            <path d="M16 12 H21 M19 10 L21 12 L19 14" stroke="#ffffff"
+                                                stroke-width="1.5" stroke-linecap="round" fill="none" />
+                                            <path d="M16 16 H20 M18 14 L20 16 L18 18" stroke="#ffffff"
+                                                stroke-width="1.5" stroke-linecap="round" fill="none" />
+                                        </g>
+                                    </svg>
+                                </span>
                                 <div>
                                     <span class="widget-title"
-                                        style="font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">Air
+                                        style="font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">Air
                                         Ventilation</span>
-                                    <div class="widget-subtitle" id="status-ventilation-text" style="font-size: 12px;">
+                                    <div class="widget-subtitle" id="status-ventilation-text"
+                                        style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">
                                         Active • Speed 2</div>
                                 </div>
                             </div>
@@ -616,27 +668,36 @@
 
                         <!-- Card 4: Sliding Door -->
                         <div class="widget active" data-glow="yellow" id="widget-kitchen-door"
-                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; border-color: rgba(255, 183, 0, 0.4); background: rgba(255, 183, 0, 0.15);">
+                            style="flex: 1; min-height: unset; padding: 6px 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <span style="font-size: 30px;">🚪</span>
+                                <!-- Sliding Door Icon SVG -->
+                                <svg viewBox="0 0 24 24"
+                                    style="width: 32px; height: 32px; fill: #ffd2a0; flex-shrink: 0;">
+                                    <path d="M3 3 H15 V21 H3 Z" fill="none" stroke="#ffd2a0" stroke-width="1.5"
+                                        stroke-linejoin="round" />
+                                    <rect x="9" y="4" width="9" height="16" fill="#ffd2a0" opacity="0.8" rx="0.5" />
+                                    <rect x="11" y="11" width="1" height="2" fill="#333" rx="0.2" />
+                                    <path d="M13 12 H18 M16 10 L18 12 L16 14" stroke="#ffffff" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                </svg>
                                 <div>
                                     <span class="widget-title"
                                         style="font-size: 18px; font-weight: 700; letter-spacing: 0.5px; color: #ffffff;">Sliding
                                         Door</span>
                                     <div class="widget-subtitle" id="status-kitchen-door-text"
-                                        style="font-size: 12px; color: rgba(255, 255, 255, 0.8);">
+                                        style="font-size: 12px; color: var(--accent-green);">
                                         Locked</div>
                                 </div>
                             </div>
                             <label class="switch">
                                 <input type="checkbox" class="toggle-control" checked data-target="widget-kitchen-door">
-                                <span class="slider"></span>
+                                <span class="slider green"></span>
                             </label>
                         </div>
                     </div>
 
                     <!-- Kitchen Camera -->
-                    <div class="widget camera-widget col-4" style="min-height: 160px;"
+                    <div class="widget camera-widget col-4" style="cursor: pointer; min-height: 110px;"
                         onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
                         <img class="camera-feed" src="assets/camera_kitchen.png" alt="Kitchen Camera"
                             style="width: 100%; height: 100%; object-fit: cover;">
@@ -648,7 +709,7 @@
 
                     <!-- Dishwasher Widget -->
                     <div class="widget col-4 active" data-glow="blue" id="widget-kitchen-dishwasher"
-                        style="min-height: 160px;">
+                        style="min-height: 110px;">
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title">Dishwasher</span>
@@ -942,7 +1003,7 @@
                         <div class="widget-header">
                             <div>
                                 <span class="widget-title" style="font-size: 13px;">Door</span>
-                                <div class="widget-subtitle" id="status-bedroom-door-text" style="font-size: 9px;">
+                                <div class="widget-subtitle" id="status-bedroom-door-text" style="font-size: 9px; color: var(--accent-green);">
                                     Locked</div>
                             </div>
                             <label class="switch">
@@ -985,10 +1046,11 @@
                 <!-- ------------------- NURSERY VIEW ------------------- -->
                 <section class="room-view" id="view-nursery">
 
-                    <!-- Column 1: Ceiling Light (small) + Night Light (small) + CCTV Baby Crib (large) -->
+                    <!-- Column 1: Ceiling Light (small) + Night Light (small) -->
                     <div class="col-4 flex-col-gap">
-                        <!-- Nursery Ceiling Light Widget (compact) -->
-                        <div class="widget active" data-glow="yellow" id="widget-nursery-lights" style="flex: 0 0 110px; overflow: hidden;">
+                        <!-- Nursery Ceiling Light Widget (compact restructured) -->
+                        <div class="widget active" data-glow="yellow" id="widget-nursery-lights"
+                            style="flex: 1; overflow: hidden; display: flex; flex-direction: column; padding: 10px 14px;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title" style="font-size: 13px;">Ceiling Light</span>
@@ -999,24 +1061,45 @@
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
-                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:space-between; padding: 4px 0;">
+                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 0;">
                                 <!-- Icon (Bulb) -->
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                    id="nursery-light1-icon">💡</div>
-                                <!-- Brightness value -->
-                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                                    <span id="val-nursery-light1" style="font-size:18px; font-weight:700; color:#fff;">30%</span>
-                                    <div style="width: 80px; height: 18px; background: rgba(0,0,0,0.4); border-radius: 9px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
-                                        <div id="ios-nursery-light1-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: rgba(255,255,255,0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 9px;"></div>
-                                        <input type="range" min="0" max="100" value="30" id="slider-nursery-light1"
-                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                <div id="nursery-light1-icon"
+                                    style="font-size: 34px; text-shadow: 0 0 30px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                    💡</div>
+                            </div>
+                            <!-- Custom Brown/Beige Slide Bar Brightness -->
+                            <div id="nursery-light1-slider-container"
+                                style="margin-top: 6px; width: 100%; transition: opacity 0.3s;">
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px;">
+                                    <span>Brightness</span>
+                                    <span id="val-nursery-light1">30%</span>
+                                </div>
+                                <div id="nursery-light1-slider-track"
+                                    style="width: 100%; height: 24px; background: #3a322c; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);">
+                                    <!-- Fill bar -->
+                                    <div id="ios-nursery-light1-fill"
+                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 30%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 8px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                        <!-- Blue Sun Icon -->
+                                        <div
+                                            style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; display: flex; align-items: center; justify-content: center;">
+                                            <svg viewBox="0 0 24 24"
+                                                style="width: 11px; height: 11px; fill: #0055ff; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));">
+                                                <path
+                                                    d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 10-1.06-1.061l-1.59 1.591z" />
+                                            </svg>
+                                        </div>
                                     </div>
+                                    <!-- Input Range -->
+                                    <input type="range" min="0" max="100" value="30" id="slider-nursery-light1"
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Nursery Nightlight Widget (compact) -->
-                        <div class="widget active" data-glow="yellow" id="widget-nursery-nightlight" style="flex: 0 0 110px; overflow: hidden;">
+                        <!-- Nursery Nightlight Widget (compact restructured) -->
+                        <div class="widget active" data-glow="yellow" id="widget-nursery-nightlight"
+                            style="flex: 1; overflow: hidden; display: flex; flex-direction: column; padding: 10px 14px;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title" style="font-size: 13px;">Nightlight</span>
@@ -1027,42 +1110,53 @@
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
-                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:space-between; padding: 4px 0;">
+                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 0;">
                                 <!-- Icon (Moon) -->
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                    id="nursery-light2-icon">🌙</div>
-                                <!-- Brightness value -->
-                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                                    <span id="val-nursery-light2" style="font-size:18px; font-weight:700; color:#fff;">65%</span>
-                                    <div style="width: 80px; height: 18px; background: rgba(0,0,0,0.4); border-radius: 9px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
-                                        <div id="ios-nursery-light2-fill" style="position: absolute; top: 0; left: 0; height: 100%; width: 65%; background: rgba(255,255,255,0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 9px;"></div>
-                                        <input type="range" min="0" max="100" value="65" id="slider-nursery-light2"
-                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
-                                    </div>
-                                </div>
+                                <div id="nursery-light2-icon"
+                                    style="font-size: 34px; text-shadow: 0 0 30px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                    🌙</div>
                             </div>
-                        </div>
-
-                        <!-- CCTV 1: Baby Crib Monitor (Camera) -->
-                        <div class="widget camera-widget" style="flex: 1;"
-                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                            <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Monitor"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="camera-overlay">
-                                <span class="camera-name">Camera 04: Baby Crib</span>
-                                <span class="camera-live">LIVE</span>
+                            <!-- Custom Brown/Beige Slide Bar Brightness -->
+                            <div id="nursery-light2-slider-container"
+                                style="margin-top: 6px; width: 100%; transition: opacity 0.3s;">
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px;">
+                                    <span>Brightness</span>
+                                    <span id="val-nursery-light2">65%</span>
+                                </div>
+                                <div id="nursery-light2-slider-track"
+                                    style="width: 100%; height: 24px; background: #3a322c; border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);">
+                                    <!-- Fill bar -->
+                                    <div id="ios-nursery-light2-fill"
+                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 65%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 8px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                        <!-- Blue Sun Icon -->
+                                        <div
+                                            style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; display: flex; align-items: center; justify-content: center;">
+                                            <svg viewBox="0 0 24 24"
+                                                style="width: 11px; height: 11px; fill: #0055ff; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));">
+                                                <path
+                                                    d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 10-1.06-1.061l-1.59 1.591z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <!-- Input Range -->
+                                    <input type="range" min="0" max="100" value="65" id="slider-nursery-light2"
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Column 2: AC (top) + CCTV 2 Whole Room (bottom) -->
+                    <!-- Column 2: AC -->
                     <div class="col-4 flex-col-gap">
-                        <!-- Nursery AC Widget (moved from Column 3) -->
-                        <div class="widget active" data-glow="blue" id="widget-nursery-ac" style="flex: 0 0 232px; overflow: hidden;">
+                        <!-- Nursery AC Widget -->
+                        <div class="widget active" data-glow="blue" id="widget-nursery-ac"
+                            style="flex: 1; overflow: hidden;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title" style="font-size: 13px;">Air Conditioner</span>
-                                    <div class="widget-subtitle" id="status-nursery-ac-text" style="font-size: 9px;">Cooling • 22°C</div>
+                                    <div class="widget-subtitle" id="status-nursery-ac-text" style="font-size: 9px;">
+                                        Cooling • 22°C</div>
                                 </div>
                                 <label class="switch">
                                     <input type="checkbox" class="toggle-control" checked
@@ -1099,22 +1193,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- CCTV 2: Whole Room View -->
-                        <div class="widget camera-widget" style="flex: 1;"
-                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                            <img class="camera-feed" src="assets/camera_nursery.png?v=2" alt="Nursery Whole Room"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="camera-overlay">
-                                <span class="camera-name">Camera 05: Nursery Room</span>
-                                <span class="camera-live">LIVE</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Column 3: Sound Machine + Air Purifier -->
+                    <!-- Column 3: Sound Machine -->
                     <div class="col-4 flex-col-gap">
-
                         <!-- Sound Machine Widget -->
                         <div class="widget active" data-glow="purple" id="widget-nursery-sound" style="flex: 1;">
                             <div class="widget-header" style="margin-bottom: 0px;">
@@ -1176,69 +1258,89 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Air Purifier Widget -->
-                        <div class="widget active" data-glow="green" id="widget-nursery-purifier" style="flex: 1;">
-                            <div class="widget-header">
-                                <div>
-                                    <span class="widget-title">Air Purifier</span>
-                                    <div class="widget-subtitle" id="status-nursery-purifier-text">Active • Excellent
-                                    </div>
+                    <!-- Row 2: Camera 04 (col-4) + Camera 05 (col-4) + Air Purifier (col-4) -->
+
+                    <!-- CCTV 1: Baby Crib Monitor (Camera 04) -->
+                    <div class="widget camera-widget col-4" style="cursor: pointer; min-height: 110px;"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed" src="assets/camera_baby.png" alt="Baby Crib Monitor"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 04: Baby Crib</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- CCTV 2: Whole Room View (Camera 05) -->
+                    <div class="widget camera-widget col-4" style="cursor: pointer; min-height: 110px;"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed" src="assets/camera_nursery.png?v=2" alt="Nursery Whole Room"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 05: Nursery Room</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- Air Purifier Widget -->
+                    <div class="widget active col-4" data-glow="green" id="widget-nursery-purifier">
+                        <div class="widget-header">
+                            <div>
+                                <span class="widget-title">Air Purifier</span>
+                                <div class="widget-subtitle" id="status-nursery-purifier-text">Active • Excellent
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-control" checked
-                                        data-target="widget-nursery-purifier">
-                                    <span class="slider green"></span>
-                                </label>
                             </div>
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-control" checked
+                                    data-target="widget-nursery-purifier">
+                                <span class="slider green"></span>
+                            </label>
+                        </div>
+                        <div
+                            style="flex-grow: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: center; padding: 5px 0;">
+                            <!-- Top Row: Gauge + Basic Info -->
                             <div
-                                style="flex-grow: 1; display: flex; flex-direction: column; align-items: stretch; justify-content: center; padding: 5px 0;">
-                                <!-- Top Row: Gauge + Basic Info -->
-                                <div
-                                    style="display: flex; align-items: center; justify-content: space-around; margin-bottom: 8px;">
-                                    <div style="position: relative; width: 75px; height: 37.5px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center;"
-                                        id="purifier-gauge-container">
-                                        <!-- Gauge Background Arc -->
-                                        <div
-                                            style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.08); box-sizing: border-box;">
-                                        </div>
-                                        <!-- Gauge Progress Arc (Green) -->
-                                        <div style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid var(--accent-green); border-bottom-color: transparent; border-right-color: transparent; box-sizing: border-box; transform: rotate(45deg); transition: transform 0.8s ease;"
-                                            id="purifier-gauge-progress"></div>
-                                        <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; z-index: 2;"
-                                            id="val-purifier-aqi">12 AQI</div>
-                                    </div>
+                                style="display: flex; align-items: center; justify-content: space-around; margin-bottom: 8px;">
+                                <div style="position: relative; width: 75px; height: 37.5px; overflow: hidden; display: flex; align-items: flex-end; justify-content: center;"
+                                    id="purifier-gauge-container">
+                                    <!-- Gauge Background Arc -->
                                     <div
-                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                                        <span style="font-size: 13px; font-weight: 700; color: var(--accent-green);"
-                                            id="lbl-purifier-quality">Good</span>
-                                        <span
-                                            style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px;"
-                                            id="val-purifier-status">Air Quality</span>
+                                        style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid rgba(255,255,255,0.08); box-sizing: border-box;">
                                     </div>
+                                    <!-- Gauge Progress Arc (Green) -->
+                                    <div style="position: absolute; top: 0; left: 0; width: 75px; height: 75px; border-radius: 50%; border: 6px solid var(--accent-green); border-bottom-color: transparent; border-right-color: transparent; box-sizing: border-box; transform: rotate(45deg); transition: transform 0.8s ease;"
+                                        id="purifier-gauge-progress"></div>
+                                    <div style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; z-index: 2;"
+                                        id="val-purifier-aqi">12 AQI</div>
                                 </div>
-
-                                <!-- Bottom Row: PM2.5 & Humidity & Filter -->
                                 <div
-                                    style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
-                                    <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <span style="font-size: 13px; font-weight: bold; color: #fff;"
-                                            id="val-purifier-pm25">8</span>
-                                        <span
-                                            style="font-size: 9px; color: #aaa; text-transform: uppercase;">PM2.5</span>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <span style="font-size: 13px; font-weight: bold; color: #fff;"
-                                            id="val-purifier-hum">52%</span>
-                                        <span
-                                            style="font-size: 9px; color: #aaa; text-transform: uppercase;">Humid</span>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <span style="font-size: 13px; font-weight: bold; color: #fff;"
-                                            id="val-purifier-filter">95%</span>
-                                        <span
-                                            style="font-size: 9px; color: #aaa; text-transform: uppercase;">Filter</span>
-                                    </div>
+                                    style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <span style="font-size: 13px; font-weight: 700; color: var(--accent-green);"
+                                        id="lbl-purifier-quality">Good</span>
+                                    <span style="font-size: 10px; color: var(--color-text-secondary); margin-top: 2px;"
+                                        id="val-purifier-status">Air Quality</span>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Row: PM2.5 & Humidity & Filter -->
+                            <div
+                                style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #fff;"
+                                        id="val-purifier-pm25">8</span>
+                                    <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">PM2.5</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #fff;"
+                                        id="val-purifier-hum">52%</span>
+                                    <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">Humid</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <span style="font-size: 13px; font-weight: bold; color: #fff;"
+                                        id="val-purifier-filter">95%</span>
+                                    <span style="font-size: 9px; color: #aaa; text-transform: uppercase;">Filter</span>
                                 </div>
                             </div>
                         </div>
@@ -1248,10 +1350,10 @@
                 <!-- ------------------- LAUNDRY VIEW ------------------- -->
                 <section class="room-view" id="view-laundry">
 
-                    <!-- Column 1: Overhead Light + CCTV -->
-                    <div class="col-4 flex-col-gap">
+                    <!-- Row 1, Col 1: Overhead Light -->
+                    <div class="col-4">
                         <!-- Laundry Overhead Light Widget -->
-                        <div class="widget active" data-glow="yellow" id="widget-laundry-light" style="flex: 1;">
+                        <div class="widget active" data-glow="yellow" id="widget-laundry-light" style="height: 100%; display: flex; flex-direction: column;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title">Ceiling Light</span>
@@ -1263,48 +1365,48 @@
                                     <span class="slider yellow"></span>
                                 </label>
                             </div>
-                            <div
-                                style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 4px 0;">
-                                <div style="font-size: 32px; filter: drop-shadow(0 2px 5px rgba(255, 183, 0, 0.4)); transition: all 0.3s ease;"
-                                    id="laundry-light-icon">💡</div>
+                            <div style="flex-grow:1; display:flex; align-items:center; justify-content:center; padding: 10px 0;">
+                                <div id="laundry-light-icon"
+                                    style="font-size: 50px; text-shadow: 0 0 40px rgba(255,183,0,1); transition: all 0.3s; transform: scale(1.1);">
+                                    💡</div>
                             </div>
-                            <div class="range-container" style="margin-top: 4px; margin-bottom: 2px; width: 100%;">
+                            <!-- Custom Brown/Beige Slide Bar Brightness -->
+                            <div id="laundry-light-slider-container"
+                                style="margin-top: 15px; width: 100%; transition: opacity 0.3s;">
                                 <div
                                     style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px;">
                                     <span>Brightness</span>
                                     <span id="val-laundry-light">80%</span>
                                 </div>
-                                <div
-                                    style="width: 100%; height: 24px; background: rgba(0,0,0,0.4); border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);">
+                                <div id="laundry-light-slider-track"
+                                    style="width: 100%; height: 32px; background: #3a322c; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);">
+                                    <!-- Fill bar -->
                                     <div id="ios-laundry-light-fill"
-                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background: rgba(255, 255, 255, 0.9); pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px;">
+                                        style="position: absolute; top: 0; left: 0; height: 100%; width: 80%; background: #f0ede6; pointer-events: none; transition: width 0.1s ease-out; border-radius: 12px; box-shadow: 2px 0 5px rgba(0,0,0,0.3);">
+                                        <!-- Blue Sun Icon -->
+                                        <div
+                                            style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;">
+                                            <svg viewBox="0 0 24 24"
+                                                style="width: 14px; height: 14px; fill: #0055ff; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));">
+                                                <path
+                                                    d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 10-1.06-1.061l-1.59 1.591z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div
-                                        style="position: absolute; left: 10px; z-index: 2; pointer-events: none; font-size: 14px; color: #555; mix-blend-mode: difference;">
-                                        ☀️</div>
+                                    <!-- Input Range -->
                                     <input type="range" min="0" max="100" value="80" id="slider-laundry-light"
                                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;">
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Laundry Camera (CCTV) -->
-                        <div class="widget camera-widget" style="flex: 1;"
-                            onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
-                            <img class="camera-feed" src="assets/camera_laundry.png" alt="Laundry Camera"
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="camera-overlay">
-                                <span class="camera-name">Camera 05: Laundry</span>
-                                <span class="camera-live">LIVE</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Column 2: Smart Fan + Smart Washer -->
-                    <div class="col-4 flex-col-gap">
+
+                    <!-- Row 1, Col 2: Smart Fan -->
+                    <div class="col-4">
                         <!-- Smart Fan Widget -->
                         <div class="widget active" data-glow="cyan" id="widget-laundry-fan"
-                            style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 12px; min-height: 250px;">
+                            style="height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 12px;">
                             <div class="widget-header" style="margin-bottom: 5px;">
                                 <div
                                     style="display: flex; align-items: center; width: 100%; justify-content: space-between;">
@@ -1390,9 +1492,86 @@
                                     Running - Med</div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Smart Washer Widget -->
-                        <div class="widget active" data-glow="blue" id="widget-laundry-washer" style="flex: 1;">
+                    <!-- Row 1, Col 3: Laundry Environment -->
+                    <div class="col-4">
+                        <!-- Laundry Environment -->
+                        <div class="widget active" data-glow="green" id="widget-laundry-sensors"
+                            style="height: 100%; display:flex; flex-direction:column; overflow:hidden;">
+                            <div class="widget-header" style="margin-bottom:0; flex-shrink:0;">
+                                <div>
+                                    <span class="widget-title">Laundry Environment</span>
+                                    <div class="widget-subtitle">Sensors &amp; Supplies</div>
+                                </div>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="env-tab-btn active" id="btn-env-sensors"
+                                        onclick="switchEnvTab('sensors')">Sensors</button>
+                                    <button class="env-tab-btn" id="btn-env-usage"
+                                        onclick="switchEnvTab('usage')">Usage</button>
+                                </div>
+                            </div>
+                            <!-- Sensors Panel -->
+                            <div id="env-panel-sensors"
+                                style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden;">
+                                <div class="sensors-grid" style="margin-top:6px; flex-shrink:0;">
+                                    <div class="sensor-block">
+                                        <span class="sensor-value" style="color: var(--accent-green);"
+                                            id="laundry-leak-val">Safe</span>
+                                        <span class="sensor-label">Leak</span>
+                                    </div>
+                                    <div class="sensor-block">
+                                        <span class="sensor-value">24°C</span>
+                                        <span class="sensor-label">Temp</span>
+                                    </div>
+                                    <div class="sensor-block">
+                                        <span class="sensor-value">58%</span>
+                                        <span class="sensor-label">Humidity</span>
+                                    </div>
+                                </div>
+                                <!-- Detergent Wave -->
+                                <div class="detergent-container" id="detergent-container" style="flex:1; min-height:0;">
+                                    <div class="detergent-beaker" id="detergent-beaker">
+                                        <div class="detergent-liquid" id="detergent-liquid">
+                                            <div class="detergent-wave"></div>
+                                        </div>
+                                        <div class="detergent-level-badge" id="detergent-level-badge">65%</div>
+                                    </div>
+                                    <div
+                                        style="display:flex; flex-direction:column; justify-content:center; gap:3px; flex:1; min-width:0;">
+                                        <div
+                                            style="font-size:8px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:0.5px;">
+                                            Detergent</div>
+                                        <div style="font-size:13px; font-weight:700;" id="detergent-pct-text">65%</div>
+                                        <div style="font-size:8px; color:var(--color-text-secondary);">Liquid • Pods 42%
+                                        </div>
+                                        <button class="detergent-refill-btn" id="btn-detergent-refill"
+                                            style="display:none;">+ Refill</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Usage Chart Panel -->
+                            <div id="env-panel-usage"
+                                style="flex:1; display:none; flex-direction:column; align-items:stretch; justify-content:center; padding-top:4px; min-height:0; overflow:hidden;">
+                                <canvas id="laundry-usage-chart" style="width:100%; flex:1; min-height:0;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2, Col 1: Laundry Camera (CCTV) -->
+                    <div class="widget camera-widget col-4" style="cursor: pointer; min-height: 110px;"
+                        onclick="openCctvModal(this.querySelector('.camera-feed').src, this.querySelector('.camera-name').textContent)">
+                        <img class="camera-feed" src="assets/camera_laundry.png" alt="Laundry Camera"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="camera-overlay">
+                            <span class="camera-name">Camera 05: Laundry</span>
+                            <span class="camera-live">LIVE</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2, Col 2: Smart Washer -->
+                    <div class="col-4">
+                        <div class="widget active" data-glow="blue" id="widget-laundry-washer" style="height: 100%;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title">Smart Washer</span>
@@ -1477,71 +1656,9 @@
                         </div>
                     </div>
 
-                    <!-- Column 3: Laundry Environment + Smart Dryer -->
-                    <div class="col-4 flex-col-gap">
-                        <!-- Laundry Environment -->
-                        <div class="widget active" data-glow="green" id="widget-laundry-sensors"
-                            style="flex: 1; display:flex; flex-direction:column; overflow:hidden;">
-                            <div class="widget-header" style="margin-bottom:0; flex-shrink:0;">
-                                <div>
-                                    <span class="widget-title">Laundry Environment</span>
-                                    <div class="widget-subtitle">Sensors & Supplies</div>
-                                </div>
-                                <div style="display:flex; gap:4px;">
-                                    <button class="env-tab-btn active" id="btn-env-sensors"
-                                        onclick="switchEnvTab('sensors')">Sensors</button>
-                                    <button class="env-tab-btn" id="btn-env-usage"
-                                        onclick="switchEnvTab('usage')">Usage</button>
-                                </div>
-                            </div>
-                            <!-- Sensors Panel -->
-                            <div id="env-panel-sensors"
-                                style="flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden;">
-                                <div class="sensors-grid" style="margin-top:6px; flex-shrink:0;">
-                                    <div class="sensor-block">
-                                        <span class="sensor-value" style="color: var(--accent-green);"
-                                            id="laundry-leak-val">Safe</span>
-                                        <span class="sensor-label">Leak</span>
-                                    </div>
-                                    <div class="sensor-block">
-                                        <span class="sensor-value">24°C</span>
-                                        <span class="sensor-label">Temp</span>
-                                    </div>
-                                    <div class="sensor-block">
-                                        <span class="sensor-value">58%</span>
-                                        <span class="sensor-label">Humidity</span>
-                                    </div>
-                                </div>
-                                <!-- Detergent Wave -->
-                                <div class="detergent-container" id="detergent-container" style="flex:1; min-height:0;">
-                                    <div class="detergent-beaker" id="detergent-beaker">
-                                        <div class="detergent-liquid" id="detergent-liquid">
-                                            <div class="detergent-wave"></div>
-                                        </div>
-                                        <div class="detergent-level-badge" id="detergent-level-badge">65%</div>
-                                    </div>
-                                    <div
-                                        style="display:flex; flex-direction:column; justify-content:center; gap:3px; flex:1; min-width:0;">
-                                        <div
-                                            style="font-size:8px; color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:0.5px;">
-                                            Detergent</div>
-                                        <div style="font-size:13px; font-weight:700;" id="detergent-pct-text">65%</div>
-                                        <div style="font-size:8px; color:var(--color-text-secondary);">Liquid • Pods 42%
-                                        </div>
-                                        <button class="detergent-refill-btn" id="btn-detergent-refill"
-                                            style="display:none;">+ Refill</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Usage Chart Panel -->
-                            <div id="env-panel-usage"
-                                style="flex:1; display:none; flex-direction:column; align-items:stretch; justify-content:center; padding-top:4px; min-height:0; overflow:hidden;">
-                                <canvas id="laundry-usage-chart" style="width:100%; flex:1; min-height:0;"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Smart Dryer Widget -->
-                        <div class="widget active" data-glow="orange" id="widget-laundry-dryer" style="flex: 1;">
+                    <!-- Row 2, Col 3: Smart Dryer -->
+                    <div class="col-4">
+                        <div class="widget active" data-glow="orange" id="widget-laundry-dryer" style="height: 100%;">
                             <div class="widget-header">
                                 <div>
                                     <span class="widget-title">Smart Dryer</span>
@@ -1764,7 +1881,7 @@
                         <!-- Doors & Windows -->
                         <div style="width:100%;">
                             <div
-                                style="font-size:9px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
+                                style="font-size:12px; color:#ffffff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px;">
                                 🔒 Doors & Windows</div>
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
                                 <div class="widget-sm" id="btn-door-front"
@@ -1782,7 +1899,7 @@
                                 <div class="widget-sm" id="btn-door-living"
                                     style="padding:7px 10px; flex-direction:column; gap:1px; cursor:pointer; user-select:none;">
                                     <span style="font-size:9px; color:var(--color-text-muted);">Living Room</span>
-                                    <span style="font-size:11px; font-weight:700; color:var(--accent-yellow);"
+                                    <span style="font-size:11px; font-weight:700; color:var(--accent-red);"
                                         id="status-door-living">🔓 Unlocked</span>
                                 </div>
                                 <div class="widget-sm" id="btn-door-bedroom"
@@ -1800,7 +1917,7 @@
                         <div
                             style="width:100%; flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
                             <div
-                                style="font-size:12px; color:var(--color-text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px;">
+                                style="font-size:14px; color:#ffffff; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px;">
                                 🌬️ Air &nbsp;·&nbsp; ⚡ Energy</div>
                             <div
                                 style="display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:12px; flex-grow:1;">
