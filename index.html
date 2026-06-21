@@ -57,13 +57,7 @@
             <!-- Top Header -->
             <header class="top-header">
                 <div class="header-welcome" id="header-greeting">Welcome Home, Payal!</div>
-                <div class="header-search">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                    </svg>
-                    <input type="text" placeholder="Search devices, scenes, automation..." id="dashboard-search">
-                </div>
+
                 <div class="header-time">
                     <div class="time" id="clock-time">10:00:00 AM</div>
                     <div class="date" id="clock-date">Sunday, 17 Sept 2026</div>
@@ -1974,6 +1968,32 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- Custom Confirmation Modal Overlay -->
+    <div id="custom-confirm-overlay"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); z-index:10000; align-items:center; justify-content:center; flex-direction:column; opacity:0; transition:opacity 0.3s ease;">
+        <div
+            style="background:#2b3036; border:1px solid rgba(255,255,255,0.1); padding:32px; border-radius:24px; display:flex; flex-direction:column; align-items:center; width:360px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.6);">
+            <div id="confirm-modal-icon"
+                style="width:60px; height:60px; border-radius:50%; background:#ff7a00; display:flex; align-items:center; justify-content:center; color:white; font-size:26px; margin-bottom:20px;">
+                ⚠️
+            </div>
+            <h2 id="confirm-modal-title" style="font-size:20px; font-weight:700; margin-bottom:12px; color:white;">Confirm Action</h2>
+            <div id="confirm-modal-message" style="color:rgba(255,255,255,0.7); font-size:14px; margin-bottom:24px; line-height:1.5;">Are you sure you want to proceed?</div>
+            <div style="display:flex; gap:12px; width:100%;">
+                <button id="btn-confirm-cancel"
+                    style="flex:1; background:#4b5563; border:none; color:white; font-weight:600; padding:12px; border-radius:12px; cursor:pointer; transition:background 0.2s;"
+                    onmouseover="this.style.background='#374151'" onmouseout="this.style.background='#4b5563'">
+                    Cancel
+                </button>
+                <button id="btn-confirm-ok"
+                    style="flex:1; background:#dc2626; border:none; color:white; font-weight:600; padding:12px; border-radius:12px; cursor:pointer; transition:background 0.2s;"
+                    onmouseover="this.style.background='#b91c1c'" onmouseout="this.style.background='#dc2626'">
+                    Yes, Proceed
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Emergency Calling Modal Overlay -->

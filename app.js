@@ -1719,15 +1719,88 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
     }
 
+    function showCustomConfirm(options) {
+        const overlay = document.getElementById("custom-confirm-overlay");
+        const titleEl = document.getElementById("confirm-modal-title");
+        const messageEl = document.getElementById("confirm-modal-message");
+        const iconEl = document.getElementById("confirm-modal-icon");
+        const cancelBtn = document.getElementById("btn-confirm-cancel");
+        const okBtn = document.getElementById("btn-confirm-ok");
+
+        if (!overlay) return;
+
+        titleEl.textContent = options.title || "Confirm Action";
+        messageEl.textContent = options.message || "Are you sure?";
+        iconEl.textContent = options.icon || "⚠️";
+        iconEl.style.background = options.iconBg || "#ff7a00";
+        okBtn.style.background = options.okBg || "#dc2626";
+        okBtn.textContent = options.okText || "Yes, Proceed";
+        
+        // Remove existing event listeners by cloning
+        const newCancelBtn = cancelBtn.cloneNode(true);
+        const newOkBtn = okBtn.cloneNode(true);
+        cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+        okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+
+        const closeConfirm = () => {
+            overlay.style.opacity = "0";
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 300);
+        };
+
+        newCancelBtn.addEventListener("click", () => {
+            closeConfirm();
+            if (options.onCancel) options.onCancel();
+        });
+
+        newOkBtn.addEventListener("click", () => {
+            closeConfirm();
+            if (options.onConfirm) options.onConfirm();
+        });
+
+        overlay.style.display = "flex";
+        setTimeout(() => {
+            overlay.style.opacity = "1";
+        }, 10);
+    }
+
     if (cancelCallBtn && callOverlay && callStatusText) {
         if (emergencyCallBtn) {
-            emergencyCallBtn.addEventListener("click", () => startEmergencySequence("999"));
+            emergencyCallBtn.addEventListener("click", () => {
+                showCustomConfirm({
+                    title: "Emergency Dispatch",
+                    message: "Are you sure you want to call emergency services (999)? This will trigger immediate dispatch.",
+                    icon: "📞",
+                    iconBg: "#dc2626",
+                    okBg: "#dc2626",
+                    okText: "Call 999",
+                    onConfirm: () => {
+                        startEmergencySequence("999");
+                    }
+                });
+            });
         }
 
         if (kitchenFireAlarmBtn) {
             kitchenFireAlarmBtn.addEventListener("change", (e) => {
                 if (e.target.checked) {
-                    startEmergencySequence("fire");
+                    showCustomConfirm({
+                        title: "Fire Alarm Trigger",
+                        message: "Are you sure you want to trigger the Fire Emergency call? This will alert the Fire Department.",
+                        icon: "🚒",
+                        iconBg: "#dc2626",
+                        okBg: "#dc2626",
+                        okText: "Trigger Call",
+                        onConfirm: () => {
+                            startEmergencySequence("fire");
+                        },
+                        onCancel: () => {
+                            e.target.checked = false;
+                            const widget = document.getElementById("widget-kitchen-fire-alarm");
+                            if (widget) widget.classList.remove("active");
+                        }
+                    });
                 }
             });
         }
@@ -1735,7 +1808,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (kitchenSprinklersBtn) {
             kitchenSprinklersBtn.addEventListener("change", (e) => {
                 if (e.target.checked) {
-                    startEmergencySequence("sprinklers");
+                    showCustomConfirm({
+                        title: "Water Sprinklers",
+                        message: "Are you sure you want to activate the water sprinklers in the Kitchen? This will run the water suppression systems.",
+                        icon: "💦",
+                        iconBg: "#1e3a8a",
+                        okBg: "#1d4ed8",
+                        okText: "Activate Sprinklers",
+                        onConfirm: () => {
+                            startEmergencySequence("sprinklers");
+                        },
+                        onCancel: () => {
+                            e.target.checked = false;
+                            const widget = document.getElementById("widget-kitchen-sprinklers");
+                            if (widget) widget.classList.remove("active");
+                        }
+                    });
                 }
             });
         }
@@ -1833,7 +1921,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (emergencyAlarmBtn && alarmFlashVignette && alarmLabel && alarmDesc) {
-        emergencyAlarmBtn.addEventListener("click", () => {
+        function toggleAlarmState() {
             alarmActive = !alarmActive;
 
             if (alarmActive) {
@@ -1871,6 +1959,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Stop Siren
                 stopSiren();
             }
+        }
+
+        emergencyAlarmBtn.addEventListener("click", () => {
+            if (!alarmActive) {
+                showCustomConfirm({
+                    title: "Trigger House Alarm",
+                    message: "Are you sure you want to trigger the sirens and flash lights? This will sound loud alarms throughout the house.",
+                    icon: "🚨",
+                    iconBg: "#dc2626",
+                    okBg: "#dc2626",
+                    okText: "Trigger Alarm",
+                    onConfirm: () => {
+                        toggleAlarmState();
+                    }
+                });
+            } else {
+                toggleAlarmState();
+            }
         });
     }
 
@@ -1889,43 +1995,54 @@ document.addEventListener("DOMContentLoaded", () => {
             // Prevent double-clicks during transitions
             if (gateState === "OPENING" || gateState === "CLOSING") return;
 
-            if (gateState === "CLOSED") {
-                gateState = "OPENING";
-                gateLabel.textContent = "MAIN GATE: OPENING...";
-                gateDesc.textContent = "Opening gate, please wait...";
-                gateIconBg.style.background = "rgba(245, 158, 11, 0.4)";
-                gateIconBg.style.color = "var(--accent-orange)";
-                emergencyGateBtn.style.borderColor = "rgba(245, 158, 11, 0.4)";
-                emergencyGateBtn.style.background = "rgba(245, 158, 11, 0.05)";
+            const actionStr = gateState === "CLOSED" ? "open" : "close";
+            showCustomConfirm({
+                title: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Main Gate`,
+                message: `Are you sure you want to ${actionStr} the main gate?`,
+                icon: "🚧",
+                iconBg: "#f59e0b",
+                okBg: "#00e272",
+                okText: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Gate`,
+                onConfirm: () => {
+                    if (gateState === "CLOSED") {
+                        gateState = "OPENING";
+                        gateLabel.textContent = "MAIN GATE: OPENING...";
+                        gateDesc.textContent = "Opening gate, please wait...";
+                        gateIconBg.style.background = "rgba(245, 158, 11, 0.4)";
+                        gateIconBg.style.color = "var(--accent-orange)";
+                        emergencyGateBtn.style.borderColor = "rgba(245, 158, 11, 0.4)";
+                        emergencyGateBtn.style.background = "rgba(245, 158, 11, 0.05)";
 
-                gateTimeout = setTimeout(() => {
-                    gateState = "OPEN";
-                    gateLabel.textContent = "MAIN GATE: OPEN";
-                    gateDesc.textContent = "Click to Close Gate";
-                    gateIconBg.style.background = "rgba(0, 226, 114, 0.4)";
-                    gateIconBg.style.color = "var(--accent-green)";
-                    emergencyGateBtn.style.borderColor = "rgba(0, 226, 114, 0.4)";
-                    emergencyGateBtn.style.background = "rgba(0, 226, 114, 0.05)";
-                }, 3000);
-            } else if (gateState === "OPEN") {
-                gateState = "CLOSING";
-                gateLabel.textContent = "MAIN GATE: CLOSING...";
-                gateDesc.textContent = "Closing gate, please wait...";
-                gateIconBg.style.background = "rgba(245, 158, 11, 0.4)";
-                gateIconBg.style.color = "var(--accent-orange)";
-                emergencyGateBtn.style.borderColor = "rgba(245, 158, 11, 0.4)";
-                emergencyGateBtn.style.background = "rgba(245, 158, 11, 0.05)";
+                        gateTimeout = setTimeout(() => {
+                            gateState = "OPEN";
+                            gateLabel.textContent = "MAIN GATE: OPEN";
+                            gateDesc.textContent = "Click to Close Gate";
+                            gateIconBg.style.background = "rgba(0, 226, 114, 0.4)";
+                            gateIconBg.style.color = "var(--accent-green)";
+                            emergencyGateBtn.style.borderColor = "rgba(0, 226, 114, 0.4)";
+                            emergencyGateBtn.style.background = "rgba(0, 226, 114, 0.05)";
+                        }, 3000);
+                    } else if (gateState === "OPEN") {
+                        gateState = "CLOSING";
+                        gateLabel.textContent = "MAIN GATE: CLOSING...";
+                        gateDesc.textContent = "Closing gate, please wait...";
+                        gateIconBg.style.background = "rgba(245, 158, 11, 0.4)";
+                        gateIconBg.style.color = "var(--accent-orange)";
+                        emergencyGateBtn.style.borderColor = "rgba(245, 158, 11, 0.4)";
+                        emergencyGateBtn.style.background = "rgba(245, 158, 11, 0.05)";
 
-                gateTimeout = setTimeout(() => {
-                    gateState = "CLOSED";
-                    gateLabel.textContent = "MAIN GATE: CLOSED";
-                    gateDesc.textContent = "Click to Open Gate";
-                    gateIconBg.style.background = "rgba(255, 255, 255, 0.1)";
-                    gateIconBg.style.color = "white";
-                    emergencyGateBtn.style.borderColor = "rgba(255, 255, 255, 0.15)";
-                    emergencyGateBtn.style.background = "rgba(255, 255, 255, 0.05)";
-                }, 3000);
-            }
+                        gateTimeout = setTimeout(() => {
+                            gateState = "CLOSED";
+                            gateLabel.textContent = "MAIN GATE: CLOSED";
+                            gateDesc.textContent = "Click to Open Gate";
+                            gateIconBg.style.background = "rgba(255, 255, 255, 0.1)";
+                            gateIconBg.style.color = "white";
+                            emergencyGateBtn.style.borderColor = "rgba(255, 255, 255, 0.15)";
+                            emergencyGateBtn.style.background = "rgba(255, 255, 255, 0.05)";
+                        }, 3000);
+                    }
+                }
+            });
         });
     }
 
@@ -2387,28 +2504,50 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDoorFront && statusDoorFront) {
         btnDoorFront.addEventListener("click", () => {
             const isLocked = statusDoorFront.textContent.includes("🔒");
-            if (isLocked) {
-                statusDoorFront.innerHTML = "🔓 Unlocked";
-                statusDoorFront.style.color = "var(--accent-red)";
-            } else {
-                statusDoorFront.innerHTML = "🔒 Locked";
-                statusDoorFront.style.color = "var(--accent-green)";
-            }
-            updateSecurityBanner();
+            const actionStr = isLocked ? "unlock" : "lock";
+            showCustomConfirm({
+                title: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Front Door`,
+                message: `Are you sure you want to ${actionStr} the Front Door?`,
+                icon: isLocked ? "🔓" : "🔒",
+                iconBg: isLocked ? "#ef4444" : "#00e272",
+                okBg: isLocked ? "#ef4444" : "#00e272",
+                okText: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Front Door`,
+                onConfirm: () => {
+                    if (isLocked) {
+                        statusDoorFront.innerHTML = "🔓 Unlocked";
+                        statusDoorFront.style.color = "var(--accent-red)";
+                    } else {
+                        statusDoorFront.innerHTML = "🔒 Locked";
+                        statusDoorFront.style.color = "var(--accent-green)";
+                    }
+                    updateSecurityBanner();
+                }
+            });
         });
     }
 
     if (btnDoorBack && statusDoorBack) {
         btnDoorBack.addEventListener("click", () => {
             const isLocked = statusDoorBack.textContent.includes("🔒");
-            if (isLocked) {
-                statusDoorBack.innerHTML = "🔓 Unlocked";
-                statusDoorBack.style.color = "var(--accent-red)";
-            } else {
-                statusDoorBack.innerHTML = "🔒 Locked";
-                statusDoorBack.style.color = "var(--accent-green)";
-            }
-            updateSecurityBanner();
+            const actionStr = isLocked ? "unlock" : "lock";
+            showCustomConfirm({
+                title: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Back Door`,
+                message: `Are you sure you want to ${actionStr} the Back Door?`,
+                icon: isLocked ? "🔓" : "🔒",
+                iconBg: isLocked ? "#ef4444" : "#00e272",
+                okBg: isLocked ? "#ef4444" : "#00e272",
+                okText: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Back Door`,
+                onConfirm: () => {
+                    if (isLocked) {
+                        statusDoorBack.innerHTML = "🔓 Unlocked";
+                        statusDoorBack.style.color = "var(--accent-red)";
+                    } else {
+                        statusDoorBack.innerHTML = "🔒 Locked";
+                        statusDoorBack.style.color = "var(--accent-green)";
+                    }
+                    updateSecurityBanner();
+                }
+            });
         });
     }
 
@@ -2435,8 +2574,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDoorLiving && statusDoorLiving && toggleLivingDoor) {
         btnDoorLiving.addEventListener("click", () => {
             const isCurrentlyLocked = statusDoorLiving.textContent.includes("🔒");
-            toggleLivingDoor.checked = !isCurrentlyLocked;
-            toggleLivingDoor.dispatchEvent(new Event("change"));
+            const actionStr = isCurrentlyLocked ? "unlock" : "lock";
+            showCustomConfirm({
+                title: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Living Room Door`,
+                message: `Are you sure you want to ${actionStr} the Living Room Door?`,
+                icon: isCurrentlyLocked ? "🔓" : "🔒",
+                iconBg: isCurrentlyLocked ? "#ef4444" : "#00e272",
+                okBg: isCurrentlyLocked ? "#ef4444" : "#00e272",
+                okText: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Living Door`,
+                onConfirm: () => {
+                    toggleLivingDoor.checked = !isCurrentlyLocked;
+                    toggleLivingDoor.dispatchEvent(new Event("change"));
+                }
+            });
         });
     }
 
@@ -2463,8 +2613,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDoorBedroom && statusDoorBedroom && toggleBedroomDoor) {
         btnDoorBedroom.addEventListener("click", () => {
             const isCurrentlyLocked = statusDoorBedroom.textContent.includes("🔒");
-            toggleBedroomDoor.checked = !isCurrentlyLocked;
-            toggleBedroomDoor.dispatchEvent(new Event("change"));
+            const actionStr = isCurrentlyLocked ? "unlock" : "lock";
+            showCustomConfirm({
+                title: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Bedroom Door`,
+                message: `Are you sure you want to ${actionStr} the Bedroom Door?`,
+                icon: isCurrentlyLocked ? "🔓" : "🔒",
+                iconBg: isCurrentlyLocked ? "#ef4444" : "#00e272",
+                okBg: isCurrentlyLocked ? "#ef4444" : "#00e272",
+                okText: `${actionStr.charAt(0).toUpperCase() + actionStr.slice(1)} Bedroom Door`,
+                onConfirm: () => {
+                    toggleBedroomDoor.checked = !isCurrentlyLocked;
+                    toggleBedroomDoor.dispatchEvent(new Event("change"));
+                }
+            });
         });
     }
 
