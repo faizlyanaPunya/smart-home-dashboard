@@ -324,14 +324,35 @@ document.addEventListener("DOMContentLoaded", () => {
             const statusText = document.getElementById("status-kitchen-oven-text");
             const ovenGlow = document.getElementById("oven-glow-window");
             const dialInfo = document.getElementById("status-kitchen-oven");
+            const valText = document.getElementById("val-kitchen-oven");
+            const progress = document.getElementById("progress-kitchen-oven");
+            const btnDown = document.getElementById("btn-kitchen-oven-down");
+            const btnUp = document.getElementById("btn-kitchen-oven-up");
+            const btnTimerDown = document.getElementById("btn-kitchen-timer-down");
+            const btnTimerUp = document.getElementById("btn-kitchen-timer-up");
+            const controlsSide = document.getElementById("oven-controls-side");
+
             if (isChecked) {
-                statusText.textContent = `Preheating • ${document.getElementById("val-kitchen-oven").textContent}`;
                 if (ovenGlow) ovenGlow.style.opacity = "1";
                 if (dialInfo) dialInfo.textContent = "Preheating";
+                if (progress) progress.style.stroke = "";
+                if (btnDown) { btnDown.style.opacity = "1"; btnDown.style.pointerEvents = ""; }
+                if (btnUp) { btnUp.style.opacity = "1"; btnUp.style.pointerEvents = ""; }
+                if (btnTimerDown) { btnTimerDown.style.opacity = "1"; btnTimerDown.style.pointerEvents = ""; }
+                if (btnTimerUp) { btnTimerUp.style.opacity = "1"; btnTimerUp.style.pointerEvents = ""; }
+                if (controlsSide) controlsSide.style.opacity = "1";
+                updateOven(ovenTarget);
             } else {
                 statusText.textContent = "Off";
                 if (ovenGlow) ovenGlow.style.opacity = "0.2";
                 if (dialInfo) dialInfo.textContent = "Off";
+                if (valText) valText.textContent = "--";
+                if (progress) progress.style.stroke = "rgba(255, 255, 255, 0.15)";
+                if (btnDown) { btnDown.style.opacity = "0.4"; btnDown.style.pointerEvents = "none"; }
+                if (btnUp) { btnUp.style.opacity = "0.4"; btnUp.style.pointerEvents = "none"; }
+                if (btnTimerDown) { btnTimerDown.style.opacity = "0.4"; btnTimerDown.style.pointerEvents = "none"; }
+                if (btnTimerUp) { btnTimerUp.style.opacity = "0.4"; btnTimerUp.style.pointerEvents = "none"; }
+                if (controlsSide) controlsSide.style.opacity = "0.4";
             }
             if (typeof updateOvenTimerDisplay === 'function') {
                 updateOvenTimerDisplay();
@@ -718,6 +739,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const svgKitchenOven = document.getElementById("svg-kitchen-oven");
 
     function updateOven(val) {
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && !toggle.checked) return;
+
         ovenTarget = Math.max(50, Math.min(250, val));
         updateOvenDialDisplay();
     }
@@ -729,14 +753,31 @@ document.addEventListener("DOMContentLoaded", () => {
             ovenActual = ovenTarget;
         }
         setDialProgress(progressKitchenOven, valKitchenOven, statusKitchenOven, ovenActual, 50, 250, "°C", status, true);
+        
+        const statusText = document.getElementById("status-kitchen-oven-text");
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (statusText && toggle && toggle.checked) {
+            statusText.textContent = `${status} • ${Math.round(ovenTarget)}°C`;
+        }
     }
     updateOven(ovenTarget);
 
-    document.getElementById("btn-kitchen-oven-up").addEventListener("click", () => updateOven(ovenTarget + 5));
-    document.getElementById("btn-kitchen-oven-down").addEventListener("click", () => updateOven(ovenTarget - 5));
+    document.getElementById("btn-kitchen-oven-up").addEventListener("click", () => {
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && !toggle.checked) return;
+        updateOven(ovenTarget + 5);
+    });
+    document.getElementById("btn-kitchen-oven-down").addEventListener("click", () => {
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && !toggle.checked) return;
+        updateOven(ovenTarget - 5);
+    });
 
     // Simulate Oven heating up to set target
     setInterval(() => {
+        const toggle = document.querySelector("#widget-kitchen-oven .toggle-control");
+        if (toggle && !toggle.checked) return;
+
         if (ovenActual < ovenTarget) {
             ovenActual += Math.min(2.5, ovenTarget - ovenActual);
             updateOvenDialDisplay();
